@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="public/images/icon/hpg00.webp" />
+    <title>Zhenghang's AOS Lab</title>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS: Base -->
+    <link rel="stylesheet" href="src/css/base/reset.css" />
+    <link rel="stylesheet" href="src/css/base/variables.css" />
+    <link rel="stylesheet" href="src/css/base/global.css" />
+    <link rel="stylesheet" href="src/css/base/animations.css" />
+
+    <!-- CSS: Layout -->
+    <link rel="stylesheet" href="src/css/layout/hero.css" />
+
+    <!-- CSS: Components -->
+    <link rel="stylesheet" href="src/css/components/navbar.css" />
+    <link rel="stylesheet" href="src/css/components/buttons.css" />
+    <link rel="stylesheet" href="src/css/components/tooltip.css" />
+
+    <!-- CSS: Effects -->
+    <link rel="stylesheet" href="src/css/effects/glass.css" />
+    <link rel="stylesheet" href="src/css/effects/transitions.css" />
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+    <div id="transition-overlay"></div>
+
+    <div class="ui-layer" id="ui-layer">
+      <header>
+        <div class="logo">AOS Lab</div>
+        <div class="controls">
+          <div class="btn-circle glass" id="theme-toggle">
+            <svg
+              id="icon-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </div>
+          <div class="btn-circle glass" id="lang-toggle">EN</div>
+        </div>
+      </header>
+
+      <div class="center-text-container">
+        <div class="typewriter-text">
+          <span id="text-output"></span><span class="cursor"></span>
+        </div>
+      </div>
+
+      <footer>
+        <div class="landing-wrapper">
+          <div class="landing-btn glass" id="landing-btn">
+            <img src="public/images/icon/landing.webp" width="50pt" />
+          </div>
+          <div class="tooltip glass">Landing</div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- 核心入口 JS (ES Module) -->
+    <script type="module" src="src/js/hero/app.js"></script>
+  </body>
+</html>

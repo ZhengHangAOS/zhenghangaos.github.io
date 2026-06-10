@@ -1,0 +1,75 @@
+{
+  "id": "S009",
+  "name": "冥王星 Pluto",
+  "project": "planetary",
+  "galaxySystem": "太阳系",
+  "radius": 0.19,
+  "textureImg": "/planets/S/textures/s009/pluto_map.webp",
+  "character": "孤寒独行者",
+
+  "moons": {
+    "count": 1,
+    "satellites": [
+      {
+        "name": "冥卫一 Charon",
+        "radius": 0.1,
+        "textureS": "/planets/S/textures/s009/charon.webp",
+        "speed": 6.39,
+        "obitA": 0.65,
+        "obitB": 0.8,
+        "brief": "它是太阳系中按比例而言最大的卫星（质量高达冥王星的约八分之一）。由于两者的质量和距离非常接近，它们的质心其实落在了冥王星之外的太空中，严格来说它们更像是一个“双矮行星系统”。冥卫一表面主要由水冰覆盖，其北极区域由于常年捕获并固结了从冥王星大气中逃逸的甲烷，呈现出独特的赤褐色（被称为“魔多区”）。",
+
+        "aglx": 5,
+        "agly": 0,
+        "aglz": 0
+      }
+    ]
+  },
+
+  "rings": {
+    "hasRings": false,
+    "textureImg": null,
+    "rIn": null,
+    "rOut": null,
+    "color": null,
+    "emissive": null
+  },
+
+  "visuals": {
+    "obliquity": 17.16,
+    "rotationSpeed": 6.39,
+    "thumb": "/planets/icon/solor/pluto.webp",
+    "bumpImg": null
+  },
+
+  "brief": "位于柯伊伯带深处的冰质矮行星。其表面覆盖着氮冰、甲烷冰与古老撞击地形，在极端寒冷与稀薄大气的交替循环中，展现出遥远边疆世界独有的静谧气候。",
+
+  "overview": {
+    "miniT": "-240 °C",
+    "maxT": "-218 °C",
+    "Temp": "-229",
+    "gravity": "0.06",
+    "moonCount": "5",
+    "atmos": "0.00001",
+    "rotationPeriod": "6.39",
+    "obliquity": "17.16°",
+    "orbitalSpeed": "90560 地球日"
+  },
+  "highlights": [
+    {
+      "icon": "public/images/icon/heart.png",
+      "title": "汤博区氮冰之星",
+      "desc": "地表有一片巨大的明亮心形氮冰平原"
+    },
+    {
+      "icon": "public/images/icon/double.png",
+      "title": "双星潮汐锁定",
+      "desc": "与大卫星卡戎质心在空间交汇，永远面面相觑"
+    },
+    {
+      "icon": "public/images/icon/ellipse.png",
+      "title": "重叠的椭圆轨道",
+      "desc": "轨道高度倾斜且呈长椭圆，有时会比海王星更靠近太阳"
+    }
+  ]
+}

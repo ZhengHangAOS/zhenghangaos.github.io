@@ -1,0 +1,53 @@
+{
+  "id": "S002",
+  "name": "金星 Venus",
+  "project": "planetary",
+  "galaxySystem": "太阳系",
+  "radius": 0.95,
+  "character": "浓硫酸笼罩的温室",
+  "textureImg": "/planets/S/textures/s002/venus_map.webp",
+  "moons": {
+    "count": 0,
+    "satellites": []
+  },
+  "rings": {
+    "hasRings": false
+  },
+
+  "visuals": {
+    "obliquity": 177.36,
+    "rotationSpeed": 24.3,
+    "thumb": "/planets/icon/solor/venus.webp",
+    "bumpImg": "/planets/S/textures/s002/venus_bp.jpg"
+  },
+  "brief": "典型的类地行星，由于拥有以二氧化碳为主体的极端稠密大气层，触发了不可逆的失控温室效应。流体静力学平衡下其表面气压极高，厚重的硫酸云层导致其全球反照率极高，并表现出独特的大气超旋（Super-rotation）动力学特征。",
+  "overview": {
+    "miniT": "437 °C",
+    "maxT": "497 °C",
+    "Temp": 467,
+    "gravity": "0.90",
+    "moonCount": "0",
+    "atmos": "92",
+    "rotationPeriod": "-243.02",
+    "obliquity": "177.36°",
+    "orbitalSpeed": "224.70"
+  },
+
+  "highlights": [
+    {
+      "icon": "",
+      "title": "失控的温室效应",
+      "desc": "CO2 大气层锁住热量，表面常年 460°C"
+    },
+    {
+      "icon": "",
+      "title": "独特的逆向自转",
+      "desc": "自转方向相反，太阳西升东落"
+    },
+    {
+      "icon": "",
+      "title": "恐怖的大气压力",
+      "desc": "地表气压相当于地球深海 900 米处"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0px 5px 15px 0 var(--glass-shadow);
+
+  /* 🎯 核心精修：彻底废除 transition: all 0.3s;
+     1. 背景色（background）和滤镜（backdrop-filter）直接不加过渡，切换主题时瞬间卡点变色，彻底消除粘滞感！
+     2. 边框（border-color）和阴影（box-shadow）如果需要一点柔和感，锁死在 0.08 秒极限快切。
+     3. 几何形变（如 transform、max-height）保留 0.3 秒的平滑物理轨迹。
+  */
+  transition:
+    border-color 0.3s linear,
+    box-shadow 0.3s linear,
+    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    max-height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-radius 0.2s ease;
+}

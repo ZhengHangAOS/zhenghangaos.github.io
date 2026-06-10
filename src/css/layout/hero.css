@@ -1,0 +1,75 @@
+.ui-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 102.5vh;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 60px;
+}
+
+.center-text-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.typewriter-text {
+  font-size: 2.5rem;
+  font-weight: 350;
+  letter-spacing: 1.5px;
+  text-align: center;
+  max-width: 800px;
+  line-height: 1.4;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  margin-left: 4px;
+  background-color: var(--accent-color);
+  vertical-align: text-bottom;
+  animation: blink 1.1s step-end infinite;
+}
+
+footer {
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.landing-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+/* 强制锁死 Hero 页面不随系统日夜模式改变 */
+.ui-layer {
+  --text-color: #eaf4f4 !important;
+  --glass-bg: rgba(255, 255, 255, 0.03) !important;
+  --glass-border: rgba(255, 255, 255, 0.08) !important;
+  --glass-hover-bg: rgba(255, 255, 255, 0.08) !important;
+  color: var(--text-color) !important;
+}
+
+.landing-btn svg,
+.btn-circle {
+  color: var(--text-color) !important;
+}

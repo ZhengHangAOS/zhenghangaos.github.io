@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/public/images/icon/jpt.webp" />
+    <title>Article-AOSlab</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/src/css/base/reset.css" />
+    <link rel="stylesheet" href="/src/css/base/variables.css" />
+    <link rel="stylesheet" href="/src/css/base/global.css" />
+    <link rel="stylesheet" href="/src/css/effects/glass.css" />
+    <link rel="stylesheet" href="/src/css/components/buttons.css" />
+    <link rel="stylesheet" href="/src/css/components/navbar.css" />
+
+    <link rel="stylesheet" href="/src/css/layout/article.css" />
+    <link rel="stylesheet" href="/src/css/layout/markdown.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/atom-one-dark.css"
+    />
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.8.0/build/highlight.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  </head>
+  <body>
+    <nav class="home-nav">
+      <div class="nav-left"></div>
+
+      <div class="nav-right">
+        <div class="nav-bar glass">
+          <div
+            class="btn-circle"
+            data-tooltip="Home"
+            onclick="window.location.href = '/homepage.html'"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/hpg.webp" alt="Home" />
+          </div>
+          <div
+            class="btn-circle"
+            data-tooltip="Explore"
+            onclick="window.location.href = '/pages/explore.html'"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/expl.webp" alt="Explore" />
+          </div>
+          <div
+            class="btn-circle"
+            data-tooltip="Library"
+            onclick="window.location.href = '/pages/library.html'"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/tsg.webp" alt="Library" />
+          </div>
+          <div
+            class="btn-circle"
+            id="launch-btn"
+            data-tooltip="To Space"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/landing.webp" alt="Launch" />
+          </div>
+        </div>
+
+        <div class="controls">
+          <div
+            class="btn-circle glass"
+            id="theme-toggle"
+            style="cursor: pointer"
+          >
+            <svg
+              id="icon-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </div>
+
+          <div
+            class="avatar-btn"
+            style="
+              background-image: url(&quot;public/images/touxiang/touxiang.webp&quot;);
+            "
+            onclick="window.location.href = 'pages/me.html'"
+          ></div>
+        </div>
+      </div>
+    </nav>
+
+    <header class="article-banner" id="banner">
+      <div class="banner-mask"></div>
+      <div class="banner-content">
+        <h1 id="meta-title" class="banner-title">加载失败</h1>
+        <div class="banner-meta">
+          <span class="meta-item">
+            <i class="fa-solid fa-user-pen"></i>
+            <span id="meta-author">Author</span>
+          </span>
+
+          <span class="meta-item">
+            <i class="fa-regular fa-calendar-days"></i>
+            <span id="meta-date">Time</span>
+          </span>
+
+          <span class="meta-item">
+            <i class="fa-solid fa-pen-nib"></i>
+            <span id="meta-words">0</span> 字
+          </span>
+
+          <span class="meta-item">
+            <i class="fa-regular fa-clock"></i>
+            <span id="meta-time">0</span> min
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <main class="article-layout" id="article-layout">
+      <aside class="sidebar-left" id="sidebar-left">
+        <h3><i class="fa-solid fa-book-open fa-fw"></i> Content</h3>
+        <ul class="toc-list" id="notebook-toc"></ul>
+      </aside>
+
+      <article class="markdown-body" id="md-content">
+        <div class="post-navigation" id="post-nav">
+          <a href="#" class="nav-prev" id="nav-prev">Previous</a>
+          <a href="#" class="nav-next" id="nav-next">Next</a>
+        </div>
+      </article>
+
+      <aside class="sidebar-right" id="sidebar-right">
+        <h3><i class="fa-solid fa-list-ul fa-fw"></i> Outline</h3>
+        <ul class="outline-list" id="article-outline"></ul>
+      </aside>
+    </main>
+
+    <div class="fab-totop glass" id="totop-btn">
+      <i class="fa-solid fa-angles-up"></i>
+    </div>
+
+    <footer class="article-footer">
+      <p>© 2026 Zhenghang's AOS Lab. All Rights Reserved.</p>
+    </footer>
+
+    <!--全局主题管理-->
+    <script src="/src/js/global/theme.js"></script>
+    <script src="/src/js/global/launch.js" defer></script>
+    <script type="module" src="/src/js/article/app.js"></script>
+  </body>
+</html>

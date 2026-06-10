@@ -1,0 +1,20 @@
+[
+  {
+    "name": "太阳系",
+    "distance": "0",
+    "folder": "S",
+    "icon": "/planets/icon/solor/solar.webp"
+  },
+  {
+    "name": "比邻星",
+    "distance": "4.25",
+    "folder": "PC",
+    "icon": "/planets/icon/"
+  },
+  {
+    "name": "开普勒",
+    "distance": "600",
+    "folder": "K",
+    "icon": "/planets/icon/"
+  }
+]

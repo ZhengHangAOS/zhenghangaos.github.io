@@ -1,0 +1,55 @@
+/* 圆圈按钮的大小和图片高宽控制 */
+.btn-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition:
+    transform 0.3s,
+    background 0.3s;
+}
+
+.btn-circle img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.btn-circle:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+.btn-circle svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+}
+
+.landing-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  animation: float 4s ease-in-out infinite;
+}
+
+.landing-btn svg {
+  width: 28px;
+  height: 28px;
+  fill: var(--text-color);
+  transition: fill 0.3s ease;
+}
+
+.landing-btn:hover {
+  background: var(--glass-hover-bg);
+  box-shadow: 0 0 30px var(--accent-glow);
+  animation-play-state: paused;
+}

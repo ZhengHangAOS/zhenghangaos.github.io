@@ -1,0 +1,754 @@
+# Project Prompt — Zhenghang’s AOS Lab
+
+## Project Overview
+
+Create a highly atmospheric, interactive, visually immersive personal website called:
+
+# “Zhenghang’s AOS Lab”
+
+The website is a static frontend project primarily built with:
+
+- HTML
+- CSS
+- JavaScript
+
+Additional lightweight libraries are allowed when necessary, especially:
+
+- Three.js (strongly recommended)
+- GSAP (optional for transitions/animations)
+
+Avoid overly heavy frameworks or backend systems.
+The website should feel like a hybrid of:
+
+- a scientific visualization lab
+- a digital observatory
+- a planetary atmosphere research station
+- an interactive world
+
+This is NOT a traditional blog template.
+Do NOT generate generic “developer portfolio” layouts.
+
+The core thematic keywords are:
+
+- Planet
+- Atmosphere
+- Ocean
+- Fluid
+- Circulation
+- Climate
+- Space
+- Quietness
+- Floating
+- Scientific imagination
+
+The visual feeling should be:
+
+- calm
+- immersive
+- spatial
+- atmospheric
+- elegant
+- slightly futuristic
+- semi-realistic
+- not cartoonish
+- not cyberpunk
+
+The site should feel alive, like an inhabitable digital planet.
+
+---
+
+# General Design Language
+
+## Overall Style
+
+Use:
+
+- glassmorphism
+- soft neumorphism
+- depth
+- layered shadows
+- floating motion
+- translucent panels
+- smooth transitions
+- subtle parallax
+- volumetric feeling
+
+Avoid:
+
+- flat minimalist corporate UI
+- sharp edges
+- overly saturated colors
+- fast aggressive animations
+- neon cyberpunk aesthetics
+
+---
+
+# Color System
+
+## Night Mode
+
+Main tones:
+
+- deep navy blue
+- dark teal
+- atmospheric cyan
+- faint aurora green
+- dim white glow
+
+The night mode should resemble:
+
+- upper atmosphere
+- stratosphere at night
+- planetary twilight
+- deep ocean atmosphere
+
+## Day Mode
+
+Main tones:
+
+- cold white
+- pale sky blue
+- cloud gray
+- soft warm sunlight
+- subtle oceanic cyan
+
+Weather should affect background tone slightly.
+
+---
+
+# Motion Language
+
+Animations must feel:
+
+- slow
+- smooth
+- floating
+- inertial
+- fluid-like
+
+Avoid snappy UI animations.
+
+Recommended transition timing:
+
+0.5s ~ 1.2s
+
+Use easing curves with inertia feeling.
+
+Objects should subtly:
+
+- float
+- rotate slowly
+- react to mouse movement
+- drift slightly
+
+The whole website should feel like it exists inside an atmosphere.
+
+---
+
+# HERO PAGE
+
+## Layout
+
+The hero page is fullscreen.
+
+Background:
+
+A giant tilted blue-green fictional planet slowly rotating in space.
+
+The planet should have:
+
+- rings
+- moving cloud layers
+- atmospheric glow
+- soft lighting
+- depth
+- spatial scale
+
+The planet is fictional.
+It is the symbolic world of the website.
+
+Style references:
+
+- semi-realistic
+- atmospheric
+- elegant
+- scientific visualization
+- NOT cartoon
+- NOT NASA-realistic rendering
+- NOT game sci-fi HUD
+
+The camera distance should feel intimate but spatial.
+
+---
+
+# Hero Page UI
+
+## Top Left
+
+Text logo:
+
+“AOS Lab”
+
+Minimal, elegant.
+
+## Top Right
+
+Buttons:
+
+1. Dark / Light mode toggle
+   - moon/sun icon
+   - default follows system mode
+
+2. Language switch
+   - EN / 中文
+
+Buttons should be:
+
+- floating
+- translucent
+- circular
+- soft shadow
+- glassmorphism
+
+---
+
+# Center Text
+
+Center contains a sentence with typewriter animation.
+
+Example feeling:
+
+“Exploring circulation across worlds.”
+
+Do NOT hardcode only one sentence.
+Prepare structure for future multiple rotating sentences.
+
+Typography should feel:
+
+- elegant
+- scientific
+- atmospheric
+
+---
+
+# Landing Button
+
+Bottom center contains a circular floating button.
+
+Possible icon:
+
+- rocket
+- spacecraft
+- atmospheric entry capsule
+
+Style:
+
+- semi-transparent
+- volumetric
+- floating
+- glowing softly
+- glassmorphism
+
+On hover:
+
+Show a floating rounded translucent tooltip:
+
+“登陆 Landing”
+
+The button should subtly float and react to hover.
+
+---
+
+# Hero → Homepage Transition
+
+When clicking the landing button:
+
+1. Planet rapidly zooms closer
+2. Camera flies toward the atmosphere
+3. Motion blur / cloud transition optional
+4. Homepage cards emerge smoothly
+
+This transition should feel cinematic and immersive.
+
+Avoid abrupt page switching.
+
+---
+
+# HOMEPAGE
+
+## General Structure
+
+Homepage uses:
+
+- card-based layout
+- depth
+- floating UI
+- layered panels
+
+The layout contains:
+
+- left column
+- right column
+
+with margins and breathing space.
+
+---
+
+# Top Navigation Area
+
+## Right Side
+
+Contains:
+
+### 1. Search Button
+
+Circular icon button.
+
+When clicked:
+
+- expands into input field smoothly
+
+### 2. Navigation Bar
+
+Contains icons only:
+
+- Homepage
+- Explore
+- Library
+- About
+
+When active:
+
+A cloud-shaped soft background appears behind the icon.
+
+Hovering icons shows floating tooltip text.
+
+Examples:
+
+- Homepage
+- Explore
+- Library
+- About
+
+### 3. Theme Toggle
+
+### 4. Language Toggle
+
+### 5. Circular Avatar
+
+All should use unified floating glass style.
+
+---
+
+## Left Side
+
+Contains a floating weather animation system.
+
+This weather belongs to the fictional planet,
+NOT real-world weather.
+
+Weather states include:
+
+- sunny
+- cloudy
+- partly cloudy
+- rain
+- thunderstorm
+- snow
+- strong wind
+- fog
+- dust storm
+
+Each weather has animated floating iconography.
+
+Examples:
+
+- sun/moon/stars
+- drifting clouds
+- rain streaks
+- lightning flashes
+- floating snow
+- drifting leaves
+- dust particles
+
+Style:
+
+- soft neumorphism
+- animated
+- floating
+- dimensional
+
+Weather is randomized each page load.
+
+Night/day mode affects weather visuals.
+
+---
+
+# Main Content Area
+
+## Two-column layout
+
+### LEFT COLUMN
+
+Slightly wider than the right column.
+
+---
+
+## Main Title
+
+Large typography:
+
+“AtmosOceanSci Lab”
+
+Elegant and spatial.
+
+---
+
+## Main Feature Cards
+
+Three vertical floating cards:
+
+1. Explore
+2. Library
+3. About Me
+
+Cards have:
+
+- depth
+- shadows
+- floating hover animation
+- large floating 3D object partially breaking card boundary
+
+Examples:
+
+Explore card:
+- floating planet + cloud system
+- rotates slowly
+- enlarges on hover
+
+Cards contain:
+
+- title
+- subtitle
+- short description
+
+Clicking enters corresponding page.
+
+---
+
+## Recent Posts Section
+
+Contains:
+
+- smaller title
+- large scrollable card
+
+Card content includes rows separated by lines.
+
+Each row contains:
+
+- icon
+- title
+- author
+- publication date
+
+Rows are clickable.
+
+Supports scrolling and pagination.
+
+---
+
+# RIGHT COLUMN
+
+Contains a large floating card.
+
+Top section:
+
+- introduction text
+- small image
+- atmospheric message
+
+Bottom section:
+
+Contains a fully interactive 3D rotating planet.
+
+This planet is the same fictional planet from the hero page.
+
+Requirements:
+
+- mouse interaction
+- drag rotation
+- floating motion
+- atmospheric glow
+- partially outside card boundary
+
+Below this:
+
+Recommended content cards.
+
+Horizontal floating cards with:
+
+- image
+- title
+- description
+- links
+
+Cards stack downward elegantly.
+
+---
+
+# Background System
+
+Background adapts to:
+
+- day/night mode
+- weather state
+
+Examples:
+
+Rain:
+- water ripple effects near bottom
+
+Snow:
+- snow accumulation
+- small snowman
+
+Wind:
+- drifting leaves
+
+Dust storm:
+- tumbleweed
+- cactus silhouettes
+
+These decorative effects remain subtle and mostly near page bottom.
+
+Do NOT overcrowd the page.
+
+---
+
+# WEBSITE STRUCTURE
+
+Main sections:
+
+- Homepage
+- Explore
+- Library
+- Introduction
+- About Me
+
+Each section should preserve the same design language.
+
+---
+
+# EXPLORE PAGE
+
+Accessed from:
+
+- homepage cards
+- navigation bar
+
+Navigation bar remains at top.
+
+Main center contains three large cards:
+
+1. Earth
+2. Planet
+3. World
+
+Each card contains:
+
+- floating rotating object
+- title
+- atmospheric hover animation
+
+---
+
+# Explore Subpage Structure
+
+Using “Planet” as example:
+
+## LEFT PANEL
+
+Scrollable list of selectable planets.
+
+Each item contains:
+
+- thumbnail
+- title
+- subtitle
+
+---
+
+## CENTER AREA
+
+Large floating interactive 3D planet.
+
+Features:
+
+- slow rotation
+- drag interaction
+- atmospheric glow
+- orbit lines
+- satellites
+- floating labels
+
+Planet sits above a minimal pedestal.
+
+Top-left overlay:
+
+- planet title
+- subtitle
+- tags
+
+Bottom contains tab bar:
+
+- Explore
+- Compare
+- Orbit
+
+Below:
+
+horizontal planet selector slider.
+
+---
+
+## RIGHT PANEL
+
+Contains information cards:
+
+### Overview Card
+
+Shows:
+
+- temperature
+- gravity
+- atmosphere
+- pressure
+- rotation
+
+Use elegant progress bars.
+
+### Mission Card
+
+Shows exploration missions.
+
+---
+
+# EARTH MODE
+
+Earth mode supports switching visualization types:
+
+Examples:
+
+- SST visualization
+- ENSO visualization
+- wind field visualization
+- atmospheric circulation
+
+The Earth sphere texture updates dynamically.
+
+---
+
+# LIBRARY PAGE
+
+Card-based layout.
+
+Contains categories such as:
+
+- Atmospheric Science Notes
+- GFD Notes
+- Fluid Mechanics
+- Mathematics
+- Book Reviews
+
+Click category → open note list → open reading page.
+
+---
+
+# ABOUT PAGE
+
+Describes the lab itself.
+
+Future support for multiple members.
+
+---
+
+# ABOUT ME PAGE
+
+Contains:
+
+- biography
+- research interests
+- projects
+- publications
+- academic background
+
+Style remains atmospheric and immersive.
+
+---
+
+# TECHNICAL REQUIREMENTS
+
+Use modular architecture.
+
+Recommended:
+
+- separate CSS files
+- reusable components
+- reusable card system
+- reusable floating animation system
+
+Strongly recommended:
+
+Three.js for:
+
+- planets
+- atmosphere
+- orbit lines
+- particles
+- cloud layers
+
+Optional:
+
+GSAP for transitions.
+
+---
+
+# PERFORMANCE REQUIREMENTS
+
+Animations must remain smooth.
+
+Avoid:
+
+- excessive particles
+- overly heavy shaders
+- large texture sizes
+
+Prioritize:
+
+- responsive motion
+- stable frame rate
+- elegant transitions
+
+---
+
+# IMPORTANT DESIGN PHILOSOPHY
+
+This website is NOT simply:
+
+- a blog
+- a portfolio
+- a resume
+
+It is:
+
+# a living digital atmospheric world.
+
+Every interaction should reinforce:
+
+- atmosphere
+- circulation
+- depth
+- floating motion
+- planetary feeling
+- scientific imagination

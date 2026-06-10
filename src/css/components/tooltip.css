@@ -1,0 +1,17 @@
+.tooltip {
+  position: absolute;
+  top: -50px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.landing-btn:hover + .tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -1,0 +1,111 @@
+.logo {
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--text-color);
+  text-shadow: 0 0 10px var(--accent-glow);
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  pointer-events: auto;
+}
+
+/* ============================== 导航栏骨架 ============================== */
+.home-nav {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(-50%) !important; /* 维持主页的居中定位 */
+
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 80px;
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  width: 100%;
+  max-width: 1270px;
+  box-sizing: border-box;
+  z-index: 100; /* 确保悬浮在最上层 */
+
+  backdrop-filter: none !important;
+  border-bottom: none !important;
+
+  /* from homepage */
+  grid-template-columns: 1fr auto 1fr;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --------------------- 四合一胶囊容器 --------------------- */
+.nav-bar {
+  display: flex;
+  gap: 8px;
+  padding: 0 5px;
+  border-radius: 100px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.nav-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+
+/* --------------------- 导航 hover 提示 --------------------- */
+.nav-bar .btn-circle::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -35px;
+  font-size: 12px;
+  opacity: 0;
+  background: var(--glass-bg);
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.nav-bar .btn-circle:hover::after {
+  opacity: 1;
+}
+
+/* --------------------- 主题切换按钮 --------------------- */
+#theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#theme-toggle svg {
+  width: 23px;
+  height: 23px;
+  display: block;
+  stroke: var(--text-color);
+  transition: none;
+}
+
+/* --------------------- 头像按钮 --------------------- */
+.avatar-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  /* 增加专属厚框线 */
+  border: 3px solid var(--accent-color);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+.avatar-btn:hover {
+  transform: scale(1.125);
+}

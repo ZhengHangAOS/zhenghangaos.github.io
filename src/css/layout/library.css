@@ -1,0 +1,285 @@
+/* ==========================================================================
+   1. 基础布局骨架与页面平替
+   ========================================================================== */
+html,
+body {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+}
+
+/* ==========================================================================
+   2. 导航栏样式配置 (特有)
+   ========================================================================== */
+.home-nav {
+  max-width: 1300px;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.7rem;
+  font-weight: 500;
+  letter-spacing: 0.7px;
+}
+.nav-icon-img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   3. 主体内容与三栏矩阵
+   ========================================================================== */
+.library-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.library-header {
+  text-align: center;
+  margin-bottom: 60px;
+  margin-top: 100px;
+}
+
+.library-intro {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+  max-width: 800px;
+  margin: 0 auto;
+  background: linear-gradient(
+    135deg,
+    var(--text-color) 30%,
+    var(--accent-color)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 992px) {
+  .library-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .library-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.notebook-card {
+  display: flex;
+  align-items: flex-start;
+  padding: 1.25rem;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text-color);
+  gap: 1.25rem;
+  cursor: pointer;
+  transition:
+    transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+  will-change: transform, box-shadow;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.notebook-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.card-img-wrapper {
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+}
+
+.card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  margin-bottom: 2.5px;
+}
+
+.card-title:hover {
+  color: var(--accent-color);
+}
+
+.card-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.75;
+  line-clamp: 3;
+  max-height: calc(0.85rem * 1.5 * 3);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   4. CATALOG BUTTON & SIDEBAR SYSTEM
+   ========================================================================== */
+.catalog-btn {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-color);
+  background: var(--glass-hover-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  /* 🎯 核心优化：将按钮的 all 改为精准的 hover 属性反馈（背景色和缩放/位移等），
+     防止主题切换时按钮的文字颜色和边框跟着变色动画一起滑行 */
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.catalog-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.catalog-sidebar {
+  position: fixed;
+  top: 0;
+  right: -380px;
+  width: 340px;
+  height: 100vh;
+  z-index: 999;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-radius: 10px;
+
+  /* 🎯 降温修改 1：未打开时强行阻断渲染链 */
+  visibility: hidden;
+
+  /* 🎯 背景与边框设置 */
+  background: var(--bg-color);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1.5px solid var(--glass-border);
+  box-shadow: -8px 8px 10px 0 var(--glass-shadow);
+
+  /* 🎯 核心优化：彻底删除底部的 transition: all。
+     只允许 transform（位移）和 visibility（显示隐藏）参与动画，
+     主题变量（如 var(--bg-color)）切换时瞬间到位，绝不拖泥带水 */
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.5s;
+
+  will-change: transform;
+}
+
+.catalog-sidebar.active {
+  visibility: visible;
+  transform: translateX(-380px);
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 0.75rem;
+}
+
+.sidebar-header h3 {
+  margin-left: 11px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: var(--accent-color);
+}
+
+#sidebar-close {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+#sidebar-close:hover {
+  opacity: 1;
+}
+
+.catalog-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.catalog-item-link {
+  display: block;
+  padding: 10px 12px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  background: transparent;
+  transition:
+    transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.catalog-item-link:hover {
+  background: var(--glass-hover-bg);
+  color: var(--accent-color);
+  transform: translateX(6px);
+}

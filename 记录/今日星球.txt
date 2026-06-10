@@ -1,0 +1,231 @@
+今日星球板块的文字改为
+标题：今日星球：星座/星系名 （空格） 星球名字 （这两个名字要有颜色，星座和星系名字将和星球一样随机从explore的星球库抽取）
+第二行：点击探索 ➡️ （只有第二行可以点击至抽取的对应星球的链接）
+我想从一个包含多个星球对象的数组（Explore 星球库）中，每天“随机”抽取一个星球展示在主页。
+
+我不希望用户每次刷新网页都看到不同的星球。我需要实现“一天只换一次”的效果。也就是说，在同一个日期内（以年-月-日为准），无论用户刷新多少次网页、更换什么设备，计算出的星球必须完全固定；而一旦跨入第二天，就会自动计算并切换到下一个看似随机的星球。
+
+请根据以下【数学算法模型】为我编写对应的js代码：
+
+1.日期数字化因子：
+   获取当前系统时间的 Year, Month, Day。将其转换为一个 8 位的唯一整数：D = (Year * 10000) + (Month * 100) + Day。例如 2026年5月21日 转换为 20260521。
+
+2.伪随机扰动：
+   为了防止星球按照数组顺序死板地轮播，需要对数字 D 进行数学扰动。请使用正弦函数 sin(D) 的无理数离散特性，计算出一个介于 0 到 1 之间的确定性小数 R：
+   R = Math.abs(Math.sin(D)) * 10000 - Math.floor(Math.abs(Math.sin(D)) * 10000)
+
+3.边界索引映射：
+   假设我的星球库数组长度为 N。利用计算出的小数 R，通过公式对结果进行向下取整，得到最终的数组索引：
+   Index = Math.floor(R * N)
+
+你需要做的是：
+1. 编写一个纯 JavaScript 函数（例如名为 getDailyPlanet(planetArray)），接收一个星球数组作为参数。
+2. 在函数内部实现上述三个数学步骤，并最终返回命中索引的那个星球对象。
+3. 请确保代码中不包含任何真正随机的函数（如 Math.random()），完全依靠日期作为唯一确定性种子。
+这是我的星球库的一个索引文件"planets/index.json"，我把星球分为了3种，内容示例如下：
+[
+  { "id": "E001", "file": "xxx.json"},
+  { "id": "Exxx", "file": "xxx.json"},
+  { "id": "Pxxx", "file": "xxx.json"},
+  { "id": "Fxxx", "file": "xxx.json"},
+]
+每个星球我都写成了一个json，现在给你一个示例json：
+{
+  "id": "P006",
+  "name": "土星 Saturn",
+  "project": "planetary",
+  "galaxySystem": "太阳系",
+  "radius": 9.45,
+  "textureImg": "planets/P/textures/P/p006/saturn_map.jpg",
+
+  "moons": {
+    "count": 2,
+    "satellites": [
+      {
+        "name": "土卫六 Titan",
+        "radius": 0.4,
+        "textureS": "planets/P/textures/P/p006/",
+        "agl": 15,  //卫星公转面与母姓赤道的夹角
+        "speed": 1,  // 卫星公转速度
+        "obitA": 5.0, //卫星椭圆的轨道长轴
+        "obitB": 4.0  //轨道短轴
+      },
+      {
+        "name": "土卫二 Enceladus",
+        "radius": 0.04,
+        "textureS": "planets/P/textures/P/p006/",
+        "agl": 20,
+        "speed": 2,
+        "obitA": 6.0,
+        "obitB": 5.5
+      }
+    ]
+  },
+
+  "rings": {
+    "hasRings": true,
+    "textureImg": "public/images/textures/rings/saturn_ring.png",
+    "rIn": 6.5, //环内圈
+    "rOut": 7, //环外圈
+    "color": "",
+    "emissive": ""
+  },
+
+  "visuals": {
+    "radiusRatio": 9.45, //半径
+    "obliquity": 26.73, //倾角
+    "rotationSpeed": 0.035, //转速
+    "bumpImg": null
+  },
+
+  "brief":
+  "overview": 
+}
+
+现在需要你写代码实现今日星球和hero页星球基本一致的星球逻辑：卫星、轨道线（颜色灰白2种）、星环（如果没有卫星或星环，那么json里相应位置则是空的，那么星球里就不显示）。这是hero页的planet.js，请参考：
+// ==========================================================================
+// 1. 骨架与空间层级定义 (Layering Architecture)
+// ==========================================================================
+
+// 负责整体地轴倾斜的基座组 (21.5° 倾斜)
+export const tiltGroup = new THREE.Group();
+tiltGroup.rotation.z = (21.5 * Math.PI) / 180;
+
+// 【核心交互层】鼠标拖拽转动的组。
+// 因为卫星和星球系统都在它里面，所以鼠标转动星球时，卫星会优雅地同步公转！
+export const interactionGroup = new THREE.Group();
+tiltGroup.add(interactionGroup);
+
+// 【星球自转层】专门用来负责基础自转和 Landing 狂飙。
+// 把它和鼠标拖拽隔离，防止 Landing 动画乱滚，且独立自转不会拉着卫星一起转！
+export const planetSystem = new THREE.Group();
+interactionGroup.add(planetSystem);
+
+// ==========================================================================
+// 2. 主行星系统 (Main Planet)
+// ==========================================================================
+
+// --- 星球核心 ---
+const coreGeo = new THREE.SphereGeometry(4, 64, 64);
+const textureLoader = new THREE.TextureLoader();
+// 💡 天王星贴图路径
+const planetTexture = textureLoader.load(
+  "public/textures/hero/hat_p_12b_01.PNG",
+);
+
+const coreMat = new THREE.MeshStandardMaterial({
+  map: planetTexture,
+  roughness: 0.8,
+  metalness: 0.1,
+});
+
+export const planetCore = new THREE.Mesh(coreGeo, coreMat);
+planetSystem.add(planetCore); // 放入纯净的 planetSystem
+
+// 行星阴影
+// ✨行星产生阴影
+planetCore.castShadow = true;
+// 行星也接收卫星的阴影，不过卫星很小可以不加
+planetCore.receiveShadow = true;
+planetSystem.add(planetCore);
+
+// ==========================================
+// 2.5 星环 (Textured Ring System)
+// ==========================================
+
+// 1. 创建星环几何体（内径 6.5，外径 7.5）
+const ringGeo = new THREE.RingGeometry(6.5, 7.5, 64);
+
+// 2. 加载星环条纹贴图
+const ringTexture = textureLoader.load("public/textures/hero/ring02.png");
+
+// 3. 映射优化：将直线丝带图拉伸扭曲为完美同心圆
+const pos = ringGeo.attributes.position;
+const v3 = new THREE.Vector3();
+for (let i = 0; i < pos.count; i++) {
+  v3.fromBufferAttribute(pos, i);
+  const radius = v3.length();
+  const u = (radius - 6.5) / (7.5 - 6.5); // 修正错位，完美对齐 6.5 内径
+  ringGeo.attributes.uv.setXY(i, u, 0);
+}
+
+// 4. 配置高质感材质
+const ringMat = new THREE.MeshStandardMaterial({
+  color: 0xf0ffff, // 材质基础反射暗色
+  emissive: 0xd4f2e7, // ✨ 自发光颜色
+  emissiveIntensity: 0.2, // 🛠️ 亮度开关：觉得淡可调高至 1.5，刺眼可调低
+
+  alphaMap: ringTexture, // ✨ 仅让贴图控制条纹的镂空与疏密
+  transparent: true, // 开启透明支持
+  opacity: 1.0, // 整体不透明度上限
+
+  side: THREE.DoubleSide, // 双面渲染
+  shadowSide: THREE.DoubleSide, // 保证实时阴影也带有精致的条纹镂空
+  roughness: 0.4,
+  metalness: 0.1,
+});
+
+const ring = new THREE.Mesh(ringGeo, ringMat);
+ring.rotation.x = Math.PI / 2; // 星环躺平匹配赤道
+ring.castShadow = true; // 将星环自身的条纹影子投在行星表面
+ring.receiveShadow = true; // 接收行星投过来的巨大黑影
+
+planetSystem.add(ring); // 塞入内层自转加速组
+
+// ==========================================================================
+// 3. 卫星系统 (Satellite System)
+// ==========================================================================
+
+export const satelliteSystem = new THREE.Group();
+// 【参数】轨道平面倾角：卫星轨道和星球赤道的上下夹角
+satelliteSystem.rotation.x = (15 * Math.PI) / 180;
+// 【参数】轨道偏航角：改变椭圆轨道的长轴朝向
+satelliteSystem.rotation.y = (-20 * Math.PI) / 180;
+interactionGroup.add(satelliteSystem); // ✨ 重点：放入交互层，共享鼠标搓拽，但不参与星球自转
+
+// --- 卫星轨道线 (细椭圆) ---
+const orbitA = 6.0; // 长半轴
+const orbitB = 6.0; // 短半轴
+
+export const orbitCurve = new THREE.EllipseCurve(
+  0,
+  0,
+  orbitA,
+  orbitB,
+  0,
+  2 * Math.PI,
+  false,
+  0,
+);
+const orbitPoints = orbitCurve.getPoints(120);
+const orbitGeo = new THREE.BufferGeometry().setFromPoints(orbitPoints);
+const orbitMat = new THREE.LineBasicMaterial({
+  color: 0xffffff,
+  transparent: true,
+  opacity: 0.3,
+});
+const orbitLine = new THREE.Line(orbitGeo, orbitMat);
+orbitLine.rotation.x = Math.PI / 2; // 将椭圆平放
+satelliteSystem.add(orbitLine);
+
+// --- 卫星实体 ---
+const satGeo = new THREE.SphereGeometry(0.3, 32, 32);
+const satTex = textureLoader.load("public/textures/hero/ice_planet.png");
+const satMat = new THREE.MeshStandardMaterial({
+  map: satTex,
+  roughness: 0.9,
+  metalness: 0.1,
+});
+export const satelliteMesh = new THREE.Mesh(satGeo, satMat);
+satelliteSystem.add(satelliteMesh);
+
+// 卫星阴影
+// ✨卫星接收阴影
+satelliteMesh.receiveShadow = true;
+// ✨卫星产生阴影
+satelliteMesh.castShadow = true;
+satelliteSystem.add(satelliteMesh);
+
+
+
+

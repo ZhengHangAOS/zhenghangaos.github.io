@@ -1,0 +1,61 @@
+{
+  "id": "S001",
+  "name": "水星 Mercury",
+  "project": "planetary",
+  "galaxySystem": "太阳系",
+  "radius": 0.38,
+  "textureImg": "/planets/S/textures/s001/mercury.webp",
+  "character": "极寒极热的蔽日铁核",
+
+  "moons": {
+    "count": 0,
+    "satellites": []
+  },
+
+  "rings": {
+    "hasRings": false,
+    "textureImg": null
+  },
+
+  "pbr": null,
+
+  "visuals": {
+    "radiusRatio": 0.38,
+    "obliquity": 0.03,
+    "rotationSpeed": 38.65,
+    "thumb": "/planets/icon/solor/merc.webp",
+    "bumpImg": null
+  },
+
+  "brief": "距离太阳最近的类地行星。由于大气层极其稀薄，无法有效传导和保存热量，导致其表面经历了太阳系中最剧烈的昼夜温差。其表面布满了类似月球的密集撞击坑。",
+
+  "overview": {
+    "miniT": "-180 °C",
+    "maxT": "430 °C",
+    "Temp": "430",
+    "gravity": "0.4",
+    "moonCount": "0",
+    "atmos": "10e-15",
+    "rotationPeriod": "58.65",
+    "obliquity": "0.03°",
+    "orbitalSpeed": "47.36 km/s"
+  },
+
+  "highlights": [
+    {
+      "icon": "",
+      "title": "剧烈的昼夜温差",
+      "desc": "向阳面与背阳面温差高达 600°C"
+    },
+    {
+      "icon": "",
+      "title": "超大金属核心",
+      "desc": "铁质核心占整个行星体积的 85%"
+    },
+    {
+      "icon": "",
+      "title": "极速轨道公转",
+      "desc": "仅需 88 个地球日即可绕太阳一周"
+    }
+  ]
+}

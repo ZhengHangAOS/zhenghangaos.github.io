@@ -1,0 +1,60 @@
+{
+  "id": "S004.5",
+  "name": "谷神星 Ceres",
+  "project": "planetary",
+  "galaxySystem": "太阳系",
+  "radius": 0.08,
+  "textureImg": "/planets/S/textures/s004.5/Ceres.webp",
+  "character": "小行星带的冰水巨岩",
+
+  "moons": {
+    "count": 0,
+    "satellites": []
+  },
+
+  "rings": {
+    "hasRings": false,
+    "textureImg": null
+  },
+
+  "pbr": null,
+
+  "visuals": {
+    "obliquity": 4,
+    "rotationSpeed": 0.375,
+    "thumb": "/planets/icon/solor/ceres.webp",
+    "bumpImg": "/planets/S/textures/s004.5/Ceres_bump.webp"
+  },
+
+  "brief": "位于主小行星带内部的冰质矮行星，也是该区域唯一达到流体静力平衡的天体。其表面分布着富含盐类与水冰的亮斑、古老撞击盆地以及可能存在的地下冰层，暗示着这颗寒冷小世界曾经历长期的内部演化。",
+
+  "overview": {
+    "miniT": "-143 °C",
+    "maxT": "-38 °C",
+    "Temp": "-105",
+    "gravity": "0.028",
+    "moonCount": "0",
+    "atmos": "0",
+    "rotationPeriod": "0.375",
+    "obliquity": "4.0°",
+    "orbitalSpeed": "1680"
+  },
+
+  "highlights": [
+    {
+      "icon": "",
+      "title": "小行星带之王",
+      "desc": "占整个小行星带总质量的近三分之一"
+    },
+    {
+      "icon": "",
+      "title": "奥卡托陨坑亮斑",
+      "desc": "地表拥有富含碳酸钠的明亮高反射盐类沉积点"
+    },
+    {
+      "icon": "",
+      "title": "潜藏的冰岩水库",
+      "desc": "内部可能由岩石核心及含水冰的地幔层构成"
+    }
+  ]
+}

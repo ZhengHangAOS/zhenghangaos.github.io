@@ -1,0 +1,12 @@
+[
+  { "id": "S001", "file": "/planets/S/S001.json" },
+  { "id": "S002", "file": "/planets/S/S002.json" },
+  { "id": "S003", "file": "/planets/S/S003.json" },
+  { "id": "S004", "file": "/planets/S/S004.json" },
+  { "id": "S004.5", "file": "/planets/S/S004.5.json" },
+  { "id": "S005", "file": "/planets/S/S005.json" },
+  { "id": "S006", "file": "/planets/S/S006.json" },
+  { "id": "S007", "file": "/planets/S/S007.json" },
+  { "id": "S008", "file": "/planets/S/S008.json" },
+  { "id": "S009", "file": "/planets/S/S009.json" }
+]

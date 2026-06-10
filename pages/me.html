@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/public/images/hpg/about.png" />
+    <title>AboutMe - AOSlab</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/src/css/base/reset.css" />
+    <link rel="stylesheet" href="/src/css/base/variables.css" />
+    <link rel="stylesheet" href="/src/css/base/global.css" />
+    <link rel="stylesheet" href="/src/css/effects/glass.css" />
+    <link rel="stylesheet" href="/src/css/components/buttons.css" />
+
+    <link rel="stylesheet" href="/src/css/components/navbar.css" />
+
+    <link rel="stylesheet" href="/src/css/layout/me.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  </head>
+  <body>
+    <nav class="home-nav">
+      <div class="nav-left"></div>
+
+      <div class="nav-right">
+        <div class="nav-bar glass">
+          <div
+            class="btn-circle"
+            data-tooltip="Home"
+            onclick="window.location.href = '/homepage.html'"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/hpg.webp" alt="Home" />
+          </div>
+          <div
+            class="btn-circle"
+            data-tooltip="Explore"
+            onclick="window.location.href = '/pages/explore.html'"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/expl.webp" alt="Explore" />
+          </div>
+          <div
+            class="btn-circle"
+            data-tooltip="Library"
+            onclick="window.location.href = '/pages/library.html'"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/tsg.webp" alt="Library" />
+          </div>
+
+          <div
+            class="btn-circle"
+            id="launch-btn"
+            data-tooltip="To Space"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/landing.webp" alt="Launch" />
+          </div>
+        </div>
+
+        <div class="controls">
+          <div
+            class="btn-circle glass"
+            id="theme-toggle"
+            style="cursor: pointer"
+          >
+            <svg
+              id="icon-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- =========================== 主栏目 =========================== -->
+
+    <main class="me-layout">
+      <!-- ------------------------------------ 左栏 ------------------------------------ -->
+      <aside class="profile-sidebar">
+        <!-- ------ 头像 & 宠物 ------- -->
+        <div
+          class="avatar-container"
+          style="position: relative; display: inline-block"
+        >
+          <div class="web-pet" id="my-pet">
+            <div class="pet-bubble">宠物：Om Nom</div>
+            <img src="/public/images/pet/omnom01.gif" alt="Om Nom" />
+          </div>
+          <img
+            src="/public/images/touxiang/touxiang.webp"
+            alt="Avatar"
+            class="profile-avatar"
+          />
+        </div>
+        <h1 class="profile-name">Zhenghang Liu</h1>
+        <h3 class="profile-title">Undergraduate</h3>
+        <p class="profile-univ">
+          <a
+            href="https://aos.fudan.edu.cn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Department of AOS, Fudan University
+          </a>
+        </p>
+
+        <!-- ------ 社交链接 ------- -->
+
+        <div class="social-links">
+          <a
+            href="mailto:liuzhenghang8@gmail.com"
+            data-tooltip="liuzhenghang8@gmail.com"
+          >
+            <i class="fa-regular fa-envelope"></i>
+          </a>
+
+          <a
+            href="https://maps.google.com/?q=Shanghai,China"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-tooltip="Shanghai, China"
+          >
+            <i class="fa-solid fa-location-dot"></i>
+          </a>
+
+          <a
+            href="https://github.com/ZhengHangAOS"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-tooltip="My GitHub profile"
+          >
+            <i class="fa-brands fa-github"></i>
+          </a>
+
+          <a
+            href="https://xhslink.com/m/6HHLfFSEyDS"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-tooltip="Rednote 小红书"
+          >
+            <i class="fa-solid fa-book"></i>
+          </a>
+        </div>
+
+        <!-- ------ 研究兴趣 ------- -->
+
+        <div class="interest-card glass">
+          <h4 class="card-title">Research Interest</h4>
+          <ul class="interest-list">
+            <li>Planetary Atmospheric & Oceanic Dynamics</li>
+            <li>Mid-High Latitude Circulation</li>
+            <li>Atmosphere-Ocean interaction</li>
+          </ul>
+        </div>
+
+        <!-- ------ publication ------- -->
+
+        <div
+          class="link-card glass"
+          onclick="
+            window.location.href =
+              '/article.html?path=/docs/research/publication.md'
+          "
+          style="cursor: pointer"
+        >
+          <div class="link-card-icon">
+            <img src="/public/images/icon/me/pub.webp" alt="Pub Icon" />
+          </div>
+          <div class="link-card-content">
+            <h4 class="card-title">Publication</h4>
+          </div>
+        </div>
+
+        <!-- ------ 相册 ------- -->
+
+        <div
+          class="link-card glass"
+          onclick="window.location.href = '/gallery/gallery.html'"
+          style="cursor: pointer"
+        >
+          <div class="link-card-icon">
+            <img src="/gallery/glry.webp" alt="Gallery Icon" />
+          </div>
+          <div class="link-card-content">
+            <h4 class="card-title">Gallery</h4>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ------------------------------------ 右栏 ------------------------------------ -->
+
+      <section class="content-area">
+        <!-- ------ about ------- -->
+        <div class="section-block">
+          <h2 class="section-title">About</h2>
+          <div class="about-text">
+            <p>
+              Hello！我是一名热爱大气科学与流体力学的大学生、初级研究者。在这里，
+              我通过代码与设计构建了一座属于我自己的“数字化空间站”。我热衷于探索不同行星环境下的大气、气候与海洋，
+              也喜欢将晦涩难懂的科学数据转化为具有美感的可视化作品。
+            </p>
+          </div>
+        </div>
+
+        <!-- ------ skill ------- -->
+        <div class="section-block">
+          <h2 class="section-title">Skills</h2>
+          <div class="skills-card glass">
+            <p>
+              <strong>分析建模：</strong> Python
+              ，气象数据分析；Fortran，COMSOL，WRF
+            </p>
+            <p>
+              <strong>人工智能：</strong>
+              基本的机器学习方法，如随机森林、MLP、CNN；气象大模型的使用
+            </p>
+            <p>
+              <strong>开发设计：</strong>
+              基础的前端开发技巧，html，css，JavaScript
+            </p>
+          </div>
+        </div>
+
+        <!-- ------ 研究经历 ------- -->
+        <div class="section-block">
+          <h2 class="section-title">Research</h2>
+
+          <!-- 卡片 1 -->
+          <div
+            class="exp-card glass"
+            onclick="
+              window.location.href = '/article.html?path=/docs/research/r01.md'
+            "
+          >
+            <h3 class="exp-title">
+              北极与青藏高原放大效应对东亚极端低温的协同作用
+            </h3>
+            <p class="exp-desc">
+              基于合成分析与多元回归，构建放大指数并建立其与极端低温的统计联系。
+              识别出线性叠加与非线性协同两种关键作用机制，为理解气候变暖下极端天气的变化提供有力证据。
+            </p>
+          </div>
+
+          <!-- 卡片 2 -->
+          <div
+            class="exp-card glass"
+            onclick="
+              window.location.href = '/article.html?path=/docs/research/r02.md'
+            "
+          >
+            <h3 class="exp-title">
+              冬季巴伦支-喀拉海增暖对欧亚中高纬温度梯度的影响
+            </h3>
+            <p class="exp-desc">
+              系统分析了 BKS 增暖对欧亚温度梯度及大尺度环流背景的调制作用。
+              揭示“增暖—梯度减弱—急流变化—斜压不稳定”的链条，阐明了北极对中纬度天气系统的远程强迫机制。
+            </p>
+          </div>
+
+          <!-- 卡片 3 -->
+          <div
+            class="exp-card glass"
+            onclick="
+              window.location.href = '/article.html?path=/docs/research/r03.md'
+            "
+          >
+            <h3 class="exp-title">
+              极地涡旋的PV梯度结构与非线性稳定性阈值研究
+            </h3>
+            <p class="exp-desc">
+              利用 2D QG
+              模型构建理想化极地涡旋，探讨PV边界梯度强度对涡旋稳定性的控制作用。
+              刻画出“稳定振荡—整体位移—结构破裂”三种动力响应模态在参数空间中的转变边界。
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!--全局主题管理-->
+    <script src="/src/js/global/theme.js"></script>
+    <script src="/src/js/global/launch.js" defer></script>
+    <script type="module" src="/src/js/me/app.js"></script>
+  </body>
+</html>

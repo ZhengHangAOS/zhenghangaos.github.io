@@ -1,0 +1,108 @@
+{
+  "id": "S005",
+  "name": "木星 Jupiter",
+  "project": "planetary",
+  "galaxySystem": "太阳系",
+  "radius": 11.21,
+  "textureImg": "/planets/S/textures/s005/jupiter_map.webp",
+  "character": "风暴肆虐的流体巨球",
+
+  "moons": {
+    "count": 2,
+    "satellites": [
+      {
+        "name": "木卫二 Europa",
+        "radius": 0.25,
+        "textureS": "/planets/S/textures/s005/europa.jpeg",
+        "speed": 3.6,
+        "obitA": 15,
+        "obitB": 16,
+        "brief": "这颗卫星的表面被厚厚的冰壳包裹，呈现出纵横交错的冰裂缝。科学界普遍认为，在冰壳之下隐藏着一个巨大的全球性液态水海洋，其含水量可能超过地球的总和，是寻找地外生命的热门目标。",
+        "aglx": 10,
+        "agly": 0,
+        "aglz": 0
+      },
+      {
+        "name": "木卫一 Io",
+        "radius": 0.29,
+        "textureS": "/planets/S/textures/s005/io.webp",
+        "brief": "它是太阳系中火山活动最剧烈的天体。受到木星和周围卫星极强的引力潮汐撕扯，它的内部被剧烈加热，表面分布着数百座喷发硫磺与硅酸盐熔岩的活火山，地表呈现出独特的“披萨饼”色。",
+        "speed": 1.8,
+        "obitA": 14.5,
+        "obitB": 14.2,
+
+        "aglx": 20,
+        "agly": 20,
+        "aglz": 0
+      },
+      {
+        "name": "木卫三 Ganymede",
+        "radius": 0.41,
+        "textureS": "/planets/S/textures/s005/ganymede.webp",
+        "speed": 7.2,
+        "obitA": 16.5,
+        "obitB": 16.1,
+        "brief": "太阳系中体积最大的卫星，甚至比八大行星中的水星还要大。它是目前已知唯一一颗拥有自发偶极磁场的卫星，内部同样可能拥有夹在不同冰层之间的次表层海洋。",
+        "aglx": 38,
+        "agly": 38,
+        "aglz": 38
+      },
+      {
+        "name": "木卫四 Callisto",
+        "radius": 0.38,
+        "textureS": "/planets/S/textures/s005/callisto.webp",
+        "speed": 16.7,
+        "obitA": 18.5,
+        "obitB": 18.0,
+        "brief": "它是太阳系中受撞击坑密度最高的天体。由于缺乏地质活跃性，它的表面几乎完整保留了数十亿年前太阳系早期的撞击历史，被称为太阳系的“远古活化石”。",
+
+        "aglx": 5,
+        "agly": 0,
+        "aglz": 0
+      }
+    ]
+  },
+
+  "rings": {
+    "hasRings": false
+  },
+
+  "visuals": {
+    "obliquity": 3.13,
+    "rotationSpeed": 0.41,
+    "thumb": "/planets/icon/solor/jpt.webp",
+    "bumpImg": null
+  },
+
+  "brief": "太阳系最大的气态巨行星，其深厚氢氦大气中分布着壮丽的纬向急流与巨大风暴系统。持续数百年的“大红斑”是行星流体动力学最宏伟的天然实验室之一。",
+
+  "overview": {
+    "miniT": "-145 °C",
+    "maxT": "-108 °C",
+    "Temp": "-145",
+    "gravity": "2.53",
+    "moonCount": "95",
+    "atmos": "1",
+    "rotationPeriod": "0.41",
+    "obliquity": "3.13°",
+    "orbitalSpeed": "4333"
+  },
+
+  "highlights": [
+    {
+      "icon": "",
+      "title": "世纪大红斑",
+      "desc": "肆虐数百年的超级气旋"
+    },
+    {
+      "icon": "",
+      "title": "巨型气态行星",
+      "desc": "质量是太阳系其他行星总和的 2.5 倍"
+    },
+    {
+      "icon": "",
+      "title": "庞大的卫星帝国",
+      "desc": "拥有近百颗卫星，木卫二冰层下疑有液体海洋"
+    }
+  ]
+}

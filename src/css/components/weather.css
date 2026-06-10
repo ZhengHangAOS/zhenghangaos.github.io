@@ -1,0 +1,160 @@
+/* ================= 布局与提示框 ================= */
+.weather-wrapper,
+.landing-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: max-content;
+}
+
+.weather-widget {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* 从 20px 缩小到 12px，让文字和图标更紧凑 */
+  padding: 6px 16px; /* 从 8px 20px 稍微缩减，让胶囊框更精致 */
+  border-radius: 30px;
+  cursor: auto;
+}
+
+.weather-widget:hover,
+.landing-btn:hover {
+  transform: scale(1.08); /* 悬停轻微放大 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 统一的提示框 (Tooltip) */
+.tooltip {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -35px;
+  font-size: 12px;
+  opacity: 0;
+  background: var(--glass-bg);
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.weather-wrapper:hover .tooltip,
+.landing-wrapper:hover .tooltip {
+  opacity: 1;
+}
+
+/* ================= 自定义天气图片容器 ================= */
+/* 1. 调整外壳尺寸，配合导航栏 48px 的圆圈按钮 */
+.weather-icon-container {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: float-icon 3s ease-in-out infinite;
+  /* position: relative; */ /* 保底防溢出 */
+}
+
+/* 2. 图片大小 */
+.weather-icon-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain; /* 保证图片不变形 */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4)); /* 阴影也稍微收敛一点 */
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 3. 悬停放大倍数 */
+.weather-widget:hover .weather-icon-img {
+  transform: scale(1.25) translateY(-2px) !important;
+}
+
+@keyframes float-icon {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.weather-temp {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.weather-desc {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* ================= 底部堆积特效 (积水、雪、落叶、底云) ================= */
+#weather-bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+}
+#weather-ground {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 150px;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 积水涟漪 (更明显) */
+.splash-ring {
+  position: absolute;
+  bottom: 20px;
+  width: 30px;
+  height: 10px;
+  border: 2px solid rgba(176, 196, 222, 0.8);
+  border-radius: 50%;
+  transform: rotateX(75deg);
+  animation: ripple 1s ease-out forwards;
+}
+@keyframes ripple {
+  0% {
+    transform: rotateX(75deg) scale(0);
+    opacity: 1;
+    border-width: 3px;
+  }
+  100% {
+    transform: rotateX(75deg) scale(4);
+    opacity: 0;
+    border-width: 0px;
+  }
+}
+
+/* 冰雹堆 */
+.hail-pile {
+  position: absolute;
+  bottom: 10px;
+  width: 8px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  animation: hail-stay 3s ease-out forwards;
+}
+@keyframes hail-stay {
+  0% {
+    opacity: 1;
+    transform: scale(0.5);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,25 @@
+现在做about me页面，代码都放在/pages/me/目录
+## 顶部：
+只保留主页导航栏里的：起飞按钮+四个图标bar+黑白切换按钮
+页面要适配黑白主题，与主页的逻辑一致；
+
+## 左栏：
+圆形大头像，有颜色边框
+名字（加粗黑色）
+student（橙色）
+University（灰色）
+一栏小icon，依次是邮件、位置、GitHub、Google，点击将至对应链接；
+下面是一个小卡片（方向，小圆角）：Research Interest（黑色标题）
+Planetary Atmosphere
+Mid-High Latitude Circulation
+Atmosphere-Ocean interaction
+
+## 右栏（比左栏宽）
+关于我 About （这部分无卡片）
+内容 
+
+技能 Skills（标题）
+内容（一个卡片）
+
+研究经历（标题）
+每项一个卡片：黑色标题+下面灰色内容，可点击进入。

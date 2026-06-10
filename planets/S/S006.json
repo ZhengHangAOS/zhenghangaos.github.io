@@ -1,0 +1,88 @@
+{
+  "id": "S006",
+  "name": "土星 Saturn",
+  "project": "planetary",
+  "galaxySystem": "太阳系",
+  "radius": 9.45,
+  "textureImg": "/planets/S/textures/s006/saturn_map.webp",
+  "character": "绝美星环的气体星球",
+
+  "moons": {
+    "count": 2,
+    "satellites": [
+      {
+        "name": "土卫六 Titan",
+        "radius": 0.5,
+        "textureS": "/planets/S/textures/s006/titan.webp",
+        "speed": 16,
+        "obitA": 18.5,
+        "obitB": 18.5,
+        "brief": "太阳系中唯一拥有浓厚大气层的卫星（成分以氮气为主）。由于表面温度极低，它形成了以液态甲烷和乙烷为主体的河流、湖泊与降雨，拥有极其独特的低热碳氢化合物循环。",
+
+        "aglx": 5,
+        "agly": 0,
+        "aglz": 0
+      },
+      {
+        "name": "土卫二 Enceladus",
+        "radius": 0.3,
+        "textureS": "/planets/S/textures/s006/enceladus.webp",
+        "speed": 1.5,
+        "obitA": 16.5,
+        "obitB": 16,
+        "brief": "这是一颗高反射率的白色冰雪世界。它的南极地区存在剧烈的冰火山喷发，直接将地下海洋的地下水和有机物碎屑喷射到太空中。这些喷发物也是土星外围“E环”的主要物质来源。",
+
+        "aglx": 20,
+        "agly": 0,
+        "aglz": 20
+      }
+    ]
+  },
+
+  "rings": {
+    "hasRings": true,
+    "colorMap": "/planets/S/textures/s006/saturnringcolor.jpg",
+    "alphaMap": "/planets/S/textures/s006/saturnringpattern.gif",
+    "rIn": 11.5,
+    "rOut": 16,
+    "color": "#837c70",
+    "emissive": "8c8c7c"
+  },
+
+  "visuals": {
+    "obliquity": 26.73,
+    "rotationSpeed": 0.45,
+    "thumb": "/planets/icon/solor/saturn.webp",
+    "bumpImg": null
+  },
+
+  "brief": "著名的气态巨行星，拥有太阳系中最壮观、最宽广的深邃星环系统。土星密度极低，其高层大气在强烈的内源热能驱动下，呈现出平行于赤道的明暗条带流体动力学特征。",
+
+  "overview": {
+    "Temp": "-139",
+    "gravity": "1.25",
+    "moonCount": "146",
+    "atmos": "1.4",
+    "rotationPeriod": "0.45",
+    "obliquity": "26.73°",
+    "orbitalSpeed": "0.45"
+  },
+
+  "highlights": [
+    {
+      "icon": "",
+      "title": "璀璨的水冰星环",
+      "desc": "由无数冰块岩石颗粒组成的巨大星环"
+    },
+    {
+      "icon": "",
+      "title": "小于水的密度",
+      "desc": "若有足够大的海洋它能漂浮起来"
+    },
+    {
+      "icon": "",
+      "title": "超音速六角风暴",
+      "desc": "北极圈存在一个持久的六角形几何风暴系统"
+    }
+  ]
+}

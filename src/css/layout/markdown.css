@@ -1,0 +1,341 @@
+/* ==========================================================================
+   📝 MARKDOWN CORE RENDER ENGINE (独立正文排版引擎)
+   ========================================================================== */
+
+/* 字体支持 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap");
+
+:root,
+[data-theme="light"] {
+  --border-line: rgba(26, 42, 58, 0.2);
+}
+[data-theme="dark"] {
+  --border-line: rgba(255, 255, 255, 0.2);
+}
+
+/* 🚀 1. 核心骨架 */
+.markdown-body {
+  padding: 60px 50px 40px 50px;
+  margin-top: -90px;
+  margin-left: 10px;
+
+  border-radius: 10px;
+  background: var(--gls-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  color: var(--text-color);
+  transform: none;
+
+  font-family:
+    "Noto Serif SC", "Georgia", "Cambria", "Times New Roman", "PingFang SC",
+    "Songti SC", "SimSun", serif !important;
+  font-size: 16.5px !important;
+  line-height: 1.55 !important; /* 行高/行间距，字号的倍数 */
+  letter-spacing: 0.03em !important; /* 字间距 */
+  word-wrap: break-word;
+
+  /* 抗锯齿高质感优化 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 🚀 2. 核心修正：确保正文区域文本绝对可供鼠标选择/复制 */
+.markdown-body,
+.markdown-body * {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* 🚀 3. 段落与通用文本流 */
+.markdown-body p {
+  margin-top: 0 !important;
+  margin-bottom: 0.4rem !important; /* 间距 */
+  text-align: justify !important; /* 左右对齐，印刷品级排版 */
+}
+
+.markdown-body a {
+  color: #3b82f6 !important; /* 经典学术蓝 */
+  text-decoration: none !important;
+  border-bottom: 1px dashed rgba(59, 130, 246, 0.4);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease !important;
+}
+
+.markdown-body a:hover {
+  color: #2563eb !important;
+  border-bottom-style: solid;
+}
+
+.markdown-body strong {
+  font-weight: 600 !important;
+  color: var(--text-color) !important;
+}
+
+.markdown-body em {
+  font-style: italic !important;
+  opacity: 0.9;
+}
+
+/* 🚀 4. 标题层级系统（遵循“上疏下紧”原则，建立清晰阅读骨架） */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans SC",
+    "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif !important;
+  color: var(--text-color) !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  margin-top: 1.2rem !important; /* 离上文远一点 */
+  margin-bottom: 0.8rem !important; /* 离统治的下文近一点 */
+}
+
+.markdown-body h1 {
+  font-size: 2.1rem !important;
+  border-bottom: 1px solid var(--border-line);
+  padding-bottom: 0.4rem !important;
+}
+.markdown-body h2 {
+  font-size: 1.5rem !important;
+  border-bottom: 0.5px solid var(--border-line);
+  padding-bottom: 0.3rem;
+}
+.markdown-body h3 {
+  font-size: 1.25rem !important;
+  margin-top: 0.5rem !important; /* 离上文远一点 */
+  margin-bottom: 0.2rem !important; /* 离统治的下文近一点 */
+}
+.markdown-body h4 {
+  font-size: 1.1rem !important;
+}
+
+/* 消除紧跟在容器开头的标题的多余顶部间距 */
+.markdown-body > *:first-child {
+  margin-top: 0 !important;
+}
+
+/* 🚀 5. 列表系统（无序、有序、任务列表） */
+.markdown-body ul,
+.markdown-body ol {
+  margin-top: 0 !important;
+  margin-bottom: 1.25rem !important;
+  padding-left: 2em !important;
+}
+
+.markdown-body li {
+  margin-bottom: 0.5rem !important; /* 让列表条目之间有呼吸空间 */
+}
+
+.markdown-body li > ul,
+.markdown-body li > ol {
+  margin-top: 0.4rem !important;
+  margin-bottom: 0 !important;
+}
+
+/* 任务列表样式微调 */
+.markdown-body .task-list-item {
+  list-style-type: none !important;
+  padding-left: 0 !important;
+}
+.markdown-body .task-list-item input {
+  margin-right: 0.5em !important;
+}
+
+/* 🚀 6. 高级引用块（Blockquote - 严谨科研感） */
+.markdown-body blockquote {
+  margin: 1.5rem 0 !important;
+  padding: 0.6rem 1.2rem !important;
+  background: rgba(
+    var(--text-color-rgb, 120, 120, 120),
+    0.03
+  ) !important; /* 极淡底色阴影 */
+  border-left: 4px solid #3b82f6 !important; /* 左侧高亮学术蓝竖线 */
+  border-radius: 0 8px 8px 0 !important;
+}
+
+.markdown-body blockquote p {
+  margin-bottom: 0 !important; /* 消除内部多余间距 */
+  color: var(--text-color) !important;
+  opacity: 0.85 !important;
+}
+
+/* 🚀 7. 行内变量与代码块（极客代码质感） */
+/* 行内单独立体变量/代码 */
+.markdown-body :not(pre) > code {
+  font-family: "Fira Code", Consolas, Monaco, monospace !important;
+  background-color: rgba(var(--text-color-rgb, 120, 120, 120), 0.08) !important;
+  color: #e06c75 !important; /* 优雅的暗淡朱红变量色 */
+  padding: 0.2em 0.4em !important;
+  border-radius: 4px !important;
+  font-size: 0.9em !important;
+  word-break: break-word !important;
+}
+
+/* 行间整段代码块包裹器 */
+.markdown-body pre {
+  margin-top: 0 !important;
+  margin-bottom: 1.5rem !important;
+  padding: 1rem !important;
+  overflow: auto !important;
+  background: rgba(0, 0, 0, 0.04) !important; /* 配合你全站的玻璃板底色 */
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 8px !important;
+}
+
+/* 暗黑模式下代码块底色微调 */
+[data-theme="dark"] .markdown-body pre {
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+.markdown-body pre code {
+  font-family: "Fira Code", Consolas, Monaco, monospace !important;
+  font-size: 0.88rem !important;
+  color: inherit !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+}
+
+/* 🚀 8. 科技数据表格（三线表结构演进版） */
+.markdown-body table {
+  display: block !important;
+  width: 100% !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  overflow: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 1.5rem !important;
+  border-collapse: collapse !important;
+}
+
+.markdown-body th {
+  font-weight: 600 !important;
+  background-color: rgba(var(--text-color-rgb, 120, 120, 120), 0.06) !important;
+}
+
+.markdown-body th,
+.markdown-body td {
+  padding: 8px 16px !important;
+  border: 1px solid var(--glass-border) !important;
+}
+
+.markdown-body tr:nth-child(2n) {
+  background-color: rgba(
+    var(--text-color-rgb, 120, 120, 120),
+    0.015
+  ) !important; /* 隔行斑马线纹理 */
+}
+
+/* 🚀 9. 图片与分割线 + 图表 Caption 特效 */
+.markdown-body img {
+  max-width: 100% !important;
+  box-sizing: content-box !important;
+  border-radius: 8px !important;
+  margin: 1.5rem auto 0.5rem auto !important;
+  display: block !important;
+
+  /* 基础微弱阴影（白天/黑夜通用，或可使用你的主题变量） */
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.1) !important;
+
+  /* 🚀 核心增加：为形变和阴影添加 0.3 秒的丝滑过渡效果 */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease !important;
+  cursor: pointer; /* 💡 选填：鼠标放上去变成放大镜图标，符合科研博客看大图的习惯 */
+}
+
+/* 2. 🚀 核心增加：Hover 悬浮状态 */
+.markdown-body img:hover {
+  transform: scale(1.02) !important;
+  box-shadow: 5 5px 6px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 💡 精准捕捉图片的 Caption。
+   标准的 Markdown 渲染图片描述通常会生成在标签附近、或者作为特定类名呈现。
+   这里同时兼容常见的 <figcaption> 标签以及紧跟在图片后用作说明的强调文本。
+*/
+.markdown-body figcaption,
+.markdown-body img + em,
+.markdown-body p.caption {
+  display: block !important;
+  text-align: center !important;
+  /* 🚀 图注完美锁定楷体，字号缩小，颜色变浅，拉开呼吸感 */
+  font-family: "Kaiti", "STKaiti", "华文楷体", "KaiTi_GB2312", serif !important;
+  font-size: 0.88rem !important;
+  color: var(--text-color) !important;
+  opacity: 0.75 !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.markdown-body hr {
+  height: 1px !important;
+  padding: 0 !important;
+  margin: 2rem 0 !important;
+  background-color: var(--glass-border) !important;
+  border: 0 !important;
+  opacity: 0.6 !important;
+}
+
+/* 🚀 10. 完美多端响应式间距安全网 */
+@media (max-width: 1024px) {
+  .markdown-body {
+    font-size: 15.5px !important; /* 稍微压缩字号提高小屏信息密度 */
+    line-height: 1.45 !important; /* 行高/行间距，字号的倍数 */
+    letter-spacing: 0.03em !important; /* 字间距 */
+  }
+}
+
+@media (max-width: 640px) {
+  .markdown-body {
+    font-size: 15px !important;
+  }
+  .markdown-body h1 {
+    font-size: 1.75rem !important;
+  }
+  .markdown-body h2 {
+    font-size: 1.45rem !important;
+  }
+  .markdown-body h3 {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* ======================= 代码块优化====================== */
+
+/* 🚀 锁死 MathJax / KaTeX 渲染出的块级公式容器 */
+.katex-display,
+.MathJax_Display,
+.mathjax-block {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto !important; /* 核心：公式太长时，在卡片内部出现横向滚动条，拒绝撑开外层卡片 */
+  overflow-y: hidden;
+  padding: 10px 0;
+
+  font-size: 0.87em;
+
+  /* 滚动条 */
+  scrollbar-width: thin;
+}
+
+/* 针对 Webkit 浏览器的滚动条轻量化 */
+.katex-display::-webkit-scrollbar,
+.MathJax_Display::-webkit-scrollbar {
+  height: 4px;
+}
+.katex-display::-webkit-scrollbar-thumb,
+.MathJax_Display::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}

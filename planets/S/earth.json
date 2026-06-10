@@ -1,0 +1,61 @@
+{
+  "id": "E001",
+  "name": "地球 EARTH",
+  "galaxySystem": "太阳系",
+  "character": "蓝绿色的生命家园",
+  "brief": "地球是距离太阳第三近的行星，也是目前已知唯一孕育和支持生命的天体。",
+  "mdFile": "planets/SolarSystem/markdown/earth.md",
+
+  "radius": 1,
+
+  "pbr": {
+    "clmap": "planets/SolarSystem/texture/earth_color.jpg",
+    "nmmap": "planets/SolarSystem/texture/earth_normal.jpg",
+    "rnmap": "planets/SolarSystem/texture/earth_roughness.jpg"
+  },
+
+  "visuals": {
+    "obliquity": 23.5,
+    "rotationSpeed": 1.0
+  },
+
+  "rings": {
+    "hasRings": false
+  },
+
+  "moons": {
+    "count": 1,
+    "satellites": [
+      {
+        "name": "Luna",
+        "radius": 1.0,
+        "textureS": "planets/SolarSystem/texture/moon_",
+        "agl": 5.14,
+        "speed": 27.3,
+        "obitA": 8.0,
+        "obitB": 8.0
+      }
+    ]
+  },
+
+  "overviewData": {
+    "gravity": 1.0,
+    "atm": 1.0,
+    "Temp": 15,
+    "maxT": 56.7,
+    "minT": -89.2
+  },
+
+  "highlights": [
+    {
+      "icon": "public/images/icon/water.png",
+      "title": "广阔的表面海洋",
+      "desc": "表面 71% 被水覆盖"
+    },
+    {
+      "icon": "public/images/icon/life.png",
+      "title": "生物圈循环",
+      "desc": "富含氧气，数十亿年光合作用累积"
+    }
+  ]
+}

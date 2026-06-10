@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library - AOSlab</title>
+    <link rel="icon" href="/public/images/icon/tsg.webp" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <link rel="stylesheet" href="/src/css/base/reset.css" />
+    <link rel="stylesheet" href="/src/css/base/variables.css" />
+    <link rel="stylesheet" href="/src/css/base/global.css" />
+    <link rel="stylesheet" href="/src/css/effects/glass.css" />
+    <link rel="stylesheet" href="/src/css/components/buttons.css" />
+    <link rel="stylesheet" href="/src/css/components/navbar.css" />
+
+    <script src="/src/js/global/theme.js"></script>
+    <link rel="stylesheet" href="/src/css/layout/library.css" />
+    <script src="/src/js/global/launch.js" defer></script>
+    <script src="/src/js/library/app.js" defer></script>
+  </head>
+  <body>
+    <nav class="home-nav">
+      <div class="nav-left">
+        <img
+          src="/public/images/icon/tsg.webp"
+          alt="Library Icon"
+          class="nav-icon-img"
+        />
+        <span>Library Notebooks</span>
+      </div>
+
+      <div class="nav-right">
+        <div class="nav-bar glass">
+          <div
+            class="btn-circle"
+            data-tooltip="Home"
+            onclick="window.location.href = '/homepage.html'"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/hpg.webp" alt="Home" />
+          </div>
+          <div
+            class="btn-circle"
+            data-tooltip="Explore"
+            onclick="window.location.href = '/pages/explore.html'"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/expl.webp" alt="Explore" />
+          </div>
+
+          <div
+            class="btn-circle"
+            id="launch-btn"
+            data-tooltip="To Space"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/landing.webp" alt="Launch" />
+          </div>
+        </div>
+
+        <div class="controls">
+          <div
+            class="btn-circle glass"
+            id="theme-toggle"
+            style="cursor: pointer"
+          ></div>
+
+          <div
+            class="avatar-btn"
+            style="
+              background-image: url(&quot;/public/images/touxiang/touxiang.webp&quot;);
+            "
+            onclick="window.location.href = '/pages/me.html'"
+          ></div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="library-container">
+      <header class="library-header">
+        <h1 class="library-intro">
+          Exploring atmospheric dynamics and ocean currents through numerical
+          notebooks.
+        </h1>
+      </header>
+
+      <section class="library-grid">
+        <a
+          href="/article.html?path=/docs/nb_AtmoDyn/01/note.md"
+          class="notebook-card glass"
+        >
+          <div class="card-img-wrapper">
+            <img
+              src="/public/images/"
+              alt="Atmospheric Dynamics"
+              onerror="
+                this.onerror = null;
+                this.src = '/public/images/default/fig00.webp';
+              "
+            />
+          </div>
+          <div class="card-content">
+            <h2 class="card-title">大气动力笔记</h2>
+            <p class="card-desc">描述</p>
+            <button
+              class="catalog-btn"
+              data-catalog="/docs/nb_AtmoDyn/index.json"
+            >
+              <i class="fa-solid fa-list-ul"></i> 目录
+            </button>
+          </div>
+        </a>
+
+        <a
+          href="/pages/article.html?path=/docs/nb_DeepLearning/01/note.md"
+          class="notebook-card glass"
+        >
+          <div class="card-img-wrapper">
+            <img
+              src=""
+              alt="Climatology Note"
+              onerror="
+                this.onerror = null;
+                this.src = '/public/images/default/fig00.webp';
+              "
+            />
+          </div>
+          <div class="card-content">
+            <h2 class="card-title">气候学笔记</h2>
+            <p class="card-desc">收录气候学知识的笔记</p>
+
+            <button class="catalog-btn" data-catalog="/docs/nb_/index.json">
+              <i class="fa-solid fa-list-ul"></i> 目录
+            </button>
+          </div>
+        </a>
+
+        <a
+          href="/article.html?path=/docs/nb_Syno/01/note.md"
+          class="notebook-card glass"
+        >
+          <div class="card-img-wrapper">
+            <img
+              src=""
+              alt="Synoptic Meteorology"
+              onerror="
+                this.onerror = null;
+                this.src = '/public/images/default/fig00.webp';
+              "
+            />
+          </div>
+          <div class="card-content">
+            <h2 class="card-title">天气学笔记</h2>
+            <p class="card-desc">收录天气学知识笔记</p>
+
+            <button class="catalog-btn" data-catalog="/docs/nb_Syno/index.json">
+              <i class="fa-solid fa-list-ul"></i> 目录
+            </button>
+          </div>
+        </a>
+
+        <a
+          href="/pages/article.html?path=/docs/research/publication.md"
+          class="notebook-card glass"
+        >
+          <div class="card-img-wrapper">
+            <img
+              src=""
+              alt="Research & Publications"
+              onerror="
+                this.onerror = null;
+                this.src = '/public/images/default/fig00.webp';
+              "
+            />
+          </div>
+          <div class="card-content">
+            <h2 class="card-title">文献笔记 A</h2>
+            <p class="card-desc">行星大气文献笔记。</p>
+
+            <button class="catalog-btn" data-catalog="/docs/nb_/index.json">
+              <i class="fa-solid fa-list-ul"></i> 目录
+            </button>
+          </div>
+        </a>
+
+        <a
+          href="/article.html?path=/docs/nb_Test/01/note.md"
+          class="notebook-card glass"
+        >
+          <div class="card-img-wrapper">
+            <img
+              src=""
+              alt="Test Notebook"
+              onerror="
+                this.onerror = null;
+                this.src = '/public/images/default/fig00.webp';
+              "
+            />
+          </div>
+          <div class="card-content">
+            <h2 class="card-title">测试笔记本</h2>
+            <p class="card-desc">用于网站显示测试</p>
+            <button class="catalog-btn" data-catalog="/docs/nb_Test/index.json">
+              <i class="fa-solid fa-list-ul"></i> 目录
+            </button>
+          </div>
+        </a>
+
+        <div id="catalog-sidebar" class="catalog-sidebar">
+          <div class="sidebar-header">
+            <h3>Notebook Contents</h3>
+            <button id="sidebar-close">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <ul id="catalog-list" class="catalog-list"></ul>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

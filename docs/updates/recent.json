@@ -1,0 +1,50 @@
+[
+  {
+    "imgSrc": "",
+    "title": "大气动力：大气运动中的热力学第一定律",
+    "author": "Zhenghang",
+    "date": "2026-06-04",
+    "link": "/article.html?path=/docs/nb_AtmoDyn/02/note.md"
+  },
+  {
+    "imgSrc": "",
+    "title": "天气学：极地涡旋的非线性稳定性与崩溃机制",
+    "author": "Zhenghang",
+    "date": "2026-06-03",
+    "link": "/article.html?path=/docs/nb_Syno/01/note.md"
+  },
+  {
+    "imgSrc": "",
+    "title": "天气学：急流轴偏折与高纬度阻高形势演变",
+    "author": "Zhenghang",
+    "date": "2026-06-03",
+    "link": "/article.html?path=/docs/nb_Syno/02/note.md"
+  },
+  {
+    "title": "大氣運動雷諾平均方程",
+    "author": "Zhenghang",
+    "date": "2026-04-02",
+    "link": "/article.html?path=/docs/nb_AtmoDyn/03/note.md"
+  },
+  {
+    "imgSrc": "",
+    "title": "大气动力：N-S 方程中的 Coriolis 项",
+    "author": "Zhenghang",
+    "date": "2026-01-15",
+    "link": "/article.html?path=/docs/nb_AtmoDyn/01/note.md"
+  },
+  {
+    "imgSrc": "",
+    "title": "地球计划：中纬度气旋云系绘图",
+    "author": "Zhenghang",
+    "date": "2025-10-20",
+    "link": "docs/lbrContent/"
+  },
+  {
+    "imgSrc": "",
+    "title": "文献笔记：海洋热盐环流机制",
+    "author": "Zhenghang",
+    "date": "2025-10-15",
+    "link": "docs/lbrContent/"
+  }
+]

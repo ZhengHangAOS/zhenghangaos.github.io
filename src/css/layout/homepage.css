@@ -1,0 +1,104 @@
+/* ==========================================
+   导航栏
+   ========================================== */
+
+/* 伸缩搜索框 (融合圆框) */
+.search-container {
+  display: flex;
+  align-items: center;
+  border-radius: 25px;
+  padding: 5px;
+
+  /* 🎯 优化：移除 all。搜索框外壳在膨胀或改变大小时允许使用你精致的弹性曲线，
+     但主题色、边框等变量改变时瞬间秒切，拒绝颜色跟着一起“弹” */
+  transition:
+    width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    padding 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.search-input {
+  width: 0;
+  padding: 0;
+  opacity: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  outline: none;
+  font-size: 14px;
+
+  /* 🎯 优化：精准控制宽度（width）和透明度（opacity）的滑行，
+     防止聚焦输入文本时，输入框的文字颜色（color）也跟着产生漫长的渐变延迟 */
+  transition:
+    width 0.4s ease,
+    padding 0.4s ease,
+    opacity 0.3s ease;
+}
+.search-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.search-btn img {
+  width: 35px;
+  height: 35px;
+}
+/* 悬停时拉长搜索框 */
+.search-container:hover .search-input,
+.search-input:focus {
+  width: 180px;
+  padding: 0 15px;
+  opacity: 1;
+}
+
+/* 双栏核心布局 */
+.homepage-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 50px;
+  padding: 100px 80px 50px 80px;
+  height: 100vh;
+  box-sizing: border-box; /* 【新增】防止 padding 撑大主布局撑出滚动条 */
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none; /* 【新增】兼容 Firefox 隐藏滚动条 */
+  -ms-overflow-style: none; /* 【新增】兼容 IE/Edge 隐藏滚动条 */
+
+  max-width: 1270px; /* 限制内容最大宽度，数字越小，页面越窄 */
+  margin: 0 auto; /* 关键：这行能让变窄后的页面在全屏里绝对居中 */
+  width: 100%;
+}
+
+/* 隐藏 Webkit 内核浏览器的滚动条 */
+.homepage-layout::-webkit-scrollbar {
+  display: none; /* 【修改】用 display: none 代替 width: 0 语义更明确 */
+}
+
+.main-title {
+  font-size: 3rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin-bottom: -7%;
+  z-index: 10;
+}
+
+.main-title .ttc-a {
+  color: var(--accent-color);
+  font-weight: 500;
+}
+.main-title .ttc-b {
+  color: #74cf3f;
+  font-weight: 500;
+}
+
+.sub-title {
+  font-size: 1.2rem;
+  font-weight: 400;
+  opacity: 0.8;
+  margin-bottom: 15px;
+  margin-top: 25px;
+  margin-left: 3px;
+}

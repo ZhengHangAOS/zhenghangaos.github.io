@@ -1,0 +1,710 @@
+/* ================= 全局防抖动锁死 ================= */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ================= 基础与夜间背景 ================= */
+
+.accent-text {
+  color: var(--accent-color);
+}
+
+.gray-text {
+  color: #888888;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+[data-theme="dark"] .gray-text {
+  color: #95a5b6;
+}
+
+#night-sky-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10;
+
+  /* 🎯 核心修改：实现从底部到顶部的科幻夜空渐变 */
+  /* 方向 to top 代表：从下往上。写两个或多个颜色，用逗号隔开 */
+  background: linear-gradient(to top, #03203e 0%, #0e0f1d 100%);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+[data-theme="dark"] #night-sky-bg {
+  opacity: 1;
+}
+
+[data-theme="dark"] body {
+  background: transparent;
+}
+
+/* ================= 👑 特有导航栏（严格保持） ================= */
+.home-nav {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  justify-content: flex-end !important;
+  align-items: center;
+  padding: 20px 24px;
+
+  position: fixed !important;
+  top: 10px !important;
+  left: auto !important;
+  right: 6px;
+  transform: none !important;
+
+  width: auto;
+  z-index: 300; /* 🌟 诉求 5：层级由 100 提到 300，确保绝对压在右栏（160）和全屏内容上方 */
+  background: transparent;
+}
+
+/* ================= 三栏布局 ================= */
+.explore-layout {
+  display: grid;
+  grid-template-columns: 2fr 6fr 2.5fr;
+  gap: 30px;
+  height: 100vh;
+  padding: 30px 30px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ================= 左列：系统与星球列表 ================= */
+.col-left {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  overflow: visible;
+  z-index: 160;
+}
+/* 🎯 1. 新增一个无皮肤的包裹层，纯粹用来做绝对定位的锚点 */
+.switcher-container {
+  position: relative;
+  width: 100%;
+}
+
+/* 🎯 2. 你的外壳保持原样 */
+.system-switcher {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sys-info {
+  display: flex;
+  align-items: center;
+  gap: 17px; /* Icon 与右侧文字之间的间距 */
+}
+.sys-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* 🎯 3. 下拉菜单：与外壳平级 */
+.sys-dropdown {
+  position: absolute;
+  top: 105%; /* 距离外壳底部稍微留出一点高级的呼吸间距 */
+  left: 0;
+  width: 100%;
+  border-radius: 15px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  z-index: 200; /* 绝对压在全场最顶层 */
+
+  /* 移除了原本写在这里的无效布局属性，保持定位层纯净 */
+  transition:
+    opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 🎯 4. 触发开关的类名变动 */
+.system-switcher.open + .sys-dropdown,
+#system-switcher.open + #sys-dropdown {
+  opacity: 1;
+  pointer-events: auto !important;
+  transform: translateY(0);
+}
+
+/* 🎯 下拉单项容器：让内部所有元素（Icon、名字、光年）全部在一行横向排开 */
+.sys-dropdown-item {
+  display: flex;
+  align-items: center; /* 🎯 核心：确保图标和两组文字在同一行内垂直居中对齐 */
+
+  padding: 10px 16px;
+  margin: 8px 10px;
+  border-radius: 8px;
+  border-bottom: none;
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+/* 下拉项内部的系统名字 */
+.sys-item-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-left: 16px; /* 🎯 控距：让名字和左边 35px 的图标保持高级间距 */
+  flex-shrink: 0; /* 防止名字在特殊情况下被挤压换行 */
+}
+
+/* 🎯 精确修改：让光年数字乖乖躺在标题右边 */
+.sys-item-dist {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-left: 10px; /* 🎯 控距：名字和右边光年数的间距 */
+}
+
+/* 35px 大图标控制 */
+.sys-dropdown-item img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.sys-dropdown-item:hover {
+  background: var(--glass-hover-bg);
+  transform: translateX(4px);
+}
+
+.planet-list-card {
+  flex-grow: 1;
+  height: 0;
+  border-radius: 15px;
+  padding: 13px 0;
+  position: relative;
+  overflow: visible;
+}
+.planet-list-container {
+  position: relative;
+  padding: 0 10px;
+  height: 100%;
+  overflow-y: visible;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 90%,
+    transparent 100%
+  );
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
+}
+.planet-list-container::-webkit-scrollbar {
+  display: none; /* WebKit */
+  width: 0 !important;
+}
+
+.active-indicator {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  height: 70px;
+  border: 2px solid var(--org-color);
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 161;
+  box-sizing: border-box;
+  transition: top 0.4s cubic-bezier(0.25, 1.12, 0.5, 1.05);
+}
+
+.planet-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 70px;
+  padding: 10px 10px;
+  margin-left: 10px;
+  margin-right: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  z-index: 160;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--glass-border);
+  transition:
+    transform 0.2s,
+    background 0.3s;
+  pointer-events: auto !important;
+}
+
+.planet-item:hover {
+  transform: scale(1.05);
+  background: var(--glass-hover-bg);
+}
+
+.planet-list-container .planet-item:last-child {
+  border-bottom: none;
+}
+
+.planet-thumb {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.planet-item-text h4 {
+  font-size: 1rem;
+  color: var(--text-color);
+  text-transform: uppercase;
+  font-weight: 450;
+}
+
+/* ==========================================================================
+   中间：全屏幕沉浸展示区
+   ========================================================================== */
+
+.col-middle {
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   🌌 底层：3D 宇宙舞台 (全屏固定，让星空无限蔓延)
+   -------------------------------------------------------------------------- */
+#planet-system-stage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -10; /* 置于屏幕最底层 */
+  overflow: hidden;
+  pointer-events: auto; /* 让 3D 辅助层本身不阻挡点击，真正的拖拽由 JS 控制的 Canvas 响应 */
+}
+
+#planet-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -5;
+}
+
+/* 星球底部全息阴影（根据全屏定位进行适配微调） */
+.planet-shadow {
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.15);
+  filter: blur(25px);
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="dark"] .planet-shadow {
+  opacity: 0; /* 暗黑模式下优雅隐形 */
+}
+
+/* --------------------------------------------------------------------------
+   🎛️ 中层：UI 悬浮覆盖壳 (全屏穿透，实现科幻全息面板感)
+   -------------------------------------------------------------------------- */
+.col-middle-ui-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10; /* 悬浮于 3D 舞台上方，但低于两侧独立卡片 */
+  pointer-events: none; /* 🌟 核心修复：改为 none 才能真正实现“点击穿透此层缝隙，自由抓取底层 3D 星球”而互不干扰 */
+
+  /* 利用 Flex 顺向布局将顶部标题和底部控制栏逼向屏幕两端 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 40px;
+  box-sizing: border-box;
+}
+
+/* 🪐 星球左上角大标题与简述（严格保持你原本调好的距离） */
+.planet-header {
+  pointer-events: auto; /* 🌟 恢复自身区域的事件响应 */
+  max-width: 40%;
+  margin-left: calc(
+    var(--sidebar-width, 250px) + 20px
+  ); /* 🎯 诉求 3：严格保持你调好的 250px + 20px 智能避让距离 */
+  transition: opacity 0.4s ease;
+  cursor: text; /* 🌟 诉求 2：鼠标移动到标题和简述文字上时，自动变为文本选择工字光标 */
+}
+
+.planet-header h2 {
+  font-size: 3.2rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 800;
+  text-shadow: none; /* 🌟 诉求 4：彻底清除一切可能存在的附加文字阴影 */
+}
+
+.planet-header p {
+  letter-spacing: 1.5px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  text-shadow: none; /* 🌟 诉求 4：彻底清除一切可能存在的附加文字阴影 */
+}
+
+/* 🕹️ 底部星球控制栏 (前一个、EXPLORE、后一个) */
+.planet-controls {
+  align-self: center; /* 在全屏水平居中 */
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  pointer-events: auto; /* 🌟 恢复按钮群的点击响应 */
+  margin-bottom: 10px;
+}
+
+.control-btn {
+  height: 50px;
+  border-radius: 25px;
+  cursor: pointer;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    background 0.3s;
+}
+
+.control-btn:hover {
+  transform: scale(1.08);
+}
+
+.control-btn i {
+  width: 50px;
+  text-align: center;
+}
+
+.explore-btn {
+  padding: 0 30px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  box-shadow: 0 5px 25px rgba(var(--accent-color-rgb), 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   🛰️ 弹出悬浮层：卫星详细资料卡片
+   -------------------------------------------------------------------------- */
+.moon-info-card {
+  display: none;
+  position: fixed; /* 🌟 核心修改 1：改为固定定位，脱离中栏束缚 */
+  z-index: 900; /* 🌟 核心修改 2：极其强悍的最高层级，绝对碾压左右侧边栏 */
+  pointer-events: auto !important;
+  padding: 15px;
+  border-radius: 16px;
+  width: 280px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4); /* 加深阴影增强悬浮悬空感 */
+  /* 提示：具体 top/left 将由 JS 基于屏幕视口动态注入 */
+}
+
+.moon-card-name {
+  text-align: center;
+  font-weight: 540;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+/* 1. 两组数据所在的父容器 */
+.moon-card-item {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-bottom: 12px; /* 和下方简介拉开一点距离 */
+}
+
+/* 2. 单个数据组（包含标题+数值） */
+.info-group {
+  width: 50%;
+  display: flex;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.info-group .label {
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.info-group .value {
+  font-weight: 500;
+}
+
+/* 5. 下方卫星简介的样式 */
+.moon-brief {
+  border-top: var(--glass-border);
+  padding-top: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.btn-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 1.1rem;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+  pointer-events: auto !important;
+}
+
+.btn-close:hover {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   📖 顶层：Markdown 深度探索全屏模态框
+   -------------------------------------------------------------------------- */
+
+:root {
+  --cd-color: #061626;
+}
+[data-theme="light"] {
+  --cd-color: var(--bg-color);
+}
+
+.explore-modal {
+  position: fixed; /* fixed，在全屏背景下拥有绝对制导权 */
+  top: 48%;
+  left: 48%;
+  transform: translate(-50%, -50%) translateY(40px) scale(0.95);
+  width: 60vw;
+  height: 80vh;
+  z-index: 350; /* 🌟 提高到 350，确保打开时能遮盖住 300 的导航栏 */
+  border-radius: 24px;
+  padding: 50px;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4);
+
+  background-color: var(--cd-color);
+
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.explore-modal.show {
+  opacity: 1;
+  pointer-events: auto; /* 🌟 只有在模态框显现时，才激活它的点击交互 */
+  transform: translate(-50%, -50%); /* 归位居中 */
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  font-size: 1.6rem;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: transform 0.2s;
+  z-index: 211;
+}
+
+.close-modal-btn:hover {
+  transform: scale(1.1);
+}
+
+/* ================= 3. 右列：数据概览（刚性锁定容器） ================= */
+.col-right {
+  position: relative;
+  z-index: 160; /* 保持原有的 160，此时会被层级提高至 300 的顶部导航栏完美压在下面 */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px; /* 严格维持你原本的参数 */
+  height: calc(100vh - 90px);
+  max-height: calc(100vh - 90px);
+  box-sizing: border-box;
+  overflow: hidden;
+  pointer-events: auto;
+  cursor: text; /* 🌟 诉求 1：让整个右栏数据面板在移入时自动变为文本光标 */
+}
+.nav-spacer {
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.data-card {
+  padding: 17px;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+
+/* 第一张数据卡片：紧凑不拉伸 */
+.data-card:nth-of-type(1) {
+  flex-shrink: 0;
+}
+
+/* 🎯 2. 彻底修复卡片 2 下边界定死拉长的问题 */
+.data-card:nth-of-type(2) {
+  /* 移除 flex-grow: 1 和 height: 0，不再盲目填满剩余空间 */
+  display: flex;
+  flex-direction: column;
+
+  /* 给它定义一个最大高度范围（屏幕总高度扣除上方元素占用的空间）
+     这样在内部 hl 项目极少时，它会自适应紧凑包裹；项目极多时，又不会把屏幕撑破，完美触发内部滚动 */
+  max-height: calc(100vh - 430px);
+}
+
+.card-title {
+  color: #888;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.divider {
+  height: 1px;
+  background: var(--glass-border);
+  margin: 15px 0;
+  flex-shrink: 0;
+}
+
+.data-row {
+  display: grid;
+  grid-template-columns: 20px 120px 1fr; /* 中间列锁死 120px，数值文字改到右边自适应填满 */
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 0.85rem;
+  color: var(--text-color);
+  font-weight: 400;
+}
+.data-icon {
+  color: #888;
+  text-align: center;
+  font-size: 1rem !important;
+}
+.data-label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 140px; /* 刚性锁定 */
+  min-width: 120px;
+}
+
+/* 六段式进度条：现在它们在 120px 的牢笼里绝对等长 */
+.progress-bar {
+  display: flex;
+  gap: 3px;
+  height: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.prog-seg {
+  flex: 1;
+  background: rgba(164, 163, 167, 0.45);
+  border-radius: 3px;
+}
+.prog-seg.active {
+  background: var(--accent-color);
+}
+
+/* 🪐 温度动态颜色类名 */
+.temp-frozen {
+  color: #4055fa !important; /* 浅蓝色 (小于舒适范围) */
+}
+.temp-cold {
+  color: #7dbfed !important; /* 冰蓝色 (远低于舒适范围) */
+}
+
+.temp-comfortable {
+  color: #7dbf15 !important; /* 绿色 (舒适范围) */
+}
+.temp-warm {
+  color: #f97316 !important; /* 橙色 (大于舒适范围) */
+}
+.temp-hot {
+  color: #ef4444 !important; /* 红色 (远大于舒适范围) */
+}
+
+.data-val {
+  font-weight: 700;
+  text-align: right;
+  /* 🎯 修改这里：让它脱离父级的居中控制，向上顶对齐 */
+  align-self: flex-start;
+  margin-top: 1px; /* 根据你的字体大小微调，使其与标题文本的水平中心完美重合 */
+}
+
+/* 右栏局部滚动 */
+.highlight-list {
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-right: 5px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
+}
+/* 🎯 替换掉你之前写的 .highlight-list::-webkit-scrollbar 逻辑 */
+.highlight-list::-webkit-scrollbar {
+  display: none; /* WebKit */
+  width: 0 !important;
+}
+
+/* Highlight 单项 */
+.highlight-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 18px;
+  align-items: center;
+}
+.hl-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+.hl-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hl-text h5 {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin: 0;
+  font-weight: 500;
+}
+.hl-text p {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  font-weight: 400;
+  margin: 0;
+}

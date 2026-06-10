@@ -1,0 +1,76 @@
+{
+  "id": "S008",
+  "name": "海王星 Neptune",
+  "project": "planetary",
+  "galaxySystem": "太阳系",
+  "radius": 3.88,
+  "textureImg": "/planets/S/textures/s008/neptune_map.webp",
+  "character": "狂风呼啸的深蓝冰髓",
+
+  "moons": {
+    "count": 1,
+    "satellites": [
+      {
+        "name": "海卫一 Triton",
+        "radius": 0.21,
+        "textureS": "/planets/S/textures/s008/triton.webp",
+        "speed": -5.88,
+        "obitA": 7.5,
+        "obitB": 7.0,
+        "brief": "它是太阳系中唯一一颗具有逆行轨道的大卫星（自转与行星公转方向相反）。这种特征表明它原本是柯伊伯带的天体，后来被海王星捕获。它表面极为寒冷，拥有间歇性喷发氮气羽流的低温火山活动。",
+
+        "aglx": 12,
+        "agly": 0,
+        "aglz": 0
+      }
+    ]
+  },
+
+  "rings": {
+    "hasRings": false,
+    "colorMap": "/planets/S/textures/s008/neptune_rings.png",
+    "rIn": 6.5,
+    "rOut": 7.25,
+    "color": "#506c91",
+    "emissive": "60779c"
+  },
+
+  "visuals": {
+    "obliquity": 28.32,
+    "rotationSpeed": 0.67,
+    "thumb": "/planets/icon/solor/neptn.webp",
+    "bumpImg": null
+  },
+
+  "brief": "遥远而深蓝的冰巨行星。尽管远离太阳，其大气却拥有太阳系最猛烈的超音速风暴与高速急流，显示出强烈的内部热源与复杂的深层对流活动。",
+
+  "overview": {
+    "miniT": "-218 °C",
+    "maxT": "-200 °C",
+    "Temp": -201,
+    "gravity": 1.14,
+    "moonCount": "16",
+    "atmos": 1,
+    "rotationPeriod": "0.67",
+    "obliquity": "28.32°",
+    "orbitalSpeed": "60190 地球日"
+  },
+
+  "highlights": [
+    {
+      "icon": "",
+      "title": "狂暴的太阳系风王",
+      "desc": "表面风速超过 2100 km/h"
+    },
+    {
+      "icon": "",
+      "title": "永动大暗斑",
+      "desc": "高空大气中由超强风暴形成的深蓝色巨大旋涡"
+    },
+    {
+      "icon": "",
+      "title": "钻石雨核心",
+      "desc": "极端高压将内部甲烷转化为结晶钻石并坠落"
+    }
+  ]
+}

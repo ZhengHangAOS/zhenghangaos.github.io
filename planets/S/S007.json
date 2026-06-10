@@ -1,0 +1,92 @@
+{
+  "id": "S007",
+  "name": "天王星 Uranus",
+  "project": "planetary",
+  "galaxySystem": "太阳系",
+  "radius": 4.01,
+  "textureImg": "/planets/S/textures/s007/uranus_map.jpeg",
+  "character": "躺着自转的蓝冰巨星",
+
+  "moons": {
+    "count": 2,
+    "satellites": [
+      {
+        "name": "天卫三 Titania",
+        "radius": 0.2,
+        "textureS": "/planets/S/textures/s007/titania.webp",
+        "speed": 8.71,
+        "obitA": 6.5,
+        "obitB": 6.5,
+        "brief": "天王星最大的卫星。表面分布着大量的撞击坑，并被长达数百公里的地堑（断裂带）所切割，显示其早期在冷却凝固过程中经历过地壳的剧烈扩张",
+
+        "aglx": 10,
+        "agly": 0,
+        "aglz": 0
+      },
+      {
+        "name": "天卫四 Oberon",
+        "radius": 0.19,
+        "textureS": "/planets/S/textures/s007/oberon.webp",
+        "speed": 13.46,
+        "obitA": 7.0,
+        "obitB": 7.0,
+        "brief": "天王星最外侧、体积第二大的大卫星。作为天王星家族中最古老的天体之一，天卫四的表面因长期遭受陨石轰击而布满了大量的撞击坑，地质活动处于高度静止状态。它最大的地形特征是表面存在许多长条状的断层崖，且部分古老撞击坑的底部覆盖着一层未知的暗色物质，可能是从卫星内部涌出的碳氢化合物。",
+
+        "aglx": 0,
+        "agly": 30,
+        "aglz": 0
+      }
+    ]
+  },
+
+  "rings": {
+    "hasRings": true,
+    "colorMap": "/planets/S/textures/s007/uranusring_cl.jpg",
+    "alphaMap": "/planets/S/textures/s007/uranusring_ap.gif",
+    "rIn": 4.7,
+    "rOut": 6.0,
+    "color": "#8ea7a9",
+    "emissive": "91a9ab"
+  },
+
+  "pbr": null,
+
+  "visuals": {
+    "obliquity": 97.77,
+    "rotationSpeed": 0.72,
+    "thumb": "/planets/icon/solor/uranus.webp",
+    "bumpImg": null
+  },
+
+  "brief": "一颗呈蓝绿色的冰巨行星，其自转轴几乎横卧于公转轨道平面之上。极端倾斜的姿态使其季节变化异常漫长而剧烈，构成太阳系中独特的行星气候系统。",
+
+  "overview": {
+    "miniT": "-224 °C",
+    "maxT": "-197 °C",
+    "Temp": "-197",
+    "gravity": "0.89",
+    "moonCount": "28",
+    "atmos": "1.2",
+    "rotationPeriod": "0.72",
+    "obliquity": "97.77°",
+    "orbitalSpeed": "30687"
+  },
+
+  "highlights": [
+    {
+      "icon": "",
+      "title": "躺着旋转的行星",
+      "desc": "自转轴倾角 98 度，几乎贴着轨道躺转"
+    },
+    {
+      "icon": "",
+      "title": "甲烷青蓝色大气",
+      "desc": "大气中的甲烷吸收大量红光，折射出静谧的淡青色"
+    },
+    {
+      "icon": "",
+      "title": "极寒的冰巨星",
+      "desc": "对流层顶部的温度低至 -224°C"
+    }
+  ]
+}

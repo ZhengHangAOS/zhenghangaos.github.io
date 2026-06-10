@@ -1,0 +1,15 @@
+/* 1. 全站基础重置：清空间距，锁定标准盒子模型 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 2. 只在需要禁止选中的地方精准禁止（例如：网页宠物、社交图标、按钮等） */
+.web-pet,
+.social-links a,
+.link-card,
+button {
+  user-select: none;
+  -webkit-user-select: none;
+}

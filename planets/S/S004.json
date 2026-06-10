@@ -1,0 +1,63 @@
+{
+  "id": "S004",
+  "name": "火星 Mars",
+  "project": "planetary",
+  "galaxySystem": "太阳系",
+  "radius": 0.53,
+  "character": "铁锈红的干涸沙漠",
+  "textureImg": "/planets/S/textures/s004/mars_map.jpg",
+
+  "moons": {
+    "count": 0,
+    "satellites": []
+  },
+
+  "rings": {
+    "hasRings": false
+  },
+
+  "pbr": {
+    "clmap": "/planets/S/textures/s004/mars_pbr/mars_color.webp",
+    "nmmap": "/planets/S/textures/s004/mars_pbr/mars_normal.webp",
+    "rnmap": ""
+  },
+
+  "visuals": {
+    "obliquity": 25.19,
+    "rotationSpeed": 1.03,
+    "thumb": "/planets/icon/solor/mars.webp",
+    "bumpImg": "/planets/S/textures/s004/mars_bump.jpg"
+  },
+
+  "brief": "覆盖着氧化铁尘埃的寒冷岩石行星。火星拥有稀薄但活跃的大气层，其全球性沙尘暴、极冠季节循环以及古老河谷遗迹，暗示着它曾拥有更温暖湿润的远古气候。",
+
+  "overview": {
+    "miniT": "-125 °C",
+    "maxT": "20 °C",
+    "Temp": "-63",
+    "gravity": "0.38",
+    "moonCount": "2",
+    "atmos": "0.006",
+    "rotationPeriod": "1.03",
+    "obliquity": "25.19°",
+    "orbitalSpeed": "687"
+  },
+
+  "highlights": [
+    {
+      "icon": "",
+      "title": "氧化铁荒漠",
+      "desc": "地表富含红色的氧化铁沙尘"
+    },
+    {
+      "icon": "",
+      "title": "太阳系第一高山",
+      "desc": "Olympus 山高达 21km，是珠峰的三倍"
+    },
+    {
+      "icon": "",
+      "title": "干冰与水冰极冠",
+      "desc": "两极覆盖着固态 CO2 和水组成的冰盖"
+    }
+  ]
+}

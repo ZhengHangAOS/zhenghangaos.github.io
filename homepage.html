@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="public/images/icon/hpg00.webp" />
+    <title>Homepage - AOSlab</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 引入基础、组件与特效的 CSS -->
+    <link rel="stylesheet" href="src/css/base/reset.css" />
+    <link rel="stylesheet" href="src/css/base/variables.css" />
+    <link rel="stylesheet" href="src/css/base/global.css" />
+
+    <link rel="stylesheet" href="src/css/components/buttons.css" />
+    <link rel="stylesheet" href="src/css/effects/glass.css" />
+    <link rel="stylesheet" href="/src/css/components/navbar.css" />
+
+    <link rel="stylesheet" href="src/css/components/weather.css" />
+    <link rel="stylesheet" href="src/css/layout/homepage.css" />
+    <link rel="stylesheet" href="src/css/components/cards.css" />
+
+    <link rel="stylesheet" href="src/css/base/responsive.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  </head>
+  <body>
+    <!-- 全局天气背景特效层 -->
+    <canvas id="weather-bg-canvas"></canvas>
+
+    <!-- 底部天气地面元素层 (积水、雪人、落叶等) -->
+    <div id="weather-ground"></div>
+
+    <nav class="home-nav">
+      <div class="nav-left">
+        <!-- 1. 轻拟物天气系统 -->
+        <div class="weather-wrapper">
+          <div class="weather-widget glass" id="weather-widget">
+            <div class="weather-icon-container" id="weather-icon"></div>
+            <div class="weather-info">
+              <span class="weather-temp" id="weather-temp">--°</span>
+              <span class="weather-desc" id="weather-desc">加载中</span>
+            </div>
+          </div>
+          <div class="tooltip">星球天气与环境</div>
+        </div>
+
+        <!-- 2. 发射按钮 (紧靠天气右侧) -->
+        <div class="landing-wrapper">
+          <div class="landing-btn btn-circle glass" id="launch-btn">
+            <img src="public/images/icon/landing.webp" alt="Launch" />
+          </div>
+          <div class="tooltip">To Space</div>
+        </div>
+      </div>
+      <!-- 左侧组合区结束 -->
+
+      <div class="nav-right">
+        <!-- 1. 搜索框组合 -->
+        <div class="search-container glass">
+          <input type="text" class="search-input" placeholder="Search..." />
+          <div class="search-btn">
+            <img src="public/images/icon/sch.webp" alt="Search" />
+          </div>
+        </div>
+
+        <!-- 2. 导航按钮 Bar -->
+        <div class="nav-bar glass">
+          <div
+            class="btn-circle"
+            data-tooltip="Home"
+            onclick="window.location.href = 'homepage.html'"
+            style="cursor: pointer"
+          >
+            <img src="public/images/icon/hpg.webp" alt="Home" />
+          </div>
+
+          <div
+            class="btn-circle"
+            data-tooltip="Explore"
+            onclick="window.location.href = '/pages/explore.html'"
+            style="cursor: pointer"
+          >
+            <img src="public/images/icon/expl.webp" alt="Explore" />
+          </div>
+
+          <div
+            class="btn-circle"
+            data-tooltip="Library"
+            onclick="window.location.href = 'pages/library.html'"
+            style="cursor: pointer"
+          >
+            <img src="public/images/icon/tsg.webp" alt="Library" />
+          </div>
+
+          <div
+            class="btn-circle"
+            data-tooltip="About"
+            onclick="
+              window.location.href = 'article.html?path=/docs/others/about.md'
+            "
+            style="cursor: pointer"
+          >
+            <img src="public/images/icon/abt.webp" alt="About" />
+          </div>
+        </div>
+
+        <!-- 3. 控制区 -->
+        <div class="controls">
+          <div class="btn-circle glass" id="theme-toggle">
+            <svg
+              id="icon-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </div>
+          <div class="btn-circle glass" id="lang-toggle">EN</div>
+
+          <!-- 彩色框头像 -->
+          <div
+            class="avatar-btn"
+            style="
+              background-image: url(&quot;public/images/touxiang/touxiang.webp&quot;);
+            "
+            onclick="window.location.href = 'pages/me.html'"
+          ></div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="homepage-layout">
+      <!-- ================= 左栏 ================= -->
+      <aside class="left-col">
+        <h1 class="main-title">
+          <span class="ttc-a">A</span>tmos<span class="ttc-a">O</span>cean<span
+            class="ttc-a"
+            >S</span
+          >ci <span class="ttc-b">L</span>ab
+        </h1>
+
+        <!-- 三个纵向突破边界卡片 -->
+        <div class="feature-cards">
+          <!-- 卡片 1: Explore -->
+          <div
+            class="card-3d card-explore"
+            onclick="window.location.href = '/pages/explore.html'"
+          >
+            <div class="card-bg glass"></div>
+            <div class="card-graphic">
+              <img
+                src="/public/images/hpg/mars_small.png"
+                class="card-img"
+                alt="Explore"
+              />
+            </div>
+            <div class="card-content">
+              <h3>Explore</h3>
+              <p>探索地球与行星</p>
+            </div>
+          </div>
+
+          <!-- 卡片 2: Library -->
+          <div
+            class="card-3d card-library"
+            onclick="window.location.href = 'pages/library.html'"
+          >
+            <div class="card-bg glass"></div>
+            <div class="card-graphic">
+              <img
+                src="/public/images/hpg/library.png"
+                class="card-img"
+                alt="Library"
+              />
+            </div>
+            <div class="card-content">
+              <h3>Library</h3>
+              <p>大气海洋&流体力学</p>
+            </div>
+          </div>
+
+          <!-- 卡片 3: About me -->
+          <div
+            class="card-3d card-about"
+            onclick="window.location.href = 'pages/me.html'"
+          >
+            <div class="card-bg glass"></div>
+            <div class="card-graphic">
+              <img
+                src="/public/images/hpg/about.png"
+                class="card-img"
+                alt="About"
+              />
+            </div>
+            <div class="card-content">
+              <h3>My Profile</h3>
+              <p>关于我的信息都在这</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 最近发布 -->
+        <section class="recent-posts">
+          <h2 class="sub-title">最近发布</h2>
+          <div class="recent-card glass">
+            <div class="post-list" id="recent-posts-container">
+              <div
+                class="loading-text"
+                style="padding: 10px; opacity: 0.6; font-size: 14px"
+              >
+                内容正在等待更新...
+              </div>
+            </div>
+            <div
+              id="posts-pagination-dots"
+              class="pagination-dots"
+              style="display: none"
+            ></div>
+          </div>
+        </section>
+
+        <!-- 版权声明卡片 -->
+        <section class="copyright-section" style="margin-top: 24px">
+          <!-- 预留点击跳转接口，比如跳转到约定的 about 页面或特定的开源协议页 -->
+          <div
+            class="stack-card glass copyright-card"
+            onclick="
+              window.location.href =
+                '/article.html?path=/docs/others/cpright.md'
+            "
+            style="cursor: pointer"
+          >
+            <!-- 左侧小图标容器，复用推荐内容的尺寸 -->
+            <div class="img-container copyright-icon-box">
+              <img
+                src="public/images/icon/cpr01.webp"
+                alt="Copyright License"
+              />
+            </div>
+
+            <!-- 右侧版权文本信息 -->
+            <div class="info">
+              <h4>版权与引用声明</h4>
+              <p>
+                © 2026 AtmosOceanSci Lab. 本站学术笔记与资料采用 CC BY-NC-SA 4.0
+                国际许可协议进行共享。点击查看授权详情。
+              </p>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <!-- ================= 右栏 ================= -->
+      <aside class="right-col">
+        <!-- 今日星球板块 Wrapper -->
+        <div class="today-planet-wrapper">
+          <!-- 1. 纯粹的背景层 (里面不放内容) -->
+          <div class="today-planet-card glass"></div>
+
+          <!-- 2. 独立的星球交互区 (位于背景之上) -->
+          <div class="planet-interactive-area">
+            <div id="right-planet-canvas"></div>
+            <div class="planet-shadow"></div>
+          </div>
+
+          <!-- 3. 文字与链接层 -->
+          <div class="card-header">
+            <h3>
+              今日星球：<span id="tp-galaxy">载入中...</span>
+              <span id="tp-name"></span>
+            </h3>
+            <a href="/pages/explore.html" id="tp-link" class="explore-link"
+              >点击探索</a
+            >
+          </div>
+        </div>
+
+        <!-- 推荐卡片堆叠区 -->
+        <section class="recommend-stack">
+          <h2 class="sub-title">推荐内容</h2>
+
+          <div class="stack-container" id="recommend-stack-container">
+            <div
+              class="loading-text"
+              style="color: white; opacity: 0.6; padding: 20px"
+            >
+              推荐内容加载中...
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <!-- 核心 JS -->
+    <!--全局主题管理-->
+    <script src="/src/js/global/theme.js"></script>
+    <script src="/src/js/global/launch.js" defer></script>
+    <script type="module" src="src/js/homepage/app.js"></script>
+  </body>
+</html>

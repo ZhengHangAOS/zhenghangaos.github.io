@@ -1,0 +1,11 @@
+@media (max-width: 768px) {
+  #main-container {
+    flex-direction: column;
+  } /* 瞬间变成上下堆叠 */
+  #left-panel {
+    width: 100%;
+  } /* 左栏卡片铺满屏幕 */
+  #canvas-container {
+    height: 40vh;
+  } /* 3D 画布固定收缩到屏幕上半部分 */
+}

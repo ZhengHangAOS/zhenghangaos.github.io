@@ -1,0 +1,70 @@
+{
+  "id": "S003",
+  "name": "地球 Earth",
+  "project": "planetary",
+  "character": "蓝绿色的生命家园",
+  "galaxySystem": "太阳系",
+  "radius": 1.0,
+  "textureImg": "/planets/S/textures/s003/earth_map.webp",
+
+  "moons": {
+    "count": 1,
+    "satellites": [
+      {
+        "name": "Luna",
+        "radius": 0.2,
+        "textureS": "/planets/S/textures/s003/moon.webp",
+        "speed": 27.3,
+        "obitA": 2.0,
+        "obitB": 2.0,
+        "brief": "月球是地球的天然卫星，是人类唯一亲自登临的星球。月球没有大气层与液态水，表面分为明亮的撞击高地（月陆）和暗沉的玄武岩平原（月海）。它的潮汐锁定制约了地球的自转周期，也是目前人类开展深空探测与建立基地的核心前沿。",
+        "aglx": 5,
+        "agly": 0,
+        "aglz": 5
+      }
+    ]
+  },
+
+  "rings": {
+    "hasRings": false
+  },
+
+  "visuals": {
+    "obliquity": 23.44,
+    "rotationSpeed": 1.0,
+    "thumb": "/public/images/icon/hpg00.webp",
+    "bumpImg": "/planets/S/textures/s003/earth_bp.webp"
+  },
+
+  "brief": "一颗被液态海洋与生命覆盖的蓝色岩石行星。地球的大气、海洋与冰冻圈之间持续进行着复杂的能量与动量交换，塑造出丰富而多变的天气与气候系统。",
+
+  "overview": {
+    "miniT": "-89 °C",
+    "maxT": "58 °C",
+    "Temp": "15",
+    "gravity": 1,
+    "moonCount": 1,
+    "atmos": 1,
+    "rotationPeriod": "1",
+    "obliquity": "23.44°",
+    "orbitalSpeed": "365.25"
+  },
+
+  "highlights": [
+    {
+      "icon": "public/images/icon/water.png",
+      "title": "广阔表面海洋",
+      "desc": "表面 71% 被水覆盖"
+    },
+    {
+      "icon": "public/images/icon/life.png",
+      "title": "生物圈循环",
+      "desc": "富含氧气，数十亿年光合作用累积"
+    },
+    {
+      "icon": "public/images/icon/magnet.png",
+      "title": "强劲地磁盾牌",
+      "desc": "液态外核产生磁场，完美阻挡太阳风"
+    }
+  ]
+}

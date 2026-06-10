@@ -1,0 +1,439 @@
+/* ================= 页面整体基础滚动及解绑修补 ================= */
+html,
+body {
+  overflow-x: visible;
+  overflow-y: visible;
+  height: auto;
+  min-height: 100vh;
+}
+
+main.article-layout {
+  overflow: visible;
+}
+
+/* 变量定义 */
+:root,
+[data-theme="light"] {
+  --t-color: #6e6e6e;
+  --gls-bg: rgba(248, 246, 246, 0.8); /* 正文卡片背景 */
+}
+[data-theme="dark"] {
+  --t-color: #b2b2b2;
+  --gls-bg: rgba(250, 250, 250, 0.05);
+}
+
+/* ==========================================================================
+   导航栏骨架
+   ========================================================================== */
+
+.home-nav {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  justify-content: flex-end !important;
+  align-items: center;
+  padding: 20px 24px !important;
+
+  position: fixed !important;
+  top: 8px !important;
+  right: 16px !important;
+  left: auto !important;
+  transform: none !important;
+
+  width: auto !important;
+  z-index: 100 !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  border-bottom: none !important;
+}
+
+/* ==========================================================================
+   顶部 banner
+   ========================================================================== */
+
+.article-banner {
+  position: relative;
+  width: 100vw;
+  height: 55vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.banner-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+}
+.banner-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: #ffffff;
+  padding: 0 20px 0 20px;
+  margin-top: 40px;
+}
+.banner-title {
+  font-size: 2.8rem;
+  font-weight: 500;
+  margin-bottom: 25px;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+.banner-meta {
+  font-size: 0.95rem;
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  opacity: 0.9;
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px; /* 自由放大或缩小空格的大小 */
+}
+
+/* ==========================================================================
+   三栏布局骨架
+   ========================================================================== */
+
+.article-layout {
+  display: grid;
+  grid-template-columns: 0.5fr 1.7fr 0.5fr;
+  gap: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 40px 40px 0 40px;
+  position: relative;
+  z-index: 20;
+  align-items: stretch !important;
+}
+
+.article-layout.no-left-sidebar {
+  grid-template-columns: 1fr 280px;
+  max-width: 1200px;
+}
+
+/* ---------------------------- 两侧内容控制 ---------------------------- */
+
+/* 📖 1. 目录 (双向柔和淡出) */
+.sidebar-left {
+  position: sticky !important;
+  top: 40px;
+  align-self: start;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding: 20px 5px; /* 上下都留一点呼吸空间 */
+  z-index: 30;
+
+  /* 🚀 顶部 8% 淡入，中间保持纯黑显示，底部 85% 到 100% 淡出 */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 85%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%);
+}
+
+/* 📑 2. 大纲 (双向柔和淡出) */
+.sidebar-right {
+  position: sticky !important;
+  top: 100px;
+  align-self: start;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  padding: 20px 5px 20px 5px;
+  z-index: 30;
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom, black 0%, black 90%, transparent 100%);
+}
+
+.sidebar-left::-webkit-scrollbar,
+.sidebar-right::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* 目录/大纲标题 */
+.sidebar-left h3,
+.sidebar-right h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  color: var(--text-color);
+  opacity: 0.6;
+  padding-left: 8px;
+}
+
+.sidebar-left h3 i {
+  opacity: 0.75;
+  color: var(--text-color);
+  margin-right: 5px;
+}
+.sidebar-right h3 i {
+  opacity: 0.75;
+  color: var(--text-color);
+  margin-right: 5px;
+  margin-left: 8px;
+}
+
+/* ---------------------------- 列表基础排版 ---------------------------- */
+.toc-list,
+.outline-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-list li,
+.outline-list li {
+  margin-bottom: 6px;
+}
+
+/* 目录/大纲正文 */
+.toc-list li a,
+.outline-list li a {
+  color: var(--text-color) !important;
+  opacity: 0.7;
+  text-decoration: none;
+  display: block;
+  padding: 6px 10px 6px 10px;
+  font-size: 0.92rem;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  word-break: break-all !important;
+  line-height: 1.4;
+
+  /* 为缩放和颜色高亮配置平滑过渡 */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    color 0.2s ease !important;
+  transform-origin: left center; /* 轴心靠左，放大时文字向右舒展 */
+}
+
+.toc-list li a {
+  font-weight: 420;
+}
+
+/* 鼠标划过微调放大 1.03 倍并高亮 */
+.toc-list li a:hover {
+  opacity: 1 !important;
+  color: #ff9800 !important; /* 悬停预览暖橙色 */
+  transform: scale(1.03) translateX(4px) !important;
+  background: transparent !important;
+  border: none !important;
+}
+.outline-list li a:hover {
+  opacity: 1 !important;
+  color: #00bcd4 !important; /* 悬停预览冷青色 */
+  transform: scale(1.03) translateX(4px) !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+/* 激活项色彩样式（保持优雅高亮背景，但取消边框线） */
+.toc-list li a.active,
+.article-layout .toc-list li a.active {
+  color: #ff9800 !important;
+  background: rgba(255, 152, 0, 0.1) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  transform: scale(1.03) !important;
+}
+.outline-list li a.active,
+.article-layout .outline-list li a.active {
+  color: #00bcd4 !important;
+  background: rgba(0, 188, 212, 0.1) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  opacity: 1 !important;
+  transform: scale(1.03) !important;
+}
+
+.outline-item.level-h2 {
+  padding-left: 12px;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.outline-item.level-h3 {
+  padding-left: 24px;
+  font-size: 0.88rem;
+}
+.outline-item.level-h4 {
+  padding-left: 36px;
+  font-size: 0.82rem;
+}
+
+/* ============== 滚动激活项优化 ================ */
+
+/* ---------------------------- 中央正文控制 ---------------------------- */
+/* 见 /src/css/layout/markdown.css */
+
+/* ================= 3：内嵌在正文底部的翻页导航 ================= */
+
+.post-navigation {
+  display: flex !important;
+  justify-content: space-between; /* 核心：让两端按钮各贴一边 */
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 25px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 左右小框的基础按钮样式 */
+.nav-prev,
+.nav-next {
+  display: flex !important;
+  align-items: center;
+  justify-content: center; /* 让纯文字在小框内部绝对居中 */
+  color: var(--text-color) !important;
+  text-decoration: none !important;
+
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: var(--glass-bg, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--glass-border);
+  font-size: 0.88rem;
+  font-weight: 400;
+
+  box-shadow: 1px 4px 5px rgba(0, 0, 0, 0.1);
+
+  /* 丝滑过渡 */
+  transition:
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.2s ease,
+    box-shadow 0.2s ease !important;
+
+  /* 字体 */
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif !important;
+  font-size: 0.85rem !important; /* 字号 */
+  font-weight: 600 !important; /* 字重 */
+  letter-spacing: 0.05em !important; /* 字母间距 */
+  text-transform: uppercase; /* 大写 */
+}
+
+/* 🚀 去掉原本左右平移的偏向，改成统一的轻微向上悬浮 + 阴影扩张，极为优雅 */
+.nav-prev:hover,
+.nav-next:hover {
+  background: var(--glass-hover-bg) !important;
+  transform: translateY(-2px) !important; /* 向上微调 2 像素 */
+  box-shadow: 2px 4.5px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 确保右侧按钮依然死死靠右 */
+.nav-next {
+  margin-left: auto;
+}
+
+/* ==========================================================================
+   top 按钮
+   ========================================================================== */
+
+.fab-totop {
+  position: absolute;
+  top: -55px;
+  left: -24px;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 100;
+  border: 1px solid var(--glass-border);
+  box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.1);
+
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s ease !important;
+}
+
+/* 悬停动效：完美同步 me 页面的上浮微动 */
+.fab-totop:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 3px 6px 10px rgba(0, 0, 0, 0.15);
+  background-color: var(--glass-hover-bg);
+}
+
+/* 🚀 终极修正：利用 fixed 固定定位，配合 margin-left 挂靠在视口中央容器的绝对右侧 */
+.fab-totop.fixed-show {
+  position: fixed !important;
+  top: auto !important;
+  bottom: 5%;
+
+  /* 核心魔法：先让它居中，然后往右挪正文大卡片宽度的一半加贴边间距（大约 240px~260px，根据你的笔记本屏幕感官微调） */
+  left: 80% !important;
+  right: auto;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* 🚀 响应式安全网：当屏幕太窄装不下三栏、右侧栏塌陷时，自动退回到视口右侧 */
+@media (max-width: 1200px) {
+  .fab-totop.fixed-show {
+    left: auto !important;
+    margin-left: 0 !important;
+    right: 30px !important;
+  }
+}
+
+.fab-totop i {
+  font-size: 1.1rem; /* 调整小箭头在圆圈内的大小 */
+  color: var(--text-color);
+  transition: transform 0.2s ease !important;
+}
+
+/* 鼠标悬停时，小箭头有个轻微向上弹跳的动态反馈 */
+.fab-totop:hover i {
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   页脚
+   ========================================================================== */
+
+.article-footer {
+  text-align: center;
+  padding: 10px 0 40px 0;
+  color: var(--text-color);
+  opacity: 0.5;
+  font-size: 0.88rem;
+  line-height: 1.8;
+  border-top: 1px dashed var(--glass-border);
+  margin: 40px 40px 0 40px;
+}

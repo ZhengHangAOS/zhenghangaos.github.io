@@ -1,0 +1,177 @@
+AOS-LAB/
+│
+├── index.html
+├── homepage.html
+├── README.md
+├── favicon/
+│
+├── public/                     # 静态资源
+│   │
+│   ├── textures/               # 星球纹理
+│   │   
+│   │
+│   └── images/
+│       ├── ui/
+│       ├── icons/
+│       ├── weather/
+│       └── backgrounds/
+│
+├── src/
+│   │
+│   ├── css/
+│   │   │
+│   │   ├── base/               # 全局基础系统
+│   │   │   ├── reset.css
+│   │   │   ├── variables.css
+│   │   │   ├── typography.css
+│   │   │   ├── animations.css
+│   │   │   └── global.css
+│   │   │
+│   │   ├── themes/             # 白天/黑夜主题
+│   │   │   ├── dark.css
+│   │   │   └── light.css # 暂无
+│   │   │
+│   │   ├── layout/             # 页面布局
+│   │   │   ├── hero.css
+│   │   │   ├── homepage.css
+│   │   │   ├── explore.css # 暂无
+│   │   │   ├── library.css # 暂无
+│   │   │   ├── about.css # 暂无
+│   │   │   └── responsive.css # 暂无
+│   │   │
+│   │   ├── components/         # UI组件
+│   │   │   ├── navbar.css
+│   │   │   ├── cards.css
+│   │   │   ├── buttons.css
+│   │   │   ├── tooltip.css
+│   │   │   ├── modals.css # 暂无
+│   │   │   ├── search.css # 暂无
+│   │   │   └── weather.css
+│   │   │
+│   │   └── effects/            # 特效系统
+│   │       ├── glass.css
+│   │       ├── floating.css # 暂无
+│   │       ├── glow.css # 暂无
+│   │       ├── parallax.css # 暂无
+│   │       └── transitions.css # 暂无
+│   │
+│   ├── js/
+│   │   │
+│   │   ├── core/               # 核心系统
+│   │   │   ├── app.js
+│   │   │   ├── router.js
+│   │   │   ├── state.js 
+│   │   │   ├── config.js
+│   │   │   └── utils.js
+│   │   │
+│   │   ├── hero/               # Hero 页面逻辑
+│   │   │   ├── heroScene.js
+│   │   │   ├── typewriter.js
+│   │   │   ├── landing.js
+│   │   │   └── heroTransition.js
+│   │   │
+│   │   ├── homepage/
+│   │   │   ├── homepage.js
+│   │   │   ├── cards.js
+│   │   │   ├── recommendations.js
+│   │   │   └── recentPosts.js
+│   │   │
+│   │   ├── explore/
+│   │   │   ├── explore.js
+│   │   │   ├── planetViewer.js
+│   │   │   ├── orbitSystem.js
+│   │   │   ├── satellites.js
+│   │   │   ├── earthVisuals.js
+│   │   │   └── compareMode.js
+│   │   │
+│   │   ├── weather/ # 暂无
+│   │   │   ├── weatherEngine.js
+│   │   │   ├── weatherStates.js
+│   │   │   ├── rain.js
+│   │   │   ├── snow.js
+│   │   │   ├── dust.js
+│   │   │   └── wind.js
+│   │   │
+│   │   ├── ui/
+│   │   │   ├── navbar.js
+│   │   │   ├── buttons.js
+│   │   │   ├── tooltips.js
+│   │   │   ├── searchbar.js
+│   │   │   ├── themeToggle.js
+│   │   │   └── languageSwitch.js
+│   │   │
+│   │   ├── animations/
+│   │   │   ├── floating.js
+│   │   │   ├── hoverEffects.js
+│   │   │   ├── transitions.js
+│   │   │   ├── inertia.js
+│   │   │   └── parallax.js
+│   │   │
+│   │   ├── three/
+│   │   │   ├── scene.js
+│   │   │   ├── camera.js
+│   │   │   ├── renderer.js
+│   │   │   ├── lighting.js
+│   │   │   ├── controls.js
+│   │   │   ├── shaders/
+│   │   │   ├── planets/
+│   │   │   ├── particles/
+│   │   │   └── atmosphere/
+│   │   #以下暂无
+│   │   ├── content/
+│   │   │   ├── posts.js
+│   │   │   ├── planets.js
+│   │   │   ├── worlds.js
+│   │   │   └── quotes.js
+│   │   │
+│   │   └── library/
+│   │       ├── markdownLoader.js
+│   │       ├── noteParser.js
+│   │       └── articleViewer.js
+│   │
+
+# 以下都暂无
+
+│   │
+│   ├── pages/
+│   │   ├── homepage/
+│   │   ├── explore/
+│   │   ├── library/
+│   │   ├── about/
+│   │   └── profile/
+│   │
+│   ├── content/
+│   │   │
+│   │   ├── notes/
+│   │   │   ├── gfd/
+│   │   │   ├── atmosphere/
+│   │   │   ├── fluid/
+│   │   │   └── mathematics/
+│   │   │
+│   │   ├── essays/
+│   │   │
+│   │   ├── worlds/
+│   │   │
+│   │   └── planets/
+│   │
+│   └── data/
+│       ├── weather.json
+│       ├── planets.json
+│       ├── missions.json
+│       └── homepage.json
+│
+├── docs/                       # 项目文档（极重要）
+│   │
+│   ├── design-system.md
+│   ├── color-system.md
+│   ├── motion-system.md
+│   ├── component-rules.md
+│   ├── planet-system.md
+│   ├── weather-system.md
+│   └── interaction-philosophy.md
+│
+└── archive/                    # 废弃实验内容
+
+
+
+

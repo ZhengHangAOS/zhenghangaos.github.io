@@ -1,0 +1,471 @@
+/* ---------------- 基础页面状态与零过渡动效重置 ---------------- */
+html,
+body {
+  overflow: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+}
+
+/* 文本框内的字体字体颜色定义 */
+:root,
+[data-theme="light"] {
+  --t-color: #6e6e6e;
+  --pet-bg: rgba(255, 255, 255, 0.45);
+}
+[data-theme="dark"] {
+  --t-color: #b2b2b2;
+  --pet-bg: rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================================================
+   双栏基础控制
+   ========================================================================== */
+
+.me-layout {
+  display: grid;
+  grid-template-columns: 1.25fr 2.5fr;
+  gap: 70px;
+  padding: 80px 80px 80px 80px;
+  width: 100%;
+  max-width: 1270px;
+  margin: 0 auto;
+  align-items: start;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   左栏区域
+   ========================================================================== */
+
+.profile-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--accent-color);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  margin-bottom: 15px;
+  transition: transform 0.4s;
+}
+.profile-avatar:hover {
+  transform: scale(1.05);
+}
+
+.profile-name {
+  font-size: 2.2rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+.profile-title {
+  color: var(--org-color);
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.profile-univ {
+  color: var(--t-color);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.profile-univ a {
+  color: inherit; /* 原本的灰色（#888888) */
+  text-decoration: none;
+  transition: color 0.3s ease; /* 增加色彩过渡动画 */
+}
+.profile-univ a:hover {
+  color: var(--accent-color); /* 🚀 鼠标悬浮时，自动变成你的宇宙亮青/高亮色 */
+}
+
+/* ---------------------------------------------------
+   社交图标栏规范
+   --------------------------------------------------- */
+.social-links {
+  display: flex;
+  gap: 35px;
+  margin-bottom: 35px;
+}
+
+.social-links img {
+  width: 24px;
+  height: 24px;
+  opacity: 0.6;
+  cursor: pointer;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+[data-theme="dark"] .social-links img {
+  filter: invert(1);
+  opacity: 0.8;
+}
+[data-theme="dark"] .social-links img:hover {
+  filter: invert(1) drop-shadow(0 0 5px #fff);
+}
+
+.social-links a {
+  font-size: 22px; /* 🚀 控制图标的物理大小 */
+  color: var(--text-color); /* 🚀 自动感知黑白主题，无需手动反色 */
+  opacity: 0.6;
+  position: relative; /* 为提示气泡提供定位基准 */
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    color 0.3s ease;
+}
+
+.social-links img:hover {
+  opacity: 1;
+  transform: translateY(-3px);
+}
+/* 悬停时的图标本体交互 */
+.social-links a:hover {
+  opacity: 1;
+  color: var(--accent-color); /* 悬停时瞬间变为你的空间站高亮色 */
+  transform: translateY(-4px) scale(1.1); /* 向上轻微弹跳并微放大 */
+}
+
+/* ---------------------------------------------------
+   悬浮气泡引擎
+   --------------------------------------------------- */
+
+/* 1. 初始隐藏的气泡外壳 */
+.social-links a::after {
+  content: attr(data-tooltip); /* 🚀 动态读取 HTML 中的 data-tooltip 文本 */
+  position: absolute;
+  bottom: -30px; /* 锁定在图标正下方 */
+  left: 50%;
+  transform: translateX(-50%) translateY(5px); /* 居中并稍微下移 */
+
+  font-size: 10px;
+  font-family: "Outfit", sans-serif;
+  letter-spacing: 0.5px;
+  white-space: nowrap; /* 强行不换行 */
+  padding: 5px 10px;
+  border-radius: 6px;
+  opacity: 0; /* 默认不可见 */
+  pointer-events: none; /* 穿透鼠标，防止干扰点击 */
+
+  /* 毛玻璃高级质感 */
+  background: var(--glass-bg, rgba(255, 255, 255, 0.08));
+  color: var(--text-color);
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.05));
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* 2. 悬停时优雅地向上淡入 */
+.social-links a:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0); /* 归位，产生微微升起的动态感 */
+}
+
+/* ---------------------------------------------------
+   研究兴趣卡片
+   --------------------------------------------------- */
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 15px;
+  margin-left: 13px;
+}
+.interest-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.interest-list li {
+  font-size: 0.95rem;
+  color: var(--t-color);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.interest-list li::before {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+}
+
+/* 兴趣卡片动效 */
+.interest-card {
+  width: 100%;
+  padding: 25px;
+  border-radius: 15px;
+  text-align: left;
+
+  /* 增加过渡 */
+  transition:
+    transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+    box-shadow 0.4s ease,
+    background-color 0.3s ease;
+}
+
+.interest-card:hover {
+  transform: scale(1.02); /* 🚀 轻微放大 2.5% */
+  background: var(--glass-hover-bg); /* 注入微弱毛玻璃亮光 */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------------------------------------------------
+   publication 和 相册
+   --------------------------------------------------- */
+
+.link-card {
+  width: 100%;
+  padding: 20px; /* 稍微收紧上下内边距 */
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px; /* 图标和文字之间的间距 */
+  margin-top: 20px; /* 卡片与上方的间距 */
+  box-sizing: border-box;
+
+  /* 🚀 缩放动画与毛玻璃 */
+  transition:
+    transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+    box-shadow 0.4s ease,
+    background-color 0.3s ease;
+}
+
+/* 悬停时轻微放大并亮起 */
+.link-card:hover {
+  transform: scale(1.02); /* 完美对齐 Research Interest 的放大比例 */
+  background: var(--glass-hover-bg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 左侧方形图标容器锁 */
+.link-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px; /* 微微圆角的正方形 */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* 防止卡片拉伸时把正方形图标挤扁 */
+}
+
+/* 正方形图片自适应撑满 */
+.link-card-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 保证裁切时图片不变形 */
+}
+
+/* 右侧文字区域 */
+.link-card-content {
+  display: flex;
+  align-items: center;
+}
+
+/* 清除原本标题自带的下边距，使其在正方形右侧完美垂直居中 */
+.link-card-content .card-title {
+  margin-bottom: 0 !important;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.link-card:hover .card-title {
+  color: var(--accent-color);
+  transition: color 0.3s ease;
+}
+
+/* ==========================================================================
+   右栏区域
+   ========================================================================== */
+
+.section-block {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 15px;
+  margin-left: 2.5px;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-color);
+  opacity: 0.85;
+}
+
+/* ---------------------------------------------------
+   技能卡片
+   --------------------------------------------------- */
+
+.skills-card p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--t-color);
+  margin-bottom: 5px;
+}
+.skills-card strong {
+  color: var(--text-color);
+  margin-right: 5px;
+}
+
+.skills-card {
+  padding: 20px;
+  border-radius: 15px;
+
+  /* 注入流畅的弹性物理曲线 */
+  transition:
+    transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+    box-shadow 0.4s ease,
+    background-color 0.3s ease;
+}
+
+.skills-card:hover {
+  transform: scale(1.015); /* 🚀 技能卡片面积较大，轻微放大 1.5% 质感最好 */
+  background: var(--glass-hover-bg);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------------------------------------------------
+   研究经历卡片
+   --------------------------------------------------- */
+
+.exp-card {
+  padding: 30px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition:
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.4s;
+}
+.exp-card:hover {
+  transform: translateX(10px);
+  background: var(--glass-hover-bg);
+}
+.exp-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  transition: color 0.3s;
+}
+.exp-card:hover .exp-title {
+  color: var(--accent-color);
+}
+.exp-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--t-color);
+}
+
+/* ==========================================================================
+   网页宠物 Om Nom 舱
+   ========================================================================== */
+
+.web-pet {
+  position: absolute; /* 🚀 绝对定位 */
+
+  /* 🚀 像素级对齐：利用负值让它完全飘到头像的左侧外，并垂直居中偏下靠齐 */
+  left: -45px; /* 贴在头像左边，数字越大越靠左 */
+  bottom: 21px; /* 距头像底部的距离 */
+  width: 70px; /* 大小 */
+  height: auto;
+
+  z-index: 11; /* 悬浮在头像边缘之上 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+
+  /* 弹性放大与阴影过渡曲线 */
+  transition:
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    filter 0.3s ease;
+
+  /* 阴影效果 */
+  filter: drop-shadow(4px 1px 1.5px rgba(0, 0, 0, 0.2));
+}
+
+/* 内部图片自适应撑满 */
+.web-pet img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  background: transparent !important;
+
+  pointer-events: auto;
+  cursor: pointer; /* 小手光标 */
+}
+
+/* 🚀 悬停交互：放大 15% 的同时，阴影向下扩散变深，营造真正的“悬浮立体感” */
+.web-pet:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(4.5px 2px 1.5px rgba(0, 0, 0, 0.2));
+}
+
+/* 点击瞬间（通过 JS 挂载该类名） */
+/* 弹到 xx 倍 + “果冻抖动”贝塞尔曲线 */
+.web-pet.is-clicking {
+  transform: scale(1.35) !important;
+  /* 0.1s 为过渡延迟 */
+  transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.45, 1.65) !important;
+}
+
+/* ---------------------------------------------------
+   宠物提示框
+   --------------------------------------------------- */
+
+.pet-bubble {
+  position: absolute;
+  top: -20px; /* 悬浮在小怪兽头顶 */
+  left: 50%;
+  transform: translateX(-50%) scale(0.8) translateY(5px);
+
+  font-size: 10px;
+
+  background: var(--pet-bg);
+
+  color: var(--text-color);
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+
+  opacity: 0;
+  pointer-events: none;
+  z-index: 11;
+  transition: all 0.25s ease;
+}
+
+/* 鼠标悬停在宠物上时，气泡完美浮现 */
+.web-pet:hover .pet-bubble {
+  opacity: 1;
+  transform: translateX(-50%) scale(1) translateY(0);
+}

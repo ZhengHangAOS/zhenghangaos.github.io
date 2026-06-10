@@ -1,0 +1,18 @@
+[
+  {
+    "title": "气象绘图指南",
+    "desc": "Python/NCL 数据可视化技巧。",
+    "imgSrc": "",
+    "link": "docs/lbrContent/"
+  },
+  {
+    "title": "气候模型入门",
+    "desc": "探索地球系统的未来走向。",
+    "imgSrc": ""
+  },
+  {
+    "title": "联系我",
+    "desc": "我的 GitHub 主页",
+    "imgSrc": ""
+  }
+]
