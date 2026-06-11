@@ -1,11 +1,11 @@
 /**
  * /src/js/drag-helper.js
- * 全局自适应：一键激活元素的 鼠标 + 手指 矩阵拖拽滚动
+ * 全局自适应：一键激活元素的 鼠标 + 手指 矩阵拖拽滚动（完美修复文章滚动卡死Bug）
  * @param {string} selector - 需要支持拖拽的容器选择器（如 '.planets-box'）
  */
 function initResponsiveDrag(selector) {
   const container = document.querySelector(selector);
-  if (!container) return; // 如果当前页面没这个元素，直接安全退出，不报错
+  if (!container) return;
 
   let isDragging = false;
   let startX, startY, scrollLeft, scrollTop;
@@ -24,10 +24,13 @@ function initResponsiveDrag(selector) {
 
   // 统一的滑动逻辑
   function dragMove(e) {
+    // ✨ 核心修复：如果当前并没有在拖拽星球，直接放行，让浏览器正常处理滚动
     if (!isDragging) return;
 
-    // 手机触摸滑动时，阻止浏览器默认的单指随屏滚动行为
-    if (e.touches) e.preventDefault();
+    // ✨ 核心修复：只有在真正拖拽星球时，才阻止手机浏览器的默认随屏晃动行为
+    if (e.touches) {
+      e.preventDefault();
+    }
 
     const pageX = e.touches ? e.touches[0].pageX : e.pageX;
     const pageY = e.touches ? e.touches[0].pageY : e.pageY;
@@ -54,6 +57,6 @@ function initResponsiveDrag(selector) {
 
   // 📱 手机触摸事件
   container.addEventListener("touchstart", startDrag, { passive: true });
-  container.addEventListener("touchmove", dragMove, { passive: false });
+  container.addEventListener("touchmove", dragMove, { passive: false }); // 必须保持 false 以便在拖拽时能有效拦截
   container.addEventListener("touchend", stopDrag);
 }
