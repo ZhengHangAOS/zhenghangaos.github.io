@@ -1,14 +1,14 @@
 /* ================= 页面整体基础滚动及解绑修补 ================= */
 html,
 body {
-  overflow-x: visible;
-  overflow-y: visible;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
   height: auto;
   min-height: 100vh;
 }
 
 main.article-layout {
-  overflow: visible;
+  overflow: visible !important;
 }
 
 /* 变量定义 */
