@@ -1,11 +1,73 @@
-@media (max-width: 768px) {
-  #main-container {
-    flex-direction: column;
-  } /* 瞬间变成上下堆叠 */
-  #left-panel {
-    width: 100%;
-  } /* 左栏卡片铺满屏幕 */
-  #canvas-container {
-    height: 40vh;
-  } /* 3D 画布固定收缩到屏幕上半部分 */
+/* ==========================================================================
+   /src/css/base/responsive.css
+   全局移动端响应式适配基础样式
+   ========================================================================== */
+
+/* 默认移动端优先或常规全局样式兜底：确保手机上丝滑滚动，避免缩放异常 */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden; /* 极其重要：防止移动端因内容溢出导致左右乱晃 */
+  -webkit-text-size-adjust: 100%; /* 防止 iOS 横屏时字体突然变大 */
+  -webkit-tap-highlight-color: transparent; /* 移除手机点击链接时尴尬的蓝色高亮边框 */
+}
+
+/* ==========================================================================
+   📱 移动端核心响应式断点（屏幕小于 768px 时自动生效）
+   ========================================================================== */
+@media screen and (max-width: 1000px) {
+  /* ---------- 1. 多栏布局变单栏顺次排列 ---------- */
+  /* 假设你的两栏/三栏容器使用了 Flex 布局 */
+  .container,
+  .main-layout,
+  .row {
+    flex-direction: column !important; /* 核心：强制轴线变为垂直方向 */
+    flex-wrap: nowrap !important;
+  }
+
+  /* 假设你的侧边栏和主内容区之前有固定的宽度 */
+  .sidebar,
+  .main-content,
+  .content-panel {
+    width: 100% !important; /* 手机上单栏必须撑满全屏 */
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 15px !important; /* 留出舒适的手机两边内边距 */
+  }
+
+  /* 如果你之前用了 CSS Grid 布局，也可以一键切回单栏 */
+  .grid-layout {
+    grid-template-columns: 1fr !important; /* 强制变成单列 */
+  }
+
+  /* ---------- 2. 左右两侧导航栏变顺次排列 ---------- */
+  /* 针对那些左边是 Logo/标题，右边是菜单的导航栏 */
+  .navbar,
+  .nav-container,
+  .header-inner {
+    flex-direction: column !important; /* 变成上下顺次排列 */
+    align-items: center !important; /* 手机上居中对称美观一点 */
+    gap: 10px !important; /* 拉开上下元素之间的间距 */
+  }
+
+  .nav-left,
+  .nav-right,
+  .nav-links {
+    width: 100% !important;
+    justify-content: center !important; /* 导航内部子项在手机上也居中 */
+    text-align: center;
+  }
+
+  /* ---------- 3. 优化移动端的手指微操体验 ---------- */
+  /* 增大手机网页按钮的可点击区域（符合人机工程学最小 44x44px 交互区域） */
+  button,
+  .btn,
+  .nav-links a {
+    min-height: 44px;
+    padding: 10px 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
