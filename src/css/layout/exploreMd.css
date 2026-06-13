@@ -1,0 +1,343 @@
+/* ==========================================================================
+   7. 剧场模式转场、右滑大卡片与 Markdown 渲染 (EXPLORE MODE & MD RENDER)
+   ========================================================================== */
+
+:root {
+  --cd-color: #061626;
+}
+
+[data-theme="light"] {
+  --cd-color: var(--bg-color);
+}
+
+/* ==========================================================================
+   7.1 剧场模式面板与转场动画 (THEATER TRANSITION & MODAL)
+   ========================================================================== */
+
+/* 右侧滑出科普大面板外壳 */
+.explore-modal {
+  position: fixed !important;
+  top: 3vh;
+  right: 2vw;
+  width: 45vw;
+  height: 94vh;
+  z-index: 350;
+  border-radius: 24px;
+  background-color: var(--cd-color);
+  padding: 40px;
+  overflow: hidden; /* 🎯 核心改动：外壳本身禁止滚动，把滚动权完全交还给内部的 #md-content */
+  box-shadow: -10px 10px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: auto;
+  transform: translateX(calc(100% + 40px));
+  transition:
+    transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.4s ease;
+}
+
+.explore-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0) !important;
+}
+
+/* 面板关闭按钮 */
+#close-explore-modal {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
+  z-index: 1010;
+}
+
+#close-explore-modal:hover {
+  transform: scale(1.2) rotate(90deg);
+  color: var(--accent-color);
+}
+
+/* 🌟 转场总闸：开启 GPU 硬件加速 */
+.col-left,
+.col-right,
+#planet-system-stage {
+  transition:
+    transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.5s ease !important;
+}
+
+/* 进入探索模式：左右两侧看板飞出 */
+body.is-exploring .col-left {
+  transform: translateX(-150%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.is-exploring .col-right {
+  transform: translateX(150%) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 只有在真正开始探索转场时，才动态激活 GPU 预准备，平时不激活 */
+body.is-exploring .col-left,
+body.is-exploring .col-right {
+  will-change: transform, opacity;
+}
+
+/* 进入探索模式：3D 星球左移 */
+body.is-exploring #planet-system-stage {
+  transform: translateX(-23vw) translateY(2.5vw) scale(0.95) !important;
+}
+
+/* 标题和小字跟着星球联动左移并微调完美靠左 */
+body.is-exploring .planet-header {
+  transform: translateX(-20vw) scale(0.9) !important;
+}
+
+/* 底部按钮群左移至左半边屏幕视觉中心 */
+body.is-exploring .planet-controls {
+  transform: translateX(-14vw);
+  pointer-events: auto;
+}
+
+/* 隐藏前一个、后一个和 EXPLORE 按钮，只保留暂停按钮 */
+body.is-exploring #btn-prev,
+body.is-exploring #btn-explore,
+body.is-exploring #btn-next {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* ==========================================================================
+   7.2 Markdown 文章精细排版样式 (MD CONTENT RENDER)
+   ========================================================================== */
+
+/* 容器设定：挂载在 .explore-modal 内部，独立撑满并支持滚动 */
+#md-content {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  box-sizing: border-box;
+
+  /* 极致学术阅读体验排版 */
+  color: var(--text-color, #e0e0e0);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  line-height: 1.65;
+  font-size: 0.95rem;
+  cursor: auto;
+}
+
+#md-content::-webkit-scrollbar {
+  display: none; /* 简单粗暴，直接物理抹除 */
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+/* 🎯 YAML 自动提取出的大标题样式 */
+.md-article-title {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 10px 0 25px 0;
+  letter-spacing: 0.5px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+/* 标题下方的科幻渐变分割线 */
+.md-article-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30vw;
+  height: 1px;
+  /* 🎯 使用全局高亮变量动态配对白天黑夜的核心色 */
+  background: var(--md-formula-color);
+}
+
+/* ==========================================================================
+   Markdown 文章内普通分割线样式 (<hr>)
+   ========================================================================== */
+#md-content hr {
+  border: none;
+  height: 1px; /* 🎯 锁死 1px，确保所有显示器都能画出这条线 */
+  background-color: var(--text-color, #fff); /* 让线跟随文字颜色 */
+  opacity: 0.2; /* 🎯 用超低透明度来实现“极细、极淡”的视觉效果 */
+  margin: 20px 0;
+}
+
+/* Markdown 标准元素层级排版 */
+#md-content h2 {
+  font-size: 1.25rem;
+  color: var(--text-color);
+  margin-top: 30px;
+  margin-bottom: 12px;
+  font-weight: 500;
+  border-left: 3px solid var(--accent-color, #4055fa);
+  padding-left: 10px;
+}
+
+#md-content h3 {
+  font-size: 1.08rem;
+  color: var(--text-color);
+  margin-top: 22px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+#md-content p {
+  margin: 0 0 14px 0;
+  text-align: justify; /* 两端对齐让整段文字边缘非常整齐 */
+}
+
+/* 科学思考/提示块样式 */
+#md-content blockquote {
+  margin: 15px 0;
+  padding: 10px 15px;
+  /* 🎯 变量替换：引用块背景与左边框 */
+  background: var(--md-quote-bg);
+  border-left: 4px solid var(--md-quote-border);
+  border-radius: 0 8px 8px 0;
+}
+#md-content blockquote p {
+  margin: 0;
+  font-style: italic;
+  color: inherit; /* 让它自适应全局正文色 */
+  opacity: 0.8; /* 增加轻微半透明，保证阅读时的次级层级感 */
+}
+
+/* 列表样式 */
+#md-content ul,
+#md-content ol {
+  margin: 0 0 15px 0;
+  padding-left: 20px;
+}
+#md-content li {
+  margin-bottom: 6px;
+}
+
+/* 🎯 LaTeX 块级公式样式调优 */
+.katex-display {
+  margin: 18px 0 !important;
+  padding: 12px;
+  /* 🎯 变量替换：块级公式背后的衬底 */
+  border-radius: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.katex-display::-webkit-scrollbar {
+  display: none;
+}
+
+/* 公式着色 */
+.katex {
+  font-size: 1.02em;
+  /* 🎯 变量替换：夜晚科技蓝 / 白天书卷蓝（即全局 accent-color） */
+  color: var(--md-formula-color);
+}
+
+/* 代码块样式 */
+#md-content code {
+  font-family: "Fira Code", Consolas, Monaco, monospace;
+  font-size: 0.85rem;
+  /* 🎯 变量替换：行内代码背景与文字颜色 */
+  background: var(--md-code-bg);
+  color: var(--md-code-inline);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+#md-content pre code {
+  display: block;
+  padding: 12px;
+  overflow-x: auto;
+  /* 🎯 变量替换：独立大代码块的背景与边框 */
+  background: var(--md-block-code-bg);
+  color: var(--text-color, #fff);
+  border: 1px solid var(--md-code-border);
+}
+
+/* ==========================================================================
+   7.3 精简版图片与 Caption 居中定位（彻底修复报错）
+   ========================================================================== */
+
+/* 🎯 1. 锁定所有 Markdown 内的图片和我们生成的 Caption 标签，强行让它们变成块级并居中 */
+#md-content img,
+#md-content .md-img-caption {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* 🎯 2. 给图片单独加上上下间距和缩放控制 */
+#md-content img {
+  margin-bottom: 10px; /* 留 10px 紧贴下面的楷体文字 */
+
+  /* 以下是你原本的样式 */
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow:
+    0 5px 10px rgba(0, 0, 0, 0.2),
+    0 1px 8px var(--md-code-border, rgba(255, 255, 255, 0.05));
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* 🎯 3. 楷体文字图题的专属微调 */
+#md-content .md-img-caption {
+  font-size: 0.85rem;
+  font-family: "STKaiti", "Kaiti SC", "华文楷体", "楷体", serif;
+  color: var(--text-color);
+  opacity: 0.65;
+  margin-top: 0;
+  margin-bottom: 25px; /* 与接下来的下一段正文拉开 25px 距离 */
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   7.4 小图靠左、图题靠右的弹性并排布局 (FLEX SIDE-BY-SIDE CAPTION)
+   ========================================================================== */
+
+/* 2. 核心修复：并排弹性容器的防溢出安全锁 */
+#md-content .md-img-flex-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 0 15px;
+
+  /* 🎯 关键：限制最大宽度并允许内部挤压，绝不撑开父级 */
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 3. 右侧侧边图题：强制斩断长链接 */
+#md-content .md-img-caption.layout-side {
+  display: inline-block;
+  text-align: left;
+  margin-top: 20px;
+  line-height: 1.5;
+  flex: 1;
+  padding-left: 10px;
+  border-left: 1.5px solid var(--md-code-border, rgba(255, 255, 255, 0.1));
+
+  word-break: break-all; /* 无论如何都在边界斩断换行 */
+  white-space: normal; /* 确保允许正常换行 */
+}

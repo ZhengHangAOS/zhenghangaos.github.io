@@ -3,6 +3,7 @@
   "name": "水星 Mercury",
   "project": "planetary",
   "galaxySystem": "太阳系",
+  "markdown": "/planets/S/markdown/s001.md",
   "radius": 0.38,
   "textureImg": "/planets/S/textures/s001/mercury.webp",
   "character": "极寒极热的蔽日铁核",

@@ -6,6 +6,7 @@
   "radius": 0.95,
   "character": "浓硫酸笼罩的温室",
   "textureImg": "/planets/S/textures/s002/venus_map.webp",
+  "markdown": "/planets/S/markdown/s002.md",
   "moons": {
     "count": 0,
     "satellites": []

@@ -3,6 +3,7 @@ window.ExploreApp = {
   currentPlanet: null,
   planetsList: [],
   isTransitioning: false,
+  isSwitching: false,
   onPlanetChange: null,
 };
 
@@ -13,6 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 初始化全局探索应用状态，增加鲁棒性
   window.ExploreApp = window.ExploreApp || {
     isTransitioning: false,
+    isSwitching: false,
     planetsList: [],
     currentPlanet: null,
   };
@@ -62,14 +64,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // ==========================================
-  // 🎯 左右切换按钮逻辑绑定（加入防卡死强制解锁）
+  // 🎯 左右切换按钮逻辑绑定（增加切星高压拦截线）
   // ==========================================
   const prevBtn = document.getElementById("btn-prev");
   const nextBtn = document.getElementById("btn-next");
 
   if (prevBtn) {
     prevBtn.onclick = () => {
-      // 如果不幸被卡死，点击按钮时若动画锁存在，强制保底释放
+      // 🌟 铁闸门：如果 3D 引擎正在切星，直接返回，不触发任何改字或切星动作（3D端已弹 alert 提示）
+      if (window.ExploreApp.isSwitching) return;
+
       if (window.ExploreApp.isTransitioning) {
         console.warn("检测到残留状态锁，左右切换强行解锁...");
         window.ExploreApp.isTransitioning = false;
@@ -82,6 +86,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (nextBtn) {
     nextBtn.onclick = () => {
+      // 🌟 铁闸门：同上，防止右箭头疯狂连点撕裂 UI
+      if (window.ExploreApp.isSwitching) return;
+
       if (window.ExploreApp.isTransitioning) {
         console.warn("检测到残留状态锁，左右切换强行解锁...");
         window.ExploreApp.isTransitioning = false;
@@ -367,12 +374,16 @@ function renderPlanetList() {
   });
 
   // 🎯 4. 终极绝杀：销毁旧代理，重新在父容器上建立唯一的【全局事件代理】
-  // 这样无论里面的 planet-item 怎么删、怎么变，点击事件绝对不会丢失！
-  container.onclick = null; // 擦除可能残存的旧监听
+  container.onclick = null;
   container.onclick = function (e) {
-    // 向上寻找最近的 .planet-item 节点
     const item = e.target.closest(".planet-item");
     if (!item) return;
+
+    // 🌟 核心拦截：如果 3D 引擎正忙着切星球呢，立刻在这里刹车！
+    // 这样既不会执行下方的 activatePlanet 去改中间的标题文字，也不会扰乱 3D 场景
+    if (window.ExploreApp && window.ExploreApp.isSwitching) {
+      return;
+    }
 
     // 强行把全场的状态锁当场释放，防止被其他文件的隐形错误死锁
     if (window.ExploreApp.isTransitioning) {
@@ -398,7 +409,6 @@ function renderPlanetList() {
     if (typeof activatePlanet === "function") {
       activatePlanet(idx, false, direction);
     } else {
-      // 容错降级：如果核心控制函数丢失，直接跨越层级强刷 3D 动线
       if (typeof window.switchToPlanet === "function") {
         window.switchToPlanet(
           window.ExploreApp.planetsList[idx],
@@ -409,8 +419,12 @@ function renderPlanetList() {
     }
   };
 }
+
 function switchPlanetByOffset(offset) {
-  if (window.ExploreApp.isTransitioning) return;
+  // 🌟 双重保险：只要过渡锁或者 3D 切星锁任意一个存在，就不允许执行偏移切换
+  if (window.ExploreApp.isTransitioning || window.ExploreApp.isSwitching)
+    return;
+
   const list = window.ExploreApp.planetsList;
   if (!list.length) return;
   const currentIdx = list.indexOf(window.ExploreApp.currentPlanet);

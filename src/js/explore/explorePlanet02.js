@@ -1,8 +1,3 @@
-/**
- * 🪐 ZhengHangAOS - Deep Space Planet Explore Engine (Dynamic Polar Vision Core)
- * 功能描述：基于“等视高极坐标归位”模型的 3D 星系电影级切换调度引擎
- */
-
 import {
   initSpaceBackground,
   updateSpaceBackground,
@@ -103,6 +98,8 @@ export function initExplorePlanet() {
   if (!window.ExploreApp) window.ExploreApp = {};
   window.ExploreApp.switchToPlanet = switchToPlanet;
 
+  window.ExploreApp.isSwitching = false;
+
   if (window.ExploreApp) {
     window.ExploreApp.onPlanetChange = (
       oldData,
@@ -176,7 +173,10 @@ function updatePlanetPolarPosition(
 }
 
 function switchToPlanet(planetData, isInitialLoad, direction = 1) {
-  if (isSwitching && !isInitialLoad) return;
+  if (isSwitching && !isInitialLoad) {
+    alert("星体折跃中，请等待当前星球就位！");
+    return;
+  }
 
   const newConfig = getPlanetCamConfig(planetData);
   const newBundle = buildPlanetSystem(planetData, newConfig.pRadius);
@@ -200,6 +200,7 @@ function switchToPlanet(planetData, isInitialLoad, direction = 1) {
   }
 
   isSwitching = true;
+  if (window.ExploreApp) window.ExploreApp.isSwitching = true;
   if (labelsContainer) labelsContainer.innerHTML = "";
 
   const oldBundle = currentPlanetBundle;
@@ -221,6 +222,7 @@ function switchToPlanet(planetData, isInitialLoad, direction = 1) {
       if (oldBundle) disposePlanet(oldBundle);
       newBundle.rootGroup.position.set(0, 0, 0);
       isSwitching = false;
+      if (window.ExploreApp) window.ExploreApp.isSwitching = false;
     },
   });
 
@@ -454,8 +456,12 @@ function initDragInteraction() {
     clickStartY = 0;
 
   function updateMouse(e) {
-    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    // 🌟 动态获取容器被 CSS 变型/平移后的真实视口矩形
+    const rect = container.getBoundingClientRect();
+
+    // 🌟 基于画布的真实物理边界，精准计算归一化设备坐标 (NDC)
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
   }
 
   window.addEventListener("mousemove", (e) => {
@@ -596,8 +602,9 @@ function initDragInteraction() {
    6. 动画大循环板块 (Render Loop & Performance Optimization)
    ========================================================================== */
 function handleResume() {
-  if (isTabActive && isWindowFocused && !isModalOpen) {
-    clock.getDelta(); // 防止恢复时由于时间差导致的动画跳变
+  // 🌟 修复：移除 !isModalOpen 的限制。无论什么模式，恢复时都必须吞掉积压的时间
+  if (isTabActive && isWindowFocused) {
+    clock.getDelta();
   }
 }
 
@@ -680,13 +687,17 @@ function initPerformanceObserver() {
 function animate() {
   requestAnimationFrame(animate);
 
-  // 🛑 终极拦截：后台隐藏、失去焦点、弹窗被打开时，阻断一切 GPU 与 CPU 开销
-  if (!isTabActive || !isWindowFocused || isModalOpen) return;
+  if (!isTabActive || !isWindowFocused) return;
 
-  // 🌟 修改点 1：控制时间步长。手动暂停时强制 delta 为 0，不再向前推进时间轴
-  const delta = isManualPaused ? 0 : clock.getDelta();
+  // 🌟 核心修复：把获取实际时间的动作独立出来，保证时钟内部不积压时间
+  const rawDelta = clock.getDelta();
 
-  // 🌌 修改点 2：星空背景。若用户开启手动暂停，背景也停止滚动
+  // 然后再根据暂停状态，决定要不要把这个增量时间注入到动画系统里
+  const delta = isManualPaused ? 0 : rawDelta;
+
+  // 🌌 星空背景... (后面代码保持不变)
+
+  // 🌌 2：星空背景。若用户开启手动暂停，背景也停止滚动
   if (!isManualPaused) {
     updateSpaceBackground(delta);
   }
