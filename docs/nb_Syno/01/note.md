@@ -6,6 +6,8 @@ words: 3450
 duration: 12
 ---
 
+> 本文的更详细版请见[《极地渦旋的位渦梯度结构与非线性稳定性阈值》](/article.html?path=/docs/research/r03.md)
+
 ## 1. 引言与物理背景
 
 极地涡旋（Polar Vortex）作为平流层大气的核心环流系统，其非线性稳定度直接决定了中高纬度极端冷事件的发生概率。在本节中，我们将利用准两维 Quasi-Geostrophic (QG) 模型，推导非线性稳定性的临界阈值。
