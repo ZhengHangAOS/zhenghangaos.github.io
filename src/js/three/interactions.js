@@ -16,27 +16,52 @@ export function initDragInteraction(renderer, camera) {
 
   let prevX = 0;
   let prevY = 0;
+  let activeTouchId = null;
 
   const state = window.interactionState;
 
   // 统一的坐标计算函数
-  function updateMousePos(e) {
+  function updateMousePos({ clientX, clientY }) {
     const rect = container.getBoundingClientRect();
-    state.mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    state.mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    state.mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    state.mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+  }
+
+  function startDrag({ clientX, clientY }) {
+    updateMousePos({ clientX, clientY });
+    raycaster.setFromCamera(state.mouse, camera);
+
+    if (raycaster.intersectObject(planetCore).length === 0) return false;
+
+    state.isDragging = true;
+    prevX = clientX;
+    prevY = clientY;
+    container.style.cursor = "grabbing";
+    return true;
+  }
+
+  function drag({ clientX, clientY }) {
+    const deltaX = (clientX - prevX) * 0.005;
+    const deltaY = (clientY - prevY) * 0.005;
+
+    interactionGroup.rotateOnWorldAxis(yAxis, deltaX);
+    interactionGroup.rotateOnWorldAxis(xAxis, deltaY);
+
+    prevX = clientX;
+    prevY = clientY;
+  }
+
+  function stopDrag() {
+    if (!state.isDragging) return;
+
+    state.isDragging = false;
+    state.isMouseMoved = true;
+    activeTouchId = null;
   }
 
   // --- A. 画布内点击事件 ---
   container.addEventListener("mousedown", (e) => {
-    updateMousePos(e);
-    raycaster.setFromCamera(state.mouse, camera);
-
-    if (raycaster.intersectObject(planetCore).length > 0) {
-      state.isDragging = true;
-      prevX = e.clientX;
-      prevY = e.clientY;
-      container.style.cursor = "grabbing";
-    }
+    startDrag(e);
   });
 
   // --- B. 画布内移动：仅更新坐标和标记锁，0计算量 ---
@@ -50,22 +75,54 @@ export function initDragInteraction(renderer, camera) {
   window.addEventListener("mousemove", (e) => {
     if (!state.isDragging) return;
 
-    const deltaX = (e.clientX - prevX) * 0.005;
-    const deltaY = (e.clientY - prevY) * 0.005;
-
-    interactionGroup.rotateOnWorldAxis(yAxis, deltaX);
-    interactionGroup.rotateOnWorldAxis(xAxis, deltaY);
-
-    prevX = e.clientX;
-    prevY = e.clientY;
+    drag(e);
   });
 
   // --- D. 全局鼠标抬起 ---
   window.addEventListener("mouseup", () => {
-    if (state.isDragging) {
-      state.isDragging = false;
-      // 抬起时标记移动，让主循环立刻重算一次指针样式（防止松开时游标卡在 grabbing）
-      state.isMouseMoved = true;
-    }
+    stopDrag();
   });
+
+  // --- E. 触屏拖拽：与鼠标使用相同的命中检测和旋转计算 ---
+  container.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.touches.length !== 1) return;
+
+      const touch = e.touches[0];
+      if (startDrag(touch)) {
+        activeTouchId = touch.identifier;
+        e.preventDefault();
+      }
+    },
+    { passive: false },
+  );
+
+  window.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!state.isDragging || activeTouchId === null) return;
+
+      const touch = Array.from(e.touches).find(
+        ({ identifier }) => identifier === activeTouchId,
+      );
+      if (!touch) return;
+
+      e.preventDefault();
+      drag(touch);
+    },
+    { passive: false },
+  );
+
+  function endTouchDrag(e) {
+    if (activeTouchId === null) return;
+
+    const didEnd = Array.from(e.changedTouches).some(
+      ({ identifier }) => identifier === activeTouchId,
+    );
+    if (didEnd) stopDrag();
+  }
+
+  window.addEventListener("touchend", endTouchDrag);
+  window.addEventListener("touchcancel", endTouchDrag);
 }

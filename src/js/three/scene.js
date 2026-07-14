@@ -1,4 +1,4 @@
-import { camera } from "./camera.js";
+import { camera, updateHeroCameraForViewport } from "./camera.js";
 import { renderer } from "./renderer.js";
 import { ambientLight, directionalLight, backLight } from "./lighting.js";
 import {
@@ -28,6 +28,8 @@ let customTime = 0;
 // ==========================================
 
 export function initScene() {
+  updateHeroCameraForViewport();
+
   scene.background = new THREE.Color(0x010308);
 
   scene.add(ambientLight);
@@ -43,6 +45,8 @@ export function initScene() {
 
   // 传入 camera 供交互文件使用
   initDragInteraction(renderer, camera);
+
+  window.addEventListener("resize", updateHeroCameraForViewport);
 
   // ==========================================
   // 🚀 性能优化：标签页激活与窗口焦点监听器
