@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="src/css/components/cards.css" />
 
     <!-- 响应式 -->
-    <link rel="stylesheet" href="/src/css/base/responsive.css" />
+    <link rel="stylesheet" href="src/css/responsive/hpg.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -60,7 +60,26 @@
       </div>
       <!-- 左侧组合区结束 -->
 
-      <div class="nav-right">
+      <div class="nav-right" id="mobile-navigation">
+        <button
+          class="mobile-menu-close"
+          type="button"
+          aria-label="Close navigation menu"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </button>
+
+        <a
+          class="mobile-sidebar-avatar"
+          href="pages/me.html"
+          aria-label="My profile"
+          style="
+            background-image: url(&quot;public/images/touxiang/touxiang.webp&quot;);
+          "
+        ></a>
+
         <!-- 1. 搜索框组合 -->
         <div class="search-container glass">
           <input type="text" class="search-input" placeholder="Search..." />
@@ -110,43 +129,54 @@
           </div>
         </div>
 
-        <!-- 3. 控制区 -->
-        <div class="controls">
-          <div class="btn-circle glass" id="theme-toggle">
-            <svg
-              id="icon-moon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </div>
-          <div class="btn-circle glass" id="lang-toggle">EN</div>
-
-          <!-- 彩色框头像 -->
-          <div
-            class="avatar-btn"
-            style="
-              background-image: url(&quot;public/images/touxiang/touxiang.webp&quot;);
-            "
-            onclick="window.location.href = 'pages/me.html'"
-          ></div>
-        </div>
       </div>
+
+      <!-- 主题、语言与个人入口：移动端显示在菜单按钮左侧。 -->
+      <div class="controls homepage-controls">
+        <div class="btn-circle glass" id="theme-toggle">
+          <svg
+            id="icon-moon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </div>
+        <div class="btn-circle glass" id="lang-toggle">EN</div>
+
+        <div
+          class="avatar-btn"
+          style="
+            background-image: url(&quot;public/images/touxiang/touxiang.webp&quot;);
+          "
+          onclick="window.location.href = 'pages/me.html'"
+        ></div>
+      </div>
+
+      <button
+        class="mobile-menu-toggle btn-circle glass"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-controls="mobile-navigation"
+        aria-expanded="false"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
     </nav>
+    <div class="mobile-nav-backdrop" aria-hidden="true"></div>
 
     <main class="homepage-layout">
       <!-- ================= 左栏 ================= -->
       <aside class="left-col">
         <h1 class="main-title">
-          <span class="ttc-a">A</span>tmos<span class="ttc-a">O</span>cean<span
-            class="ttc-a"
-            >S</span
-          >ci <span class="ttc-b">L</span>ab
+          <span class="ttc-a">P</span>lanetary
+          <span class="ttc-b">A</span>tmospheres
         </h1>
 
         <!-- 三个纵向突破边界卡片 -->
@@ -305,6 +335,7 @@
     <!--全局主题管理-->
     <script src="/src/js/global/theme.js"></script>
     <script src="/src/js/global/launch.js" defer></script>
+    <script src="src/js/homepage/mobileNav.js" defer></script>
     <!--拖拽支持-->
     <script src="/src/js/global/drager.js"></script>
     <script type="module" src="src/js/homepage/app.js"></script>

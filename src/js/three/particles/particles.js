@@ -14,8 +14,8 @@ for (let i = 0; i < starsCount; i++) {
   const theta = u * 2.0 * Math.PI;
   const phi = Math.acos(2.0 * v - 1.0);
 
-  // 2. 🛠️ 控制星星的物理范围：只出现在距离球心 20 到 100 的遥远外壳（行星半径才4，安全区极大）
-  const minRadius = 20;
+  // 2. 🛠️ 控制星星的物理范围：只出现在距离球心 25 到 100 的遥远外壳（行星半径才4，安全区极大）
+  const minRadius = 25;
   const maxRadius = 100;
   const radius = minRadius + Math.random() * (maxRadius - minRadius);
 
@@ -47,7 +47,7 @@ starsGeo.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
 starsGeo.setAttribute("color", new THREE.BufferAttribute(colorsArray, 3)); // ✨ 把颜色存入
 
 const starsMat = new THREE.PointsMaterial({
-  size: 0.15,
+  size: 0.18,
   vertexColors: true,
   transparent: true,
   opacity: 0.8,

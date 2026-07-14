@@ -280,16 +280,47 @@ export async function initRightPlanet() {
   const mouse = new THREE.Vector2();
   let isDragging = false;
   let isMouseMoved = false;
+  let activeTouchId = null;
   let prevX = 0,
     prevY = 0;
 
   const xAxis = new THREE.Vector3(1, 0, 0);
   const yAxis = new THREE.Vector3(0, 1, 0);
 
-  function updateMousePos(e) {
+  function updateMousePos({ clientX, clientY }) {
     const rect = container.getBoundingClientRect();
-    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+  }
+
+  function startDrag({ clientX, clientY }) {
+    updateMousePos({ clientX, clientY });
+    raycaster.setFromCamera(mouse, camera);
+    if (raycaster.intersectObject(planetCore).length === 0) return false;
+
+    isDragging = true;
+    prevX = clientX;
+    prevY = clientY;
+    container.style.cursor = "grabbing";
+    return true;
+  }
+
+  function drag({ clientX, clientY }) {
+    const deltaX = (clientX - prevX) * 0.005;
+    const deltaY = (clientY - prevY) * 0.005;
+
+    interactionGroup.rotateOnWorldAxis(yAxis, deltaX);
+    interactionGroup.rotateOnWorldAxis(xAxis, deltaY);
+
+    prevX = clientX;
+    prevY = clientY;
+  }
+
+  function stopDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    activeTouchId = null;
+    container.style.cursor = "grab";
   }
 
   container.addEventListener("mousemove", (e) => {
@@ -298,35 +329,62 @@ export async function initRightPlanet() {
   });
 
   container.addEventListener("mousedown", (e) => {
-    updateMousePos(e);
-    raycaster.setFromCamera(mouse, camera);
-    if (raycaster.intersectObject(planetCore).length > 0) {
-      isDragging = true;
-      prevX = e.clientX;
-      prevY = e.clientY;
-      container.style.cursor = "grabbing";
-    }
+    startDrag(e);
   });
 
   window.addEventListener("mousemove", (e) => {
     if (isDragging) {
-      const deltaX = (e.clientX - prevX) * 0.005;
-      const deltaY = (e.clientY - prevY) * 0.005;
-
-      interactionGroup.rotateOnWorldAxis(yAxis, deltaX);
-      interactionGroup.rotateOnWorldAxis(xAxis, deltaY);
-
-      prevX = e.clientX;
-      prevY = e.clientY;
+      drag(e);
     }
   });
 
   window.addEventListener("mouseup", () => {
-    if (isDragging) {
-      isDragging = false;
-      container.style.cursor = "grab";
-    }
+    stopDrag();
   });
+
+  container.addEventListener(
+    "touchstart",
+    (e) => {
+      if (e.touches.length !== 1) return;
+
+      const touch = e.touches[0];
+      if (startDrag(touch)) {
+        activeTouchId = touch.identifier;
+        e.preventDefault();
+      }
+    },
+    { passive: false },
+  );
+
+  window.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!isDragging || activeTouchId === null) return;
+
+      const touch = Array.from(e.touches).find(
+        ({ identifier }) => identifier === activeTouchId,
+      );
+      if (!touch) return;
+
+      e.preventDefault();
+      drag(touch);
+    },
+    { passive: false },
+  );
+
+  function endTouchDrag(e) {
+    if (activeTouchId === null) return;
+    if (
+      Array.from(e.changedTouches).some(
+        ({ identifier }) => identifier === activeTouchId,
+      )
+    ) {
+      stopDrag();
+    }
+  }
+
+  window.addEventListener("touchend", endTouchDrag);
+  window.addEventListener("touchcancel", endTouchDrag);
 
   // ========================== H. 性能优化与动画渲染 ==========================
   const clock = new THREE.Clock();
@@ -340,11 +398,12 @@ export async function initRightPlanet() {
   let isTabActive = document.visibilityState === "visible";
   let isWindowFocused = document.hasFocus(); // 初始化获取当前窗口焦点状态
   let isInViewport = true; // 默认由 Observer 接管赋值
+  let isMobileMenuOpen = Boolean(window.isHomepageMobileMenuOpen);
 
   // 2. 状态恢复时的“防瞬移”处理函数
   function handleResume() {
     // 只有当三个条件同时满足（即真正要恢复渲染的瞬间）
-    if (isTabActive && isWindowFocused && isInViewport) {
+    if (isTabActive && isWindowFocused && isInViewport && !isMobileMenuOpen) {
       clock.getDelta(); // 🌟 核心：在此刻调用一次，吞掉暂停期间积累的巨大时间差
     }
   }
@@ -362,6 +421,10 @@ export async function initRightPlanet() {
   window.addEventListener("focus", () => {
     isWindowFocused = true;
     handleResume();
+  });
+  window.addEventListener("homepage:mobile-menu", (event) => {
+    isMobileMenuOpen = Boolean(event.detail?.open);
+    if (!isMobileMenuOpen) handleResume();
   });
 
   // 5. 视口交叉监听 (应对星球大卡片被划走)
@@ -386,7 +449,14 @@ export async function initRightPlanet() {
     requestAnimationFrame(animate);
 
     // 🛑 终极拦截器：只要有任何一个条件不满足，立刻终止这帧的计算与渲染
-    if (!isTabActive || !isWindowFocused || !isInViewport) return;
+    if (
+      !isTabActive ||
+      !isWindowFocused ||
+      !isInViewport ||
+      isMobileMenuOpen
+    ) {
+      return;
+    }
 
     // 只有在渲染状态下，才累加 CustomTime
     const delta = clock.getDelta();

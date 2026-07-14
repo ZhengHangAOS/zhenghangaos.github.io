@@ -117,6 +117,7 @@ let currentWeather = null;
 let isWeatherVisible = true;
 let isTabVisible = true;
 let isWindowFocused = true;
+let isMobileMenuOpen = Boolean(window.isHomepageMobileMenuOpen);
 let currentActiveEffectFn = null; // 用于在切回窗口时自动无缝重启动画
 
 function setupVisibilityListeners() {
@@ -125,7 +126,7 @@ function setupVisibilityListeners() {
   window.hasWeatherVisibilityListener = true;
 
   function updateWeatherVisibility() {
-    const nextState = isTabVisible && isWindowFocused;
+    const nextState = isTabVisible && isWindowFocused && !isMobileMenuOpen;
     if (nextState !== isWeatherVisible) {
       isWeatherVisible = nextState;
       if (isWeatherVisible) {
@@ -151,6 +152,10 @@ function setupVisibilityListeners() {
   });
   window.addEventListener("focus", () => {
     isWindowFocused = true;
+    updateWeatherVisibility();
+  });
+  window.addEventListener("homepage:mobile-menu", (event) => {
+    isMobileMenuOpen = Boolean(event.detail?.open);
     updateWeatherVisibility();
   });
 }

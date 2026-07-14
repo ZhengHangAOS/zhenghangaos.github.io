@@ -1,6 +1,5 @@
 /* ========================================================================== 
    首页 Hero：移动端覆盖样式
-   仅由 index.html 引入，不影响其他页面。
    ========================================================================== */
 
 @media screen and (max-width: 800px) {
@@ -76,7 +75,7 @@
 
   footer {
     padding: 0 max(20px, env(safe-area-inset-right))
-      max(24px, env(safe-area-inset-bottom))
+      max(32px, env(safe-area-inset-bottom))
       max(20px, env(safe-area-inset-left));
   }
 
@@ -118,6 +117,6 @@
   }
 
   footer {
-    padding-bottom: max(14px, env(safe-area-inset-bottom));
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
   }
 }
