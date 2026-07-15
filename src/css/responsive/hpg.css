@@ -32,6 +32,23 @@
     overflow-y: auto;
   }
 
+  /* 移动端不保留鼠标悬停造成的放大，仅天气组件保留原有反馈。 */
+  .card-3d:hover,
+  .landing-btn:hover,
+  .btn-circle:hover,
+  .stack-card:hover {
+    transform: none !important;
+    box-shadow: none;
+  }
+
+  .card-3d:hover .card-graphic {
+    transform: translateX(-50%);
+  }
+
+  .weather-widget:hover {
+    transform: scale(1.08);
+  }
+
   body.mobile-menu-open {
     overflow: hidden;
   }

@@ -25,6 +25,7 @@
 
     <!-- 响应式 -->
     <link rel="stylesheet" href="src/css/responsive/hpg.css" />
+    <link rel="stylesheet" href="src/css/responsive/mobileNav.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -36,7 +37,12 @@
     <!-- 底部天气地面元素层 (积水、雪人、落叶等) -->
     <div id="weather-ground"></div>
 
-    <nav class="home-nav">
+    <nav
+      class="home-nav"
+      data-responsive-menu="homepage"
+      data-menu-open-class="mobile-menu-open"
+      data-menu-event="homepage:mobile-menu"
+    >
       <div class="nav-left">
         <!-- 1. 轻拟物天气系统 -->
         <div class="weather-wrapper">
@@ -63,6 +69,7 @@
       <div class="nav-right" id="mobile-navigation">
         <button
           class="mobile-menu-close"
+          data-responsive-menu-close="homepage"
           type="button"
           aria-label="Close navigation menu"
         >
@@ -73,6 +80,7 @@
 
         <a
           class="mobile-sidebar-avatar"
+          data-responsive-menu-avatar
           href="pages/me.html"
           aria-label="My profile"
           style="
@@ -159,6 +167,7 @@
 
       <button
         class="mobile-menu-toggle btn-circle glass"
+        data-responsive-menu-toggle="homepage"
         type="button"
         aria-label="Open navigation menu"
         aria-controls="mobile-navigation"
@@ -169,7 +178,11 @@
         </svg>
       </button>
     </nav>
-    <div class="mobile-nav-backdrop" aria-hidden="true"></div>
+    <div
+      class="mobile-nav-backdrop"
+      data-responsive-menu-backdrop="homepage"
+      aria-hidden="true"
+    ></div>
 
     <main class="homepage-layout">
       <!-- ================= 左栏 ================= -->
@@ -335,7 +348,7 @@
     <!--全局主题管理-->
     <script src="/src/js/global/theme.js"></script>
     <script src="/src/js/global/launch.js" defer></script>
-    <script src="src/js/homepage/mobileNav.js" defer></script>
+    <script src="src/js/responsiveJS/mobileNav.js" defer></script>
     <!--拖拽支持-->
     <script src="/src/js/global/drager.js"></script>
     <script type="module" src="src/js/homepage/app.js"></script>

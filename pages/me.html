@@ -26,14 +26,31 @@
 
     <!-- 响应式 -->
     <link rel="stylesheet" href="/src/css/base/responsive.css" />
+    <link rel="stylesheet" href="/src/css/responsive/abme.css" />
+    <link rel="stylesheet" href="/src/css/responsive/mobileNav.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   </head>
   <body>
-    <nav class="home-nav">
+    <nav
+      class="home-nav"
+      data-responsive-menu="me"
+      data-menu-open-class="me-menu-open"
+    >
       <div class="nav-left"></div>
 
-      <div class="nav-right">
+      <div class="nav-right" id="me-mobile-navigation">
+        <button
+          class="me-menu-close"
+          data-responsive-menu-close="me"
+          type="button"
+          aria-label="Close navigation menu"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18"></path>
+          </svg>
+        </button>
+
         <div class="nav-bar glass">
           <div
             class="btn-circle"
@@ -70,27 +87,46 @@
           </div>
         </div>
 
-        <div class="controls">
-          <div
-            class="btn-circle glass"
-            id="theme-toggle"
-            style="cursor: pointer"
+      </div>
+
+      <div class="me-top-actions">
+        <div
+          class="btn-circle glass"
+          id="theme-toggle"
+          style="cursor: pointer"
+        >
+          <svg
+            id="icon-moon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           >
-            <svg
-              id="icon-moon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </div>
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
         </div>
       </div>
+
+      <button
+        class="me-menu-toggle btn-circle glass"
+        data-responsive-menu-toggle="me"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="me-mobile-navigation"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
     </nav>
+    <div
+      class="me-menu-backdrop"
+      data-responsive-menu-backdrop="me"
+      aria-hidden="true"
+    ></div>
 
     <!-- =========================== 主栏目 =========================== -->
 
@@ -98,31 +134,33 @@
       <!-- ------------------------------------ 左栏 ------------------------------------ -->
       <aside class="profile-sidebar">
         <!-- ------ 头像 & 宠物 ------- -->
-        <div
-          class="avatar-container"
-          style="position: relative; display: inline-block"
-        >
-          <div class="web-pet" id="my-pet">
-            <div class="pet-bubble">宠物：Om Nom</div>
-            <img src="/public/images/pet/omnom01.gif" alt="Om Nom" />
-          </div>
-          <img
-            src="/public/images/touxiang/touxiang.webp"
-            alt="Avatar"
-            class="profile-avatar"
-          />
-        </div>
-        <h1 class="profile-name">Zhenghang Liu</h1>
-        <h3 class="profile-title">Undergraduate</h3>
-        <p class="profile-univ">
-          <a
-            href="https://aos.fudan.edu.cn"
-            target="_blank"
-            rel="noopener noreferrer"
+        <div class="profile-identity">
+          <div
+            class="avatar-container"
+            style="position: relative; display: inline-block"
           >
-            Department of AOS, Fudan University
-          </a>
-        </p>
+            <div class="web-pet" id="my-pet">
+              <div class="pet-bubble">宠物：Om Nom</div>
+              <img src="/public/images/pet/omnom01.gif" alt="Om Nom" />
+            </div>
+            <img
+              src="/public/images/touxiang/touxiang.webp"
+              alt="Avatar"
+              class="profile-avatar"
+            />
+          </div>
+          <h1 class="profile-name">Zhenghang Liu</h1>
+          <h3 class="profile-title">Undergraduate</h3>
+          <p class="profile-univ">
+            <a
+              href="https://aos.fudan.edu.cn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Department of AOS, Fudan University
+            </a>
+          </p>
+        </div>
 
         <!-- ------ 社交链接 ------- -->
 
@@ -176,7 +214,7 @@
         <!-- ------ publication ------- -->
 
         <div
-          class="link-card glass"
+            class="link-card glass publication-card"
           onclick="
             window.location.href =
               '/article.html?path=/docs/research/publication.md'
@@ -194,7 +232,7 @@
         <!-- ------ 相册 ------- -->
 
         <div
-          class="link-card glass"
+            class="link-card glass gallery-card"
           onclick="window.location.href = '/gallery/gallery.html'"
           style="cursor: pointer"
         >
@@ -300,6 +338,7 @@
     <!--全局主题管理-->
     <script src="/src/js/global/theme.js"></script>
     <script src="/src/js/global/launch.js" defer></script>
+    <script src="/src/js/responsiveJS/mobileNav.js" defer></script>
     <script type="module" src="/src/js/me/app.js"></script>
   </body>
 </html>

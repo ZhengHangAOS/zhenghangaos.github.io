@@ -27,6 +27,8 @@
 
     <!-- 响应式 -->
     <link rel="stylesheet" href="/src/css/base/responsive.css" />
+    <link rel="stylesheet" href="/src/css/responsive/atcl.css" />
+    <link rel="stylesheet" href="/src/css/responsive/mobileNav.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link
@@ -43,10 +45,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   </head>
   <body>
-    <nav class="home-nav">
+    <nav
+      class="home-nav"
+      data-responsive-menu="article"
+      data-menu-open-class="article-menu-open"
+    >
       <div class="nav-left"></div>
 
-      <div class="nav-right">
+      <button
+        class="article-toc-toggle btn-circle glass"
+        type="button"
+        aria-label="Open content menu"
+        aria-controls="sidebar-left"
+        aria-expanded="false"
+      >
+        <i class="fa-solid fa-book-open"></i>
+      </button>
+
+      <div class="nav-right" id="article-mobile-navigation">
+        <button
+          class="article-menu-close"
+          data-responsive-menu-close="article"
+          type="button"
+          aria-label="Close navigation menu"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
         <div class="nav-bar glass">
           <div
             class="btn-circle"
@@ -82,35 +107,51 @@
           </div>
         </div>
 
-        <div class="controls">
-          <div
-            class="btn-circle glass"
-            id="theme-toggle"
-            style="cursor: pointer"
-          >
-            <svg
-              id="icon-moon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </div>
+        <div
+          class="avatar-btn article-sidebar-avatar"
+          style="
+            background-image: url(&quot;public/images/touxiang/touxiang.webp&quot;);
+          "
+          onclick="window.location.href = 'pages/me.html'"
+        ></div>
+      </div>
 
-          <div
-            class="avatar-btn"
-            style="
-              background-image: url(&quot;public/images/touxiang/touxiang.webp&quot;);
-            "
-            onclick="window.location.href = 'pages/me.html'"
-          ></div>
+      <div class="article-top-actions">
+        <div
+          class="btn-circle glass"
+          id="theme-toggle"
+          style="cursor: pointer"
+        >
+          <svg
+            id="icon-moon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
         </div>
       </div>
+
+      <button
+        class="article-menu-toggle btn-circle glass"
+        data-responsive-menu-toggle="article"
+        type="button"
+        aria-label="Open site navigation"
+        aria-expanded="false"
+        aria-controls="article-mobile-navigation"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </nav>
+    <div
+      class="article-menu-backdrop"
+      data-responsive-menu-backdrop="article"
+      aria-hidden="true"
+    ></div>
 
     <header class="article-banner" id="banner">
       <div class="banner-mask"></div>
@@ -142,6 +183,13 @@
 
     <main class="article-layout" id="article-layout">
       <aside class="sidebar-left" id="sidebar-left">
+        <button
+          class="article-toc-close"
+          type="button"
+          aria-label="Close content menu"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
         <h3><i class="fa-solid fa-book-open fa-fw"></i> Content</h3>
         <ul class="toc-list" id="notebook-toc"></ul>
       </aside>
@@ -170,6 +218,8 @@
     <!--全局主题管理-->
     <script src="/src/js/global/theme.js"></script>
     <script src="/src/js/global/launch.js" defer></script>
+    <script src="/src/js/responsiveJS/mobileNav.js" defer></script>
+    <script src="/src/js/article/mobileToc.js" defer></script>
     <script type="module" src="/src/js/article/app.js"></script>
   </body>
 </html>

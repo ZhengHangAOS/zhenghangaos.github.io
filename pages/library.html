@@ -26,14 +26,20 @@
     <script src="/src/js/global/theme.js"></script>
     <link rel="stylesheet" href="/src/css/layout/library.css" />
 
-    <!-- 响应式 -->
-    <link rel="stylesheet" href="/src/css/base/responsive.css" />
+    <!-- 移动端适配 -->
+    <link rel="stylesheet" href="/src/css/responsive/lbr.css" />
+    <link rel="stylesheet" href="/src/css/responsive/mobileNav.css" />
 
     <script src="/src/js/global/launch.js" defer></script>
     <script src="/src/js/library/app.js" defer></script>
+    <script src="/src/js/responsiveJS/mobileNav.js" defer></script>
   </head>
   <body>
-    <nav class="home-nav">
+    <nav
+      class="home-nav"
+      data-responsive-menu="library"
+      data-menu-open-class="library-menu-open"
+    >
       <div class="nav-left">
         <img
           src="/public/images/icon/tsg.webp"
@@ -43,7 +49,24 @@
         <span>Library Notebooks</span>
       </div>
 
-      <div class="nav-right">
+      <div class="nav-right" id="library-mobile-navigation">
+        <button
+          class="library-menu-close"
+          data-responsive-menu-close="library"
+          type="button"
+          aria-label="Close navigation menu"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <a
+          class="library-sidebar-avatar"
+          data-responsive-menu-avatar
+          href="/pages/me.html"
+          aria-label="My profile"
+          style="background-image: url('/public/images/touxiang/touxiang.webp')"
+        ></a>
+
         <div class="nav-bar glass">
           <div
             class="btn-circle"
@@ -63,6 +86,14 @@
           </div>
 
           <div
+            class="btn-circle library-nav-current"
+            data-tooltip="Library"
+            onclick="window.location.href = '/pages/library.html'"
+            style="cursor: pointer"
+          >
+            <img src="/public/images/icon/tsg.webp" alt="Library" />
+          </div>
+          <div
             class="btn-circle"
             id="launch-btn"
             data-tooltip="To Space"
@@ -71,24 +102,40 @@
             <img src="/public/images/icon/landing.webp" alt="Launch" />
           </div>
         </div>
-
-        <div class="controls">
-          <div
-            class="btn-circle glass"
-            id="theme-toggle"
-            style="cursor: pointer"
-          ></div>
-
-          <div
-            class="avatar-btn"
-            style="
-              background-image: url(&quot;/public/images/touxiang/touxiang.webp&quot;);
-            "
-            onclick="window.location.href = '/pages/me.html'"
-          ></div>
-        </div>
       </div>
+
+      <div class="library-top-actions">
+        <div
+          class="btn-circle glass"
+          id="theme-toggle"
+          aria-label="Toggle theme"
+          style="cursor: pointer"
+        ></div>
+        <div
+          class="avatar-btn library-top-avatar"
+          style="
+            background-image: url(&quot;/public/images/touxiang/touxiang.webp&quot;);
+          "
+          onclick="window.location.href = '/pages/me.html'"
+        ></div>
+      </div>
+
+      <button
+        class="library-menu-toggle btn-circle glass"
+        data-responsive-menu-toggle="library"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="library-mobile-navigation"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </nav>
+    <div
+      class="library-menu-backdrop"
+      data-responsive-menu-backdrop="library"
+      aria-hidden="true"
+    ></div>
 
     <main class="library-container">
       <header class="library-header">

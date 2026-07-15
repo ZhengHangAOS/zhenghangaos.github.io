@@ -1,0 +1,42 @@
+/* Shared mobile drawer navigation for homepage and Library. */
+@media screen and (max-width: 800px) {
+  body.is-responsive-menu-open {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+  }
+
+  [data-responsive-menu] .nav-right {
+    width: 66.6667vw !important;
+    max-width: 66.6667vw !important;
+  }
+
+  [data-responsive-menu] .nav-bar {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  [data-responsive-menu] .nav-bar .btn-circle {
+    height: 52px;
+    min-height: 52px;
+    padding: 0 14px;
+    justify-content: flex-start;
+    gap: 14px;
+  }
+
+  [data-responsive-menu] .nav-bar .btn-circle img {
+    width: 30px;
+    height: 30px;
+  }
+
+  [data-responsive-menu] .nav-bar .btn-circle::after {
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  [data-responsive-menu] [data-responsive-menu-close] {
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
