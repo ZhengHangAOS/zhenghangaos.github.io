@@ -4,6 +4,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.getElementById("close-explore-modal");
   const mdContent = document.getElementById("md-content");
   const body = document.body;
+  let mobileScrollY = 0;
+  const isMobile = () => window.matchMedia("(max-width: 800px)").matches;
+  const setMobileRenderPause = (paused) => {
+    if (!isMobile()) return;
+    body.classList.toggle("explore-mobile-md-open", paused);
+    if (paused) {
+      mobileScrollY = window.scrollY;
+      body.style.position = "fixed";
+      body.style.top = `-${mobileScrollY}px`;
+      body.style.width = "100%";
+    } else {
+      body.style.position = "";
+      body.style.top = "";
+      body.style.width = "";
+      window.scrollTo(0, mobileScrollY);
+    }
+    window.dispatchEvent(
+      new CustomEvent("explore:render-pause", {
+        detail: { paused, source: "explore-markdown" },
+      }),
+    );
+  };
 
   exploreBtn.addEventListener("click", async () => {
     const currentPlanet = window.ExploreApp?.currentPlanet;
@@ -11,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     body.classList.add("is-exploring");
     modal.classList.add("show");
+    setMobileRenderPause(true);
 
     const mdPath = currentPlanet.mdFile || `${currentPlanet.markdown}`;
 
@@ -134,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     body.classList.remove("is-exploring");
     modal.classList.remove("show");
+    setMobileRenderPause(false);
 
     setTimeout(() => {
       mdContent.innerHTML = "";

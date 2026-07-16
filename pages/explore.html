@@ -26,7 +26,8 @@
     <link rel="stylesheet" href="/src/css/layout/exploreMd.css" />
 
     <!-- 响应式 -->
-    <link rel="stylesheet" href="/src/css/base/responsive.css" />
+    <link rel="stylesheet" href="/src/css/responsive/mobileNav.css" />
+    <link rel="stylesheet" href="/src/css/responsive/expl.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -49,9 +50,35 @@
   <body>
     <div id="night-sky-bg"></div>
 
-    <nav class="home-nav">
-      <div class="nav-left"></div>
+    <nav
+      class="home-nav"
+      data-responsive-menu="explore"
+      data-menu-open-class="explore-menu-open"
+      data-menu-event="explore:render-pause"
+    >
+      <div class="nav-left">
+        <button
+          class="explore-left-toggle btn-circle glass"
+          aria-label="Open planet list"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-earth-americas"></i>
+        </button>
+      </div>
       <div class="nav-right">
+        <button
+          class="explore-menu-close"
+          data-responsive-menu-close="explore"
+          aria-label="Close menu"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div
+          class="explore-sidebar-avatar"
+          style="
+            background-image: url(&quot;/public/images/touxiang/touxiang.webp&quot;);
+          "
+        ></div>
         <div class="nav-bar glass">
           <div
             class="btn-circle"
@@ -71,21 +98,38 @@
             <img src="/public/images/icon/landing.webp" alt="Launch" />
           </div>
         </div>
-        <div class="controls">
-          <div class="btn-circle glass" id="theme-toggle"></div>
-          <div
-            class="avatar-btn"
-            style="
-              background-image: url(&quot;/public/images/touxiang/touxiang.webp&quot;);
-            "
-            onclick="window.location.href = '/pages/me.html'"
-          ></div>
-        </div>
+      </div>
+      <div class="controls">
+        <div class="btn-circle glass" id="theme-toggle"></div>
+        <div
+          class="avatar-btn"
+          style="
+            background-image: url(&quot;/public/images/touxiang/touxiang.webp&quot;);
+          "
+          onclick="window.location.href = '/pages/me.html'"
+        ></div>
+      </div>
+      <div class="explore-top-actions">
+        <button
+          class="explore-menu-toggle btn-circle glass"
+          data-responsive-menu-toggle="explore"
+          aria-label="Open navigation"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-bars"></i>
+        </button>
       </div>
     </nav>
+    <div
+      class="explore-menu-backdrop"
+      data-responsive-menu-backdrop="explore"
+    ></div>
 
     <main class="explore-layout">
       <aside class="col-left">
+        <button class="explore-left-close" aria-label="Close planet list">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
         <div class="switcher-container">
           <div class="system-switcher glass" id="system-switcher">
             <div class="sys-info">
@@ -190,9 +234,12 @@
         </div>
       </aside>
     </main>
+    <div class="explore-left-backdrop"></div>
 
     <!--拖拽支持-->
     <script src="/src/js/global/drager.js"></script>
+    <script defer src="/src/js/responsiveJS/mobileNav.js"></script>
+    <script defer src="/src/js/explore/mobileExploreLayout.js"></script>
     <script type="module" src="../src/js/global/theme.js"></script>
     <script type="module" src="../src/js/global/launch.js"></script>
     <script type="module" src="../src/js/explore/explorePlanet02.js"></script>

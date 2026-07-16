@@ -17,7 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const notify = (isOpen) => {
       if (eventName) {
-        window.dispatchEvent(new CustomEvent(eventName, { detail: { open: isOpen } }));
+        window.dispatchEvent(
+          new CustomEvent(eventName, {
+            detail: { open: isOpen, source: menuName },
+          }),
+        );
       }
     };
 

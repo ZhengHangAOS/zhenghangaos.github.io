@@ -15,6 +15,8 @@ let isTabActive = true;
 let isWindowFocused = true;
 let isModalOpen = false;
 let isInViewport = true;
+const mobilePauseSources = new Set();
+let isMobileUiPaused = false;
 
 const clock = new THREE.Clock();
 const container = document.getElementById("planet-canvas-container");
@@ -60,6 +62,11 @@ export function initExplorePlanet() {
     0.1,
     2000,
   );
+  const syncResponsiveCamera = () => {
+    camera.fov = window.matchMedia("(max-width: 800px)").matches ? 52 : 40;
+    camera.updateProjectionMatrix();
+  };
+  syncResponsiveCamera();
 
   renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(container.clientWidth, container.clientHeight);
@@ -112,6 +119,7 @@ export function initExplorePlanet() {
   }
 
   window.addEventListener("resize", () => {
+    syncResponsiveCamera();
     camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -454,6 +462,7 @@ function buildPlanetSystem(data, pRadius) {
 function initDragInteraction() {
   let clickStartX = 0,
     clickStartY = 0;
+  let touchPointerId = null;
 
   function updateMouse(e) {
     // 🌟 动态获取容器被 CSS 变型/平移后的真实视口矩形
@@ -473,7 +482,7 @@ function initDragInteraction() {
     if (isSwitching || !currentPlanetBundle) return;
     if (
       e.target.closest(
-        "#system-switcher, #sys-dropdown, #btn-prev, #btn-next, .planet-item, #moon-info-card, .planet-header",
+        ".home-nav, #system-switcher, #sys-dropdown, #btn-prev, #btn-next, .planet-item, #moon-info-card, .planet-header",
       )
     )
       return;
@@ -510,11 +519,67 @@ function initDragInteraction() {
     }
   });
 
+  // 移动端使用同一套旋转数学；只监听触摸指针，避免与桌面 mouse 事件重复。
+  window.addEventListener(
+    "pointerdown",
+    (e) => {
+      if (e.pointerType !== "touch" || isSwitching || !currentPlanetBundle)
+        return;
+      if (
+        e.target.closest(
+          ".home-nav, #system-switcher, #sys-dropdown, .planet-controls, .planet-item, #moon-info-card, .planet-header, .explore-modal",
+        )
+      )
+        return;
+
+      updateMouse(e);
+      raycaster.setFromCamera(mouse, camera);
+      if (raycaster.intersectObject(currentPlanetBundle.planetCore).length) {
+        isDragging = true;
+        touchPointerId = e.pointerId;
+        prevX = e.clientX;
+        prevY = e.clientY;
+        e.target.setPointerCapture?.(e.pointerId);
+        e.preventDefault();
+      }
+    },
+    { passive: false },
+  );
+
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      if (
+        e.pointerType !== "touch" ||
+        e.pointerId !== touchPointerId ||
+        !isDragging ||
+        !currentPlanetBundle
+      )
+        return;
+      e.preventDefault();
+      const deltaX = (e.clientX - prevX) * 0.007;
+      const deltaY = (e.clientY - prevY) * 0.007;
+      currentPlanetBundle.interactionGroup.rotateOnWorldAxis(yAxis, deltaX);
+      currentPlanetBundle.interactionGroup.rotateOnWorldAxis(xAxis, deltaY);
+      prevX = e.clientX;
+      prevY = e.clientY;
+    },
+    { passive: false },
+  );
+
+  const stopTouchDrag = (e) => {
+    if (e.pointerType !== "touch" || e.pointerId !== touchPointerId) return;
+    isDragging = false;
+    touchPointerId = null;
+  };
+  window.addEventListener("pointerup", stopTouchDrag);
+  window.addEventListener("pointercancel", stopTouchDrag);
+
   window.addEventListener("click", (e) => {
     if (isSwitching || !currentPlanetBundle) return;
     if (
       e.target.closest(
-        "#system-switcher, #sys-dropdown, #btn-prev, #btn-next, .planet-item, #moon-info-card, .planet-header",
+        ".home-nav, #system-switcher, #sys-dropdown, #btn-prev, #btn-next, .planet-item, #moon-info-card, .planet-header",
       )
     )
       return;
@@ -603,7 +668,7 @@ function initDragInteraction() {
    ========================================================================== */
 function handleResume() {
   // 🌟 修复：移除 !isModalOpen 的限制。无论什么模式，恢复时都必须吞掉积压的时间
-  if (isTabActive && isWindowFocused) {
+  if (isTabActive && isWindowFocused && !isMobileUiPaused) {
     clock.getDelta();
   }
 }
@@ -616,7 +681,19 @@ function initPerformanceObserver() {
     },
     { threshold: 0.1 },
   );
-  if (container) observer.observe(container);
+  const viewportTarget = window.matchMedia("(max-width: 800px)").matches
+    ? document.querySelector(".col-middle")
+    : container;
+  if (viewportTarget) observer.observe(viewportTarget);
+
+  window.addEventListener("explore:render-pause", (event) => {
+    const { open, paused, source = "explore-external" } = event.detail || {};
+    const shouldPause = paused ?? open;
+    if (shouldPause) mobilePauseSources.add(source);
+    else mobilePauseSources.delete(source);
+    isMobileUiPaused = mobilePauseSources.size > 0;
+    if (!isMobileUiPaused) handleResume();
+  });
 
   // 2. 主题切换监听
   new MutationObserver((mutations) => {
@@ -687,7 +764,7 @@ function initPerformanceObserver() {
 function animate() {
   requestAnimationFrame(animate);
 
-  if (!isTabActive || !isWindowFocused) return;
+  if (!isTabActive || !isWindowFocused || isMobileUiPaused) return;
 
   // 🌟 核心修复：把获取实际时间的动作独立出来，保证时钟内部不积压时间
   const rawDelta = clock.getDelta();
@@ -697,19 +774,18 @@ function animate() {
 
   // 🌌 星空背景... (后面代码保持不变)
 
-  // 🌌 2：星空背景。若用户开启手动暂停，背景也停止滚动
-  if (!isManualPaused) {
-    updateSpaceBackground(delta);
-  }
-
-  // 🚫 视口拦截：星球如果被划出屏幕（优化点 3），停止其计算，但渲染出星空
+  // 🚫 移动端舞台滑出屏幕后，停止全部计算与绘制。
   if (!isInViewport) {
-    if (currentPlanetBundle) currentPlanetBundle.rootGroup.visible = false; // 隐藏网格，直接拔除 draw call
+    if (currentPlanetBundle) currentPlanetBundle.rootGroup.visible = false;
+    if (window.matchMedia("(max-width: 800px)").matches) return;
     renderer.render(scene, camera);
     return;
   } else if (currentPlanetBundle) {
     currentPlanetBundle.rootGroup.visible = true; // 划入时恢复
   }
+
+  // 🌌 星空背景。手动暂停时背景同样停止滚动。
+  if (!isManualPaused) updateSpaceBackground(delta);
 
   // 🌟 修改点 3：加上 !isManualPaused 条件，手动暂停时不累加全局动画时间轴
   if (!isPausedByMoon && !isSwitching && !isManualPaused) {

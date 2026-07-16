@@ -1,0 +1,499 @@
+/* Explore：移动端布局与双侧栏 */
+.explore-left-toggle,
+.explore-left-close,
+.explore-menu-toggle,
+.explore-menu-close,
+.explore-menu-backdrop,
+.explore-left-backdrop,
+.explore-sidebar-avatar,
+.explore-top-actions {
+  display: none;
+}
+
+.home-nav > .controls {
+  margin-left: 15px;
+}
+
+@media screen and (max-width: 800px) {
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .home-nav {
+    top: 0 !important;
+    right: 0;
+    width: 100%;
+    min-height: 72px;
+    padding: max(14px, env(safe-area-inset-top)) 18px 12px;
+    justify-content: space-between !important;
+    box-sizing: border-box;
+    /* 保持整个导航层高于遮罩，右侧抽屉不会被父级层叠上下文盖暗。 */
+    z-index: 1200;
+  }
+
+  .home-nav .nav-left {
+    display: block;
+  }
+
+  .explore-left-toggle,
+  .explore-menu-toggle {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    border: 0;
+  }
+
+  .explore-left-toggle i,
+  .explore-menu-toggle i {
+    font-size: 1.15rem;
+  }
+
+  .explore-top-actions {
+    position: fixed;
+    top: max(14px, env(safe-area-inset-top));
+    right: max(18px, env(safe-area-inset-right));
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 510;
+  }
+
+  .home-nav .controls {
+    position: fixed;
+    top: max(14px, env(safe-area-inset-top));
+    right: calc(max(18px, env(safe-area-inset-right)) + 52px);
+    z-index: 511;
+  }
+
+  .home-nav .controls .avatar-btn {
+    display: none;
+  }
+  .home-nav .controls .btn-circle {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+  }
+
+  .home-nav .nav-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 66.6667vw !important;
+    max-width: 66.6667vw !important;
+    height: 100dvh;
+    padding: max(28px, env(safe-area-inset-top)) 22px
+      max(24px, env(safe-area-inset-bottom));
+    gap: 18px;
+    overflow-y: auto;
+    background: color-mix(in srgb, var(--bg-color) 86%, transparent);
+    border-left: 1px solid var(--glass-border);
+    box-shadow: -16px 0 42px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(20px);
+    transform: translateX(105%);
+    transition: transform 0.28s ease;
+    z-index: 530;
+  }
+
+  .home-nav.explore-menu-open .nav-right {
+    transform: translateX(0);
+  }
+  body.explore-left-open .explore-left-toggle {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .explore-menu-backdrop,
+  .explore-left-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    visibility: hidden;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.42);
+    touch-action: none;
+    transition:
+      opacity 0.28s ease,
+      visibility 0.28s;
+  }
+
+  .explore-menu-backdrop { z-index: 1100; }
+  .explore-left-backdrop { z-index: 1250; }
+  .home-nav.explore-menu-open + .explore-menu-backdrop,
+  body.explore-left-open .explore-left-backdrop {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .explore-menu-close,
+  .explore-left-close {
+    display: block;
+    position: absolute;
+    top: max(14px, env(safe-area-inset-top));
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 1.25rem;
+    z-index: 10;
+    pointer-events: auto;
+  }
+
+  .explore-sidebar-avatar {
+    display: block;
+    order: -1;
+    width: 76px;
+    height: 76px;
+    margin: 16px auto 4px;
+    border: 3px solid var(--accent-color);
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .home-nav .nav-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0;
+  }
+  .home-nav .nav-bar .btn-circle {
+    display: flex;
+    width: 100%;
+    height: 58px;
+    min-height: 58px;
+    padding: 0 8px;
+    justify-content: center;
+    gap: 16px;
+    border-radius: 12px;
+  }
+  .home-nav .nav-bar .btn-circle img {
+    width: 34px;
+    height: 34px;
+  }
+  .home-nav .nav-bar .btn-circle::after {
+    position: static;
+    display: block;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 1.15rem;
+    font-weight: 500;
+    opacity: 1;
+  }
+
+  .explore-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+    padding: 0 18px max(30px, env(safe-area-inset-bottom));
+    overflow: visible;
+  }
+
+  .col-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 66.6667vw;
+    height: 100dvh;
+    padding: max(66px, calc(env(safe-area-inset-top) + 58px)) 16px
+      max(22px, env(safe-area-inset-bottom));
+    gap: 14px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background: color-mix(in srgb, var(--bg-color) 86%, transparent);
+    border-right: 1px solid var(--glass-border);
+    box-shadow: 16px 0 42px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(20px);
+    transform: translateX(-105%) !important;
+    transition: transform 0.28s ease !important;
+    z-index: 1300;
+  }
+  .explore-left-close {
+    position: fixed;
+    z-index: 1310;
+  }
+  body.explore-left-open .col-left {
+    transform: translateX(0) !important;
+  }
+  body.is-exploring .col-left {
+    transform: translateX(-105%) !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  body.is-exploring.explore-left-open .col-left {
+    transform: translateX(0) !important;
+  }
+
+  .system-switcher {
+    padding: 12px;
+  }
+  .planet-list-card {
+    min-height: 0;
+    height: auto;
+    flex: 1 1 auto;
+  }
+  .planet-list-container {
+    overflow-y: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+  .planet-item:hover,
+  .control-btn:hover {
+    transform: none;
+  }
+
+  .col-middle {
+    position: relative;
+    width: 100%;
+    height: min(80svh, 680px);
+    min-height: 440px;
+    margin-top: 72px;
+  }
+
+  #planet-system-stage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transform: none !important;
+  }
+  #planet-canvas-container {
+    z-index: 0;
+  }
+  #planet-canvas-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    touch-action: none;
+  }
+  .planet-shadow {
+    width: min(55vw, 250px);
+    bottom: 20%;
+  }
+
+  .col-middle-ui-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px 4px 14px;
+  }
+  .planet-header {
+    max-width: 78%;
+    margin-left: 8px;
+  }
+  .planet-header h2 {
+    font-size: clamp(1.65rem, 8vw, 2.35rem);
+    letter-spacing: 1px;
+  }
+  .planet-header p {
+    max-width: 70%;
+    font-size: 0.68rem;
+    letter-spacing: 0.35px;
+    line-height: 1.3;
+  }
+  .planet-controls {
+    gap: 9px;
+    margin-bottom: 0;
+  }
+  .control-btn {
+    height: 42px;
+    font-size: 1rem;
+  }
+  .control-btn i {
+    width: 42px;
+  }
+  .explore-btn {
+    padding: 0 20px;
+    font-size: 0.8rem;
+    letter-spacing: 1.3px;
+  }
+  .moon-info-card {
+    width: min(78vw, 300px);
+  }
+
+  .col-right {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    margin: 18px 0 0;
+    padding-bottom: 10px;
+    overflow: visible;
+  }
+  .nav-spacer {
+    display: none;
+  }
+  .data-card,
+  .data-card:nth-of-type(1),
+  .data-card:nth-of-type(2),
+  .col-right .data-card[style] {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .data-card:nth-of-type(2) .highlight-list,
+  .col-right .highlight-list[style] {
+    overflow: visible !important;
+    flex-grow: 0 !important;
+  }
+
+  .card-title {
+    font-size: 0.9rem;
+  }
+  .data-row {
+    grid-template-columns: 18px minmax(88px, 1fr) minmax(70px, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 0.78rem;
+  }
+  .data-label {
+    width: auto;
+    min-width: 0;
+    gap: 3px;
+  }
+  .data-label .gray-text,
+  .gray-text {
+    font-size: 0.72rem;
+  }
+  .data-val {
+    font-size: 0.78rem;
+    overflow-wrap: anywhere;
+  }
+  .highlight-row {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .hl-icon {
+    width: 25px;
+    height: 25px;
+  }
+  .hl-text h5 {
+    font-size: 0.84rem;
+  }
+  .hl-text p {
+    font-size: 0.74rem;
+    line-height: 1.4;
+  }
+
+  .explore-modal {
+    top: 50% !important;
+    right: auto !important;
+    left: 50% !important;
+    width: calc(100vw - 32px) !important;
+    height: min(88dvh, 880px) !important;
+    padding: 28px 20px 20px !important;
+    border-radius: 18px;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -45%) scale(0.96) !important;
+    transition:
+      transform 0.28s ease,
+      opacity 0.22s ease !important;
+    z-index: 1400;
+  }
+  .explore-modal.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1) !important;
+  }
+  #close-explore-modal {
+    top: 12px;
+    right: 16px;
+    font-size: 1.25rem;
+  }
+  #md-content {
+    padding-right: 2px;
+    font-size: 0.9rem;
+  }
+  .md-article-title {
+    font-size: 1.35rem;
+  }
+  .md-article-title::after {
+    width: 55vw;
+  }
+
+  body.explore-mobile-md-open {
+    overflow: hidden !important;
+    touch-action: none;
+  }
+  body.explore-mobile-md-open::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1350;
+    background: rgba(0, 0, 0, 0.35);
+    touch-action: none;
+  }
+  body.explore-mobile-md-open .explore-modal,
+  body.explore-mobile-md-open #md-content {
+    touch-action: pan-y;
+  }
+
+  /* 与 homepage/library 共用的抽屉视觉与文字比例。 */
+  .home-nav .nav-right {
+    justify-content: flex-start !important;
+    min-width: 0;
+    background: color-mix(in srgb, var(--bg-color) 86%, transparent);
+  }
+  .home-nav .nav-right .nav-bar {
+    order: 2;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  .home-nav .nav-right .nav-bar .btn-circle {
+    height: 46px;
+    min-height: 46px;
+    padding: 0 12px;
+    justify-content: flex-start;
+    gap: 14px;
+  }
+  .home-nav .nav-right .nav-bar .btn-circle img {
+    width: 28px;
+    height: 28px;
+  }
+  .home-nav .nav-right .nav-bar .btn-circle::after {
+    font-size: 1rem;
+  }
+
+  body.is-exploring .col-right {
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  body.is-exploring .planet-header,
+  body.is-exploring .planet-controls,
+  body.is-exploring #planet-system-stage {
+    transform: none !important;
+  }
+  body.is-exploring #btn-prev,
+  body.is-exploring #btn-explore,
+  body.is-exploring #btn-next {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+}
